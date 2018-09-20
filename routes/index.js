@@ -13,11 +13,16 @@ router.get('/abe', function(req, res, next) {
 
 /* Alex's first http get method. */
 router.get('/alex', function(req, res, next){
-   res.send('SYNCRHONIZED'); 
+   res.send('SYNCRHONIZED');
 
 /* Christian's first http get method. */
 router.get('/chris', function(req, res, next) {
 	res.send('Hi my name is Christian and let\'s gooooooo');
+});
+
+/* Amir's first http get method. */
+router.get('/chris', function(req, res, next) {
+	res.send('Hi my name is Amir and IM READY');
 });
 
 module.exports = router;
