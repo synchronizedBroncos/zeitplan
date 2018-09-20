@@ -20,4 +20,9 @@ router.get('/chris', function(req, res, next) {
 	res.send('Hi my name is Christian and let\'s gooooooo');
 });
 
+/* Jason's first http get method. */
+router.get('/jason', function(req, res, next) {
+	res.send('I am groot');
+});
+
 module.exports = router;
