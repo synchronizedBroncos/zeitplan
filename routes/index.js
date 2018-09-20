@@ -11,15 +11,13 @@ router.get('/abe', function(req, res, next) {
   res.send('This is Abe\'s first HTTP get method!');
 });
 
-<<<<<<< HEAD
 /* Alex's first http get method. */
 router.get('/alex', function(req, res, next){
    res.send('SYNCRHONIZED'); 
-=======
+
 /* Christian's first http get method. */
 router.get('/chris', function(req, res, next) {
 	res.send('Hi my name is Christian and let\'s gooooooo');
->>>>>>> added my own string in the index
 });
 
 module.exports = router;
