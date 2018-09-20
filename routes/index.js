@@ -21,7 +21,7 @@ router.get('/chris', function(req, res, next) {
 });
 
 /* Amir's first http get method. */
-router.get('/chris', function(req, res, next) {
+router.get('/amir', function(req, res, next) {
 	res.send('Hi my name is Amir and IM READY');
 });
 
