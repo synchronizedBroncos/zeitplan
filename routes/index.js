@@ -14,6 +14,7 @@ router.get('/abe', function(req, res, next) {
 /* Alex's first http get method. */
 router.get('/alex', function(req, res, next){
    res.send('SYNCRHONIZED');
+ });
 
 /* Christian's first http get method. */
 router.get('/chris', function(req, res, next) {
