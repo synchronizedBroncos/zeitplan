@@ -11,4 +11,9 @@ router.get('/abe', function(req, res, next) {
   res.send('This is Abe\'s first HTTP get method!');
 });
 
+/* Alex's first http get method. */
+router.get('/alex', function(req, res, next){
+   res.send('SYNCRHONIZED'); 
+});
+
 module.exports = router;
