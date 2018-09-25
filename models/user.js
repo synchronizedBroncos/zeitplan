@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 var bcrypt = require('bcryptjs');
 
-mongoose.connect('ENV variable with db info here');
+mongoose.connect(process.env.DB_URI);
 
 var db = mongoose.connection;
 

@@ -8,10 +8,12 @@ var app = require('../app');
 var debug = require('debug')('zeitplan:server');
 var http = require('http');
 
+// require and configure dotenv
+require('dotenv').config();
+
 /**
  * Get port from environment and store in Express.
  */
-
 var port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 
