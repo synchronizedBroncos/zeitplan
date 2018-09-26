@@ -30,4 +30,11 @@ router.get('/amir', function(req, res, next) {
 	res.send('Hi my name is Amir and IM READY');
 });
 
+function ensureAuthenticated(req, res, next){
+  if(req.isAuthenticated()){
+    return next();
+  }
+  res.redirect('/users/login');
+}
+
 module.exports = router;
