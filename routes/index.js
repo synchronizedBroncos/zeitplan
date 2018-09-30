@@ -62,8 +62,7 @@ router.get('/mail', function(req, res, next) {
       res.send(error);
     }
 
-    res.send("Mail sent.");
-    res.send(info);
+    res.send("Mail sent." + info);
   });
 });
 
