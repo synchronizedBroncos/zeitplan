@@ -68,38 +68,6 @@ app.use(function (req, res, next) {
   next();
 });
 
-//Nodemailer
-const nodemailer = require('nodemailer');
-
-let transporter = nodemailer.createTransport({
-  service: 'gmail',
-  secure: false,
-  port: 25,
-  auth: {
-    user: 'zeitplanme@gmail.com',
-    pass: 'ZEITplan480'
-  },
-  tls: {
-    rejectUnauthorized: false
-  }
-});
-
-let HelperOptions = {
-  from: '"Zeitplan" <zeitplanme@gmail.com',
-  to: 'zeitplanme@gmail.com',
-  subject: "Hello From Zeitplan!",
-  text: 'Welcome to Zeitplan'
-};
-
-transporter.sendMail(HelperOptions, (error, info) => {
-  if(error){
-    console.log(error);
-  }
-  console.log("Email sent.");
-  console.log(info);
-});
-
-
 app.get('*', function(req, res, next){
   res.locals.user = req.user || null;
   next();
