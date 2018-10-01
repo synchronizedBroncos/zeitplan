@@ -28,6 +28,7 @@
     "passport-http": "*",
     "passport-local": "*",
     "popper.js": "^1.14.4",
+    "requestify": "^0.2.5",
     "serve-favicon": "*"
   }
 }
