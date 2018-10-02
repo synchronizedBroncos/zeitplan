@@ -81,4 +81,15 @@ router.get('/requestify', function(req, res, next){
 });
 
 
+// Route to axiom
+router.get('/axiom', function(req, res, next){
+axios.get('https://jsonplaceholder.typicode.com/todos/1')
+  .then(function (response) {
+    res.send(response);
+  })
+  .catch(function (error) {
+    res.send(error);
+  });
+});
+
 module.exports = router;
