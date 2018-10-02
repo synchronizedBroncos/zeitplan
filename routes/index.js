@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var requestify = require('requestify');
 require("dotenv").config()
 
 //Nodemailer
@@ -72,5 +73,10 @@ function ensureAuthenticated(req, res, next){
   }
   res.redirect('/users/login');
 }
+
+requestify.get('https://jsonplaceholder.typicode.com/todos/1').then(function(response) {
+    // Get the response body
+    response.getBody();
+});
 
 module.exports = router;
