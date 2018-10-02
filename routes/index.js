@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var requestify = require('requestify');
 var axios = require('axios');
+var getUri = require('get-uri');
 require("dotenv").config()
 
 //Nodemailer
@@ -56,6 +57,22 @@ router.get('/amir', function(req, res, next) {
 	res.send('Hi my name is Amir and IM READY');
 });
 
+/*get-uri method*/
+router.get('/uri', function(req, res, next){
+  getUri('http://cs480-projects.github.io/teams-fall2018/index.html', function(err, rs){
+    if(err){
+      res.send(err);
+    }else {
+      rs.on('readable', function(){
+        let data;
+        while(data = this.read()){
+          res.send(data);
+        }
+      });
+      rs.destroy();
+    }
+  });
+ });
 /* Nodemailer HTTP GET method */
 router.get('/mail', function(req, res, next) {
 

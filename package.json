@@ -32,6 +32,7 @@
     "popper.js": "^1.14.4",
     "requestify": "^0.2.5",
     "serve-favicon": "*",
-    "twilio": "^3.21.0"
+    "twilio": "^3.21.0",
+    "get-uri": "2.0.2"
   }
 }
