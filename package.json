@@ -33,6 +33,6 @@
     "requestify": "^0.2.5",
     "serve-favicon": "*",
     "twilio": "^3.21.0",
-    "timers-browserify": "2.0.10"
+    "get-uri": "2.0.2"
   }
 }
