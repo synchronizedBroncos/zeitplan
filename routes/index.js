@@ -73,4 +73,15 @@ function ensureAuthenticated(req, res, next){
   res.redirect('/users/login');
 }
 
+// Route to axiom
+router.get('/axiom', function(req, res, next){
+axios.get('https://jsonplaceholder.typicode.com/todos/1')
+  .then(function (response) {
+    console.log(response);
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+});
+
 module.exports = router;
