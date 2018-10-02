@@ -1,13 +1,19 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= title %></title>
+    <title><%= title%></title>
     <link rel='stylesheet' href='/stylesheets/bootstrap.css' />
     <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script src="https://d3js.org/d3.v5.min.js"></script>
   </head>
   <body>
     <h2 class="page-header">Login</h2>
     <p>Please login below</p>
+
+    <script>
+      d3.select("p").text("PLEASE LOGIN BELOW");
+    </script>
+
     <form method="post" action="/users/login">
       <div class="form-group">
         <label>Username</label>
