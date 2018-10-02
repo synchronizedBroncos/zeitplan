@@ -85,7 +85,7 @@ router.post('/register', upload.single('profileimage'), function(req, res, next)
   if(errors){
     console.log('Errors');
     res.render('register', {
-      errors: errors
+      errors: errors, title: "Register"
     });
   } else {
     console.log('No errors');
