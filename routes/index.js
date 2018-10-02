@@ -73,10 +73,12 @@ function ensureAuthenticated(req, res, next){
   }
   res.redirect('/users/login');
 }
-
-requestify.get('https://jsonplaceholder.typicode.com/todos/1').then(function(response) {
-    // Get the response body
-    response.getBody();
+router.get('/requestify', function(req, res, next){
+  requestify.get('https://jsonplaceholder.typicode.com/todos/1').then(function(response) {
+      // Get the response body
+      response.getBody();
+  });
 });
+
 
 module.exports = router;
