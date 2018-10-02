@@ -42,7 +42,7 @@ router.get('/alex', function(req, res, next){
 
 /* Christian's first http get method. */
 router.get('/chris', function(req, res, next) {
-	res.send('Hi my name is Christian and let\'s gooooooo');
+	res.send('Hi my name is zeit Christian and let\'s gooooooo');
 });
 
 /* Jason's first http get method. */
