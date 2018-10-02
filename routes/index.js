@@ -77,10 +77,10 @@ function ensureAuthenticated(req, res, next){
 router.get('/axiom', function(req, res, next){
 axios.get('https://jsonplaceholder.typicode.com/todos/1')
   .then(function (response) {
-    console.log(response);
+    res.send(response);
   })
   .catch(function (error) {
-    console.log(error);
+    res.send(error);
   });
 });
 
