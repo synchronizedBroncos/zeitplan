@@ -1,5 +1,8 @@
 var express = require('express');
 var router = express.Router();
+var requestify = require('requestify');
+var axios = require('axios');
+var getUri = require('get-uri');
 require("dotenv").config()
 
 //Nodemailer
@@ -42,7 +45,7 @@ router.get('/alex', function(req, res, next){
 
 /* Christian's first http get method. */
 router.get('/chris', function(req, res, next) {
-	res.send('Hi my name is Christian and let\'s gooooooo');
+	res.send('Hi my name is zeit Christian and let\'s gooooooo');
 });
 
 /* Jason's first http get method. */
@@ -54,6 +57,22 @@ router.get('/amir', function(req, res, next) {
 	res.send('Hi my name is Amir and IM READY');
 });
 
+/*get-uri method*/
+router.get('/uri', function(req, res, next){
+  getUri('http://cs480-projects.github.io/teams-fall2018/index.html', function(err, rs){
+    if(err){
+      res.send(err);
+    }else {
+      rs.on('readable', function(){
+        let data;
+        while(data = this.read()){
+          res.send(data);
+        }
+      });
+      rs.destroy();
+    }
+  });
+ });
 /* Nodemailer HTTP GET method */
 router.get('/mail', function(req, res, next) {
 
@@ -72,5 +91,24 @@ function ensureAuthenticated(req, res, next){
   }
   res.redirect('/users/login');
 }
+
+// sample request with requestify module
+router.get('/requestify', function(req, res, next){
+  requestify.get('https://jsonplaceholder.typicode.com/todos/1').then(function(response) {
+      // Get the response body
+      res.send(response.getBody());
+  });
+});
+
+// Route to axiom
+router.get('/axiom', function(req, res, next){
+axios.get('https://jsonplaceholder.typicode.com/todos/1')
+  .then(function (response) {
+    res.send(response);
+  })
+  .catch(function (error) {
+    res.send(error);
+  });
+});
 
 module.exports = router;
