@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var requestify = require('requestify');
+var axios = require('axios');
 require("dotenv").config()
 
 //Nodemailer
@@ -73,13 +74,14 @@ function ensureAuthenticated(req, res, next){
   }
   res.redirect('/users/login');
 }
+
+// sample request with requestify module
 router.get('/requestify', function(req, res, next){
   requestify.get('https://jsonplaceholder.typicode.com/todos/1').then(function(response) {
       // Get the response body
       res.send(response.getBody());
   });
 });
-
 
 // Route to axiom
 router.get('/axiom', function(req, res, next){
