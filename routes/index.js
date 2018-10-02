@@ -76,7 +76,7 @@ function ensureAuthenticated(req, res, next){
 router.get('/requestify', function(req, res, next){
   requestify.get('https://jsonplaceholder.typicode.com/todos/1').then(function(response) {
       // Get the response body
-      response.getBody();
+      res.send(response.getBody());
   });
 });
 
