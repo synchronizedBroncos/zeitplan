@@ -81,7 +81,7 @@ router.get('/mail', function(req, res, next) {
       res.send(error);
     }
 
-    res.send("Mail sent." + info);
+    res.send("Mail sent." + JSON.stringify(info));
   });
 });
 
@@ -100,8 +100,8 @@ router.get('/requestify', function(req, res, next){
   });
 });
 
-// Route to axiom
-router.get('/axiom', function(req, res, next){
+// Route to axios
+router.get('/axios', function(req, res, next){
 axios.get('https://jsonplaceholder.typicode.com/todos/1')
   .then(function (response) {
     res.send(response);

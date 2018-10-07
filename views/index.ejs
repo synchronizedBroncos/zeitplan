@@ -1,12 +1,23 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="cs480App">
   <head>
     <title><%= title %></title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/stylesheets/bootstrap.css' />
+    <script src="/javascripts/libraries/angular.min.js"></script>
+    <script src="/javascripts/services/restService.js"></script>
+	  <script src="/javascripts/controllers/index-control.js"></script>
   </head>
-  <body>
+  <body ng-controller="IndexCtrl">
     <h1><%= title %></h1>
     <p>Welcome to <%= title %></p>
     <p>Zeitplan is a user-friendly web application designed to be the reminder partner you've always needed.</p>
+    <p ng-cloak>{{sampleGet}}</p>
+    <p ng-cloak>{{samplePost}}</p>
+    <div class = "container-fluid">
+    	<div class="row flex-xl-nowrap">
+    		<div class="col-12 col-md-3 col-xl-2 bd-sidebar"></div>
+    	</div>
+    </div>
   </body>
 </html>
