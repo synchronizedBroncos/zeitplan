@@ -3,7 +3,19 @@ var router = express.Router();
 var requestify = require('requestify');
 var axios = require('axios');
 var getUri = require('get-uri');
+
 require("dotenv").config()
+
+//Require task model
+Task = require('../models/tasks')
+
+//Test connect to DB to display tasks (tasks will be moved to be a property of Users, currently testing)
+var mongoose = require('mongoose');
+var url = process.env.DB_URI;
+
+mongoose.connect(url, { useNewUrlParser: true })
+
+var db = mongoose.connection;
 
 //Nodemailer
 const nodemailer = require('nodemailer');
@@ -22,11 +34,23 @@ let transporter = nodemailer.createTransport({
 });
 
 let HelperOptions = {
-  from: '"Zeitplan" <zeitplanme@gmail.com',
+  from: '"Zeitplan" <zeitplanme@gmail.com>',
   to: 'zeitplanme@gmail.com',
   subject: "Hello From Zeitplan!",
   text: 'Welcome to Zeitplan'
 };
+
+//API Call to return tasks from DB
+router.get('/api/tasks', function(req,res,next){
+  Task.getTasks(function(err,tasks){
+    if(err){
+      throw err;
+    }
+    else{
+      res.json(tasks);
+    }
+  });
+});
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
