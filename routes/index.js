@@ -1,8 +1,13 @@
 var express = require('express');
+var app = express();
 var router = express.Router();
 var requestify = require('requestify');
 var axios = require('axios');
 var getUri = require('get-uri');
+var bodyParser = require('body-parser')
+
+
+app.use(bodyParser.json())
 
 require("dotenv").config()
 
@@ -48,6 +53,19 @@ router.get('/api/tasks', function(req,res,next){
     }
     else{
       res.json(tasks);
+    }
+  });
+});
+
+//API Call to return tasks from DB
+router.post('/api/tasks', function(req,res,next){
+  var task = req.body;
+    Task.addTask(task, function(err,task){
+    if(err){
+      throw err;
+    }
+    else{
+      res.json(task);
     }
   });
 });

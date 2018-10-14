@@ -17,3 +17,7 @@ var Task = module.exports = mongoose.model('Task', tasksSchema);
 module.exports.getTasks = function(callback, limit){
     Task.find(callback).limit(limit);
 }
+
+module.exports.addTask = function(task, callback){
+    Task.create(task, callback);
+}
