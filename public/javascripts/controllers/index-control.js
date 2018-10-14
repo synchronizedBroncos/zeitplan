@@ -1,7 +1,7 @@
 var cs480App = angular.module('cs480App');
 
 cs480App.controller('IndexCtrl',
- ['$scope', 'RestService', function ($scope, RestService) {
+ ['$scope', '$log', 'RestService', function ($scope, $log, RestService, sharedTasks, $routeParams) {
 
   $scope.getRequestify = function () {
         RestService.getRequestify()
@@ -15,6 +15,32 @@ cs480App.controller('IndexCtrl',
     };
 
   $scope.getRequestify();
+
+  //Return tasks and update page's tasks list
+  $scope.getTasks = function () {
+    RestService.getTasks()
+        .then(function successCallback(response){
+            $scope.tasks = response.data;
+        }, function errorCallback(response){
+           $log.log("Error"); 
+        });
+    };
+
+  $scope.to_do = $scope.getTasks();
+
+  //Add a task to DB, also updates page's task lisk
+  $scope.addTask = function (){
+      RestService.addTask({"name" : $scope.name, "description" : $scope.description, "isDone" : $scope.isDone})
+      .then(function successCallback(response){
+        console.log("Inserted Data in DB.");
+      });
+      RestService.getTasks()
+        .then(function successCallback(response){
+            $scope.tasks = response.data;
+        }, function errorCallback(response){
+           $log.log("Error"); 
+        });
+  };
 
   $scope.userInfo= {name:'Abraham',job:'Leader'};
 

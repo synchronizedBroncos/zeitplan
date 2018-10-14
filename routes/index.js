@@ -57,7 +57,7 @@ router.get('/api/tasks', function(req,res,next){
   });
 });
 
-//API Call to return tasks from DB
+//POST API call to store task in DB
 router.post('/api/tasks', function(req,res,next){
   var task = req.body;
     Task.addTask(task, function(err,task){
