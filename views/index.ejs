@@ -6,15 +6,15 @@
     <link rel='stylesheet' href='/stylesheets/bootstrap.css' />
     <script src="/javascripts/libraries/angular.min.js"></script>
     <script src="/javascripts/services/restService.js"></script>
-	  <script src="/javascripts/controllers/index-control.js"></script>
+    <script src="/javascripts/controllers/index-control.js"></script>
+    <script src="/javascripts/libraries/jquery-3.3.1.min.js"></script>
+    <script src="/javascripts/libraries/angular-animate.min.js"></script>
+
   </head>
-  <body ng-controller="IndexCtrl">
+  <body class="animate" ng-controller="IndexCtrl">
     <h1><%= title %></h1>
     <p>Welcome to <%= title %></p>
     <p>Zeitplan is a user-friendly web application designed to be the reminder partner you've always needed.</p>
-    <p ng-cloak>{{sampleGet}}</p>
-    <p ng-cloak>{{samplePost}}</p>
-    <p ng-cloak>{{tasks}}</p>
 
     <table class="table table-striped table-hover table-sm">
       <tr>
@@ -52,6 +52,9 @@
     </div>
     </form>
 
+    <p ng-cloak>{{sampleGet}}</p>
+    <p ng-cloak>{{samplePost}}</p>
+    <p ng-cloak>{{tasks}}</p>
 
     <div class = "container-fluid">
     	<div class="row flex-xl-nowrap">
