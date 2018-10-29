@@ -16,27 +16,6 @@
     <p ng-cloak>{{samplePost}}</p>
     <p ng-cloak>{{tasks}}</p>
 
-    <form name = "AddTaskForm" method = "POST" action = "/api/tasks"></form>
-      <table>
-        <tr>
-          <td>
-            Name
-          </td>
-          <td><input type="text" ng-model="name">
-          </td>
-          <td>
-              Description
-            </td>
-            <td><input type="text" ng-model="description">
-            </td>
-          <td>
-            Complete
-          </td>
-          <td><input type="checkbox" ng-model="isDone">
-          </td>
-          <input type="submit" value = "submit" ng-click="addTask(Task)">
-      </table>
-    </form>
     <table class="table table-striped table-hover table-sm">
       <tr>
           <th>Name</th>
@@ -47,12 +26,32 @@
         <th>{{ task.name }}</th>
         <th>{{ task.description }}</th>
         <th>{{ task.isDone }}</th>
+        <th><button ng-click="deleteTask(task)">X</button></th>
       </tr>
-          <!-- show data what you want-->
     </tr>
+    </table>
 
+    <form name = "AddTaskForm" method = "POST" action = "/api/tasks"></form>
+    <div class="form-group">
+      <label for="name">Name</label>
+      <input type="text" class="form-control" required ng-model="name">
+    </div>
+    <div class="form-group">
+      <label for="description">Description</label>
+      <input type="text" class="form-control" ng-model="description">
+    </div>
+    <div class="form-group">
+      <label for="isDone">Complete?</label>
+      <select class="form-control" ng-model="isDone">
+        <option value="true">Yes</option>
+        <option value="false">No</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <input type="submit" value = "submit" ng-click="addTask(Task)">
+    </div>
+    </form>
 
-  </table>
 
     <div class = "container-fluid">
     	<div class="row flex-xl-nowrap">

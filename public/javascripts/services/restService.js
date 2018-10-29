@@ -22,7 +22,7 @@ cs480App.factory('RestService', function($http) {
   };
 
   service.getTask = function(id){
-    return $http.get(urlBase + '/user/' + id);
+    return $http.get(urlBase + '/api/tasks/' + id);
   };
 
   service.addTask = function(data){
@@ -31,6 +31,18 @@ cs480App.factory('RestService', function($http) {
         url: urlBase + 'api/tasks',
         method: "POST",
         data: data,
+      }).then(function successCallback(response) {
+        return response;
+    }, function errorCallback(response) {
+        return response;
+    });
+
+  };
+
+  service.deleteTask = function(id){
+    return $http({
+        url: urlBase + 'api/tasks/' + id,
+        method: "DELETE",
       }).then(function successCallback(response) {
         return response;
     }, function errorCallback(response) {
