@@ -13,6 +13,7 @@ var flash = require('connect-flash');
 var bcrypt = require('bcryptjs');
 var mongo = require('mongodb');
 var mongoose = require('mongoose');
+var bodyParser = require('body-parser')
 var db = mongoose.connection;
 
 // require and config dotenv
@@ -22,6 +23,8 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
 var app = express();
+
+app.use(bodyParser.json())
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
