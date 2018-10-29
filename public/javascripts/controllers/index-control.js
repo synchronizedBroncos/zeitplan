@@ -1,7 +1,7 @@
 var cs480App = angular.module('cs480App');
 
 cs480App.controller('IndexCtrl',
- ['$scope', '$log', 'RestService', function ($scope, $log, RestService, sharedTasks, $routeParams) {
+ ['$scope', 'RestService', function ($scope, RestService) {
 
   $scope.getRequestify = function () {
         RestService.getRequestify()
@@ -26,21 +26,24 @@ cs480App.controller('IndexCtrl',
         });
     };
 
-  $scope.to_do = $scope.getTasks();
+  $scope.getTasks();
 
   //Add a task to DB, also updates page's task lisk
   $scope.addTask = function (){
-      RestService.addTask({"name" : $scope.name, "description" : $scope.description, "isDone" : $scope.isDone})
-      .then(function successCallback(response){
-        console.log("Inserted Data in DB.");
-      });
-      RestService.getTasks()
+
+    var task = [{"name" : $scope.name, "description" : $scope.description, "isDone" : $scope.isDone}];
+    
+      RestService.addTask(task)
         .then(function successCallback(response){
-            $scope.tasks = response.data;
-        }, function errorCallback(response){
-           $log.log("Error"); 
-        });
+            console.log("Inserted Data in DB.");
+        })
+        .then(function errorCallback(response){
+            $log.log("Error");
+        })
+        .then($scope.getTasks()); //is this proper syntax?
   };
+
+
 
   $scope.userInfo= {name:'Abraham',job:'Leader'};
 
