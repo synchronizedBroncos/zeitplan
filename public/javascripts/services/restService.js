@@ -1,4 +1,4 @@
-var cs480App = angular.module('cs480App', []);
+var cs480App = angular.module('cs480App', ['ngAnimate']);
 
 cs480App.factory('RestService', function($http) {
   var service = {};
