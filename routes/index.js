@@ -1,26 +1,13 @@
 var express = require('express');
-var app = express();
 var router = express.Router();
 var requestify = require('requestify');
 var axios = require('axios');
 var getUri = require('get-uri');
-var bodyParser = require('body-parser')
-
-
-app.use(bodyParser.json())
 
 require("dotenv").config()
 
 //Require task model
 Task = require('../models/tasks')
-
-//Test connect to DB to display tasks (tasks will be moved to be a property of Users, currently testing)
-var mongoose = require('mongoose');
-var url = process.env.DB_URI;
-
-mongoose.connect(url, { useNewUrlParser: true })
-
-var db = mongoose.connection;
 
 //Nodemailer
 const nodemailer = require('nodemailer');

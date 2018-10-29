@@ -2,7 +2,6 @@ var cs480App = angular.module('cs480App', []);
 
 cs480App.factory('RestService', function($http) {
   var service = {};
-  var tasks = [];
   var urlBase = '';
   // var urlBase = '/api/v1';
 

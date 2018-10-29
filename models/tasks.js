@@ -1,4 +1,12 @@
 var mongoose = require('mongoose');
+require("dotenv").config()
+
+//Test connect to DB to display tasks (tasks will be moved to be a property of Users, currently testing)
+var url = process.env.DB_URI;
+
+mongoose.connect(url, { useNewUrlParser: true })
+
+var db = mongoose.connection;
 
 var tasksSchema = mongoose.Schema({
     name: {

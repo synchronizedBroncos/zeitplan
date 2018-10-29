@@ -36,11 +36,10 @@ cs480App.controller('IndexCtrl',
       RestService.addTask(task)
         .then(function successCallback(response){
             console.log("Inserted Data in DB.");
-        })
-        .then(function errorCallback(response){
+            $scope.getTasks();
+        }, function errorCallback(response){
             $log.log("Error");
-        })
-        .then($scope.getTasks()); //is this proper syntax?
+        });
   };
 
 
