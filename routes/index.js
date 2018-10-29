@@ -44,9 +44,33 @@ router.get('/api/tasks', function(req,res,next){
   });
 });
 
+//API Call to return specific task
+router.get('/api/tasks/:task_id', function(req,res){
+  Task.getTask(req.params.task_id, function(err,task){
+    if(err){
+      throw err;
+    }
+    else{
+      res.json(task);
+    }
+  });
+});
+
+//API Call to delete specific task
+router.delete('/api/tasks/:task_id', function(req,res){
+  Task.deleteTask(req.params.task_id, function(err,task){
+    if(err){
+      throw err;
+    }
+    else{
+      res.json({message : "Sucessfully Deleted Task!"});
+    }
+  });
+});
+
 //POST API call to store task in DB
 router.post('/api/tasks', function(req,res,next){
-  var task = req.body;
+  let task = req.body;
     Task.addTask(task, function(err,task){
     if(err){
       throw err;

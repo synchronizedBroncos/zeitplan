@@ -42,6 +42,16 @@ cs480App.controller('IndexCtrl',
         });
   };
 
+  $scope.deleteTask = function (task){ 
+      RestService.deleteTask(task._id)
+        .then(function successCallback(response){
+            console.log("Removed Task From DB.");
+            $scope.getTasks();
+        }, function errorCallback(response){
+            $log.log("Error");
+        });
+  };
+
 
 
   $scope.userInfo= {name:'Abraham',job:'Leader'};

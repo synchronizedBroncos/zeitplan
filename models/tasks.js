@@ -30,6 +30,14 @@ module.exports.getTasks = function(callback, limit){
     Task.find(callback).limit(limit);
 }
 
+module.exports.getTask = function(id, callback){
+    Task.findById(id, callback);
+}
+
+module.exports.deleteTask = function(id, callback){
+    Task.findByIdAndDelete(id, callback);
+}
+
 //Add Task to db
 module.exports.addTask = function(task, callback){
     Task.create(task, callback);
