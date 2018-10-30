@@ -14,7 +14,41 @@ cs480App.factory('RestService', function($http) {
   }; */
 
   service.postUser = function(userInfo){
-      return $http.post('https://reqres.in/api/users', userInfo);
+    return $http.post('https://reqres.in/api/users', userInfo);
+  };
+
+  service.getTasks = function() {
+    return $http.get(urlBase + '/api/tasks');
+  };
+
+  service.getTask = function(id){
+    return $http.get(urlBase + '/api/tasks/' + id);
+  };
+
+  service.addTask = function(data){
+    return $http({
+        //headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        url: urlBase + 'api/tasks',
+        method: "POST",
+        data: data,
+      }).then(function successCallback(response) {
+        return response;
+    }, function errorCallback(response) {
+        return response;
+    });
+
+  };
+
+  service.deleteTask = function(id){
+    return $http({
+        url: urlBase + 'api/tasks/' + id,
+        method: "DELETE",
+      }).then(function successCallback(response) {
+        return response;
+    }, function errorCallback(response) {
+        return response;
+    });
+
   };
 
   return service;

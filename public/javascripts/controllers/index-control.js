@@ -16,6 +16,44 @@ cs480App.controller('IndexCtrl',
 
   $scope.getRequestify();
 
+  //Return tasks and update page's tasks list
+  $scope.getTasks = function () {
+    RestService.getTasks()
+        .then(function successCallback(response){
+            $scope.tasks = response.data;
+        }, function errorCallback(response){
+           $log.log("Error"); 
+        });
+    };
+
+  $scope.getTasks();
+
+  //Add a task to DB, also updates page's task lisk
+  $scope.addTask = function (){
+
+    var task = [{"name" : $scope.name, "description" : $scope.description, "isDone" : $scope.isDone}];
+    
+      RestService.addTask(task)
+        .then(function successCallback(response){
+            console.log("Inserted Data in DB.");
+            $scope.getTasks();
+        }, function errorCallback(response){
+            $log.log("Error");
+        });
+  };
+
+  $scope.deleteTask = function (task){ 
+      RestService.deleteTask(task._id)
+        .then(function successCallback(response){
+            console.log("Removed Task From DB.");
+            $scope.getTasks();
+        }, function errorCallback(response){
+            $log.log("Error");
+        });
+  };
+
+
+
   $scope.userInfo= {name:'Abraham',job:'Leader'};
 
   $scope.postUser = function () {
