@@ -18,8 +18,7 @@
     <p>Please login below</p>
 
     <% if ( expressFlash.length > 0 ) { %>
-      <% for(let i = 0; i < expressFlash.length; i++) %>
-      <center><h2 class="flashMessage">Message: <%= expressFlash[i] %> </h2></center>
+      <center><h2 class="flashMessage">Message: <%= expressFlash %> </h2></center>
     <% } %>
 
     <form method="post" action="/users/login">

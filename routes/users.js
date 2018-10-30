@@ -13,7 +13,7 @@ router.get('/', function(req, res, next) {
 });
  router.get('/login', checkAuthenticated, function(req, res, next) {
   let message = req.flash('error');
-  if(req.flash('error')[0] == null || req.flash('error')[0] === '') {
+  if(message[0] == null || message[0] === '') {
     message = req.flash('message');
   }
   res.render('login', {title: 'Login', expressFlash: message});
