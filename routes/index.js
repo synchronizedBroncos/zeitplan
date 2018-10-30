@@ -95,6 +95,10 @@ router.get('/', ensureAuthenticated, function(req, res, next) {
   res.render('index', { title: 'Zeitplan', expressFlash: req.flash('message'), flashClass: flashClass });
 });
 
+router.get('/Home', function(req, res, next) {
+  res.render('Homepage', { title: 'Zeitplan' });
+});
+
 /* Abe's first http get method. */
 router.get('/abe', function(req, res, next) {
   res.send('This is Abe\'s first HTTP get method!');
