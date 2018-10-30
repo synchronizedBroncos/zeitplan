@@ -4,15 +4,22 @@
     <title><%= title%></title>
     <link rel='stylesheet' href='/stylesheets/bootstrap.css' />
     <link rel='stylesheet' href='/stylesheets/style.css' />
-    <script src="https://d3js.org/d3.v5.min.js"></script>
   </head>
   <body>
-    <h2 class="page-header">Login</h2>
+
+    <ul>
+      <li><a href="/users/login">Login</a></li>
+      <li><a href="/users/register">Register</a></li>
+    </ul>
+
+    <br>
+
+    <h2 class="page-header">Zeitplan Login</h2>
     <p>Please login below</p>
 
-    <script>
-      d3.select("p").text("PLEASE LOGIN BELOW");
-    </script>
+    <% if ( expressFlash.length > 0 ) { %>
+      <center><h2 class="flashMessage">Message: <%= expressFlash %> </h2></center>
+    <% } %>
 
     <form method="post" action="/users/login">
       <div class="form-group">
