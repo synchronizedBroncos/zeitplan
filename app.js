@@ -7,8 +7,6 @@ var session = require('express-session');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var expressValidator = require('express-validator');
-var multer = require('multer');
-var upload = multer({dest: './uploads'});
 var flash = require('connect-flash');
 var bcrypt = require('bcryptjs');
 var mongo = require('mongodb');
@@ -65,6 +63,7 @@ app.use(expressValidator({
   }
 }));
 
+// allows me to have flash messages
 app.use(require('connect-flash')());
 app.use(function (req, res, next) {
   res.locals.messages = require('express-messages')(req, res);

@@ -11,6 +11,11 @@
   <body ng-controller="IndexCtrl">
     <h1><%= title %></h1>
     <p>Welcome to <%= title %></p>
+
+    <% if ( expressFlash.length > 0 ) { %>
+    <center><h2 class="flashMessage <%= flashClass %>">Message: <%= expressFlash %> </h2></center>
+    <% } %>
+    
     <p>Zeitplan is a user-friendly web application designed to be the reminder partner you've always needed.</p>
     <p ng-cloak>{{sampleGet}}</p>
     <p ng-cloak>{{samplePost}}</p>

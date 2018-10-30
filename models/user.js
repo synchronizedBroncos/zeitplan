@@ -22,9 +22,6 @@ var UserSchema = mongoose.Schema({
   },
   name: {
     type: String
-  },
-  profileimage: {
-    type: String
   }
 });
 
