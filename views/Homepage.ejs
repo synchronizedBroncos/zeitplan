@@ -1,115 +1,89 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="cs480App">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>Homepage</title>
+  <title>Homepage</title>
 
-    <link rel="stylesheet" href="/stylesheets/bootstrap.css">
-    <link rel="stylesheet" href="/stylesheets/homepageStyle.css">
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <link rel="stylesheet" href="/stylesheets/homepageStyle.css">
 
-    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
-    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
+  <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
+  <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
+  <script src="/javascripts/libraries/angular.min.js"></script>
+  <script src="/javascripts/services/restService.js"></script>
+  <script src="/javascripts/controllers/home-control.js"></script>
 </head>
 
-<body>
+<body ng-controller="HomeCtrl">
 
-<div class="header">
-  <nav class="navbar navbar-expand-lg navbar-light bg-light nav-fixed-top">
-    <span><button type="button" id="sidebarCollapse" class="btn btn-info"> <i class="fas fa-align-left"></i></button></span>
-    <a class="navbar-brand" href="#">ZEITPLAN</a>
-    <ul class="navbar-nav mr-auto">
+  <div class="header">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light nav-fixed-top">
+      <span><button type="button" id="sidebarCollapse" class="btn btn-info" ng-click="toggleSidebar()"> <i class="fas fa-align-left"></i></button></span>
+      <a class="navbar-brand" href="#">ZEITPLAN</a>
+      <ul class="navbar-nav mr-auto">
 
-    </ul>
-    <ul class="navbar-nav">
-      <li class="nav-item">
-        <a class="nav-link" href="#">About</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Sign Out</a>
-      </li>
-    </ul>
-  </nav>
-</div>
-
-<div id="navbar" class="collapse navbar-collapse">
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="#">Sign Out</a></li>
       </ul>
-    </div>
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="#">About</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Sign Out</a>
+        </li>
+      </ul>
+    </nav>
+  </div>
 
+  <div id="navbar" class="collapse navbar-collapse">
+    <ul class="nav navbar-nav navbar-right">
+      <li><a href="#">Sign Out</a></li>
+    </ul>
+  </div>
 
-    <div class="wrapper">
-        <!-- Sidebar  -->
-        <nav id="sidebar">
-            <ul class="Sidebar_Features list-unstyled">
-                <li class="features">
-                    <a href="#">TTR</a>
-                </li>
+  <div class="wrapper">
+    <!-- Sidebar -->
+    <nav id="sidebar" ng-class="sidebarActive">
+      <ul class="Sidebar_Features list-unstyled">
+        <li ng-class="{active: activeTab =='ttr'}">
+          <a id="ttrLink" ng-click='activeTab="ttr"'>TTR</a>
+        </li>
 
-                <li class="features">
-                    <a href="#">SCHEDULE</a>
-                </li class="features">
+        <li ng-class="{active: activeTab == 'schedule'}">
+          <a ng-click='activeTab="schedule"'>SCHEDULE</a>
+        </li>
 
-                <li class="features">
-                    <a href="#">LOGS</a>
-                </li class="features">
+        <li ng-class="{active: activeTab == 'logs'}">
+          <a ng-click='activeTab="logs"'>LOGS</a>
+        </li>
 
-                <li class="features">
-                    <a href="#">POMODORO</a>
-                </li>
-            </ul>
-            <hr>
-        </nav>
-
-        <!-- Page Content  -->
-        <div id="content">
-          <!-- Random test text, please fill in this section of the page-->
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-          tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-          quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-          consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-          cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-          proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        <li ng-class="{active: activeTab == 'pomodoro'}">
+          <a ng-click='activeTab="pomodoro"'>POMODORO</a>
+        </li>
+      </ul>
+      <hr>
+    </nav>
+    <!-- Page Content  -->
+    <div class="tab-content">
+      <div ng-switch='activeTab'>
+        <div ng-switch-when="ttr">
+          <ng-include src="'ttr.html'"></ng-include>
         </div>
-</div>
-
-<!--
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="nav navbar-nav ml-auto">
-                            <li class="nav-item active">
-                                <a class="nav-link" href="#">Page</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Page</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Page</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Page</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
+        <div ng-switch-when="schedule">
+          <ng-include src="'schedule.html'"></ng-include>
+        </div>
+        <div ng-switch-when="logs">
+          <ng-include src="'logs.html'"></ng-include>
+        </div>
+        <div ng-switch-when="pomodoro">
+          <ng-include src="'pomodoro.html'"></ng-include>
+        </div>
+      </div>
     </div>
-  -->
-
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
-
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('#sidebarCollapse').on('click', function () {
-                $('#sidebar').toggleClass('active');
-            });
-        });
-    </script>
+  </div>
 </body>
 
 </html>
