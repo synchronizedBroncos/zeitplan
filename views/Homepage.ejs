@@ -13,6 +13,7 @@
 
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
+    <script src="/javascripts/libraries/angular.min.js"></script>
 </head>
 
 <body>
@@ -41,41 +42,39 @@
       </ul>
     </div>
 
-
     <div class="wrapper">
-        <!-- Sidebar  -->
+        <!-- Sidebar -->
         <nav id="sidebar">
             <ul class="Sidebar_Features list-unstyled">
-                <li class="features">
-                    <a href="#">TTR</a>
+                <li ng-class="{active: main.active.tab =='ttr'}">
+                    <a ng-click='main.active.tab="ttr"'>TTR</a>
                 </li>
 
-                <li class="features">
-                    <a href="#">SCHEDULE</a>
-                </li class="features">
+                <li ng-class="{active: main.active.tab == 'schedule'}">
+                    <a ng-click='main.active.tab="schedule"'>SCHEDULE</a>
+                </li>
 
-                <li class="features">
-                    <a href="#">LOGS</a>
-                </li class="features">
+                <li ng-class="{active: main.active.tab == 'logs'}">
+                    <a ng-click='main.active.tab="logs"'>LOGS</a>
+                </li>
 
-                <li class="features">
-                    <a href="#">POMODORO</a>
+                <li ng-class="{active: main.active.tab == 'pomodoro'}">
+                    <a ng-click='main.active.tab="pomodoro"'>POMODORO</a>
                 </li>
             </ul>
             <hr>
         </nav>
-
         <!-- Page Content  -->
-        <div id="content">
-          <!-- Random test text, please fill in this section of the page-->
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-          tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-          quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-          consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-          cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-          proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        <div class="tab-content">
+            <div ng-switch='main.active.tab'>
+              <div ng-switch-when="ttr" ng-include="'views/ttr.ejs'"></div>
+              <div ng-switch-when="schedule" ng-include="'views/schedule.ejs'"></div>
+              <div ng-switch-when="logs" ng-include="'views/logs.ejs'"></div>
+              <div ng-switch-when="pomodoro" ng-include="'views/pomodoro.ejs'"></div>
+            </div>
         </div>
 </div>
+
 
 <!--
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
