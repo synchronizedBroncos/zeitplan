@@ -4,42 +4,47 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var User = require('../models/user');
 
- /* GET users listing. */
+/* GET users listing. */
 router.get('/', function(req, res, next) {
   res.send('respond with a resource');
 });
- router.get('/register', checkAuthenticated, function(req, res, next) {
+
+router.get('/register', checkAuthenticated, function(req, res, next) {
   res.render('register', {title: 'Register', expressFlash: req.flash('message'), errors: []});
 });
- router.get('/login', checkAuthenticated, function(req, res, next) {
+
+router.get('/login', checkAuthenticated, function(req, res, next) {
   let message = req.flash('error');
   if(message[0] == null || message[0] === '') {
     message = req.flash('message');
   }
   res.render('login', {title: 'Login', expressFlash: message});
 });
- router.post('/login',
-  passport.authenticate('local', {failureRedirect: '/users/login', badRequestMessage : 'Invalid username or password.', failureFlash: true}),
-  function(req, res) {
-    console.log('Login button pushed');
-    req.flash('message', 'You are now logged in');
-    res.redirect('/');
-  });
- passport.serializeUser(function(user, done) {
+
+router.post('/login',
+passport.authenticate('local', {failureRedirect: '/users/login', badRequestMessage : 'Invalid username or password.', failureFlash: true}),
+function(req, res) {
+  req.flash('message', 'You are now logged in');
+  res.redirect('/');
+});
+
+passport.serializeUser(function(user, done) {
   done(null, user.id);
 });
- passport.deserializeUser(function(id, done) {
-    User.getUserById(id, function(err, user) {
+
+passport.deserializeUser(function(id, done) {
+  User.getUserById(id, function(err, user) {
     done(err, user);
-    });
+  });
 });
- passport.use(new LocalStrategy(function(username, password, done){
+
+passport.use(new LocalStrategy(function(username, password, done){
   User.getUserByUsername(username, function(err, user){
     if(err) throw err;
     if(!user){
       return done(null, false, {message: 'Unknown User'});
     }
-     User.comparePassword(password, user.password, function(err, isMatch){
+    User.comparePassword(password, user.password, function(err, isMatch){
       if(err) return done(err);
       if(isMatch){
         return done(null, user);
@@ -49,23 +54,24 @@ router.get('/', function(req, res, next) {
     });
   });
 }));
- router.post('/register', function(req, res, next) {
+
+router.post('/register', function(req, res, next) {
   var name = req.body.name;
   var email = req.body.email;
   var username = req.body.username;
   var password = req.body.password;
   var password2 = req.body.password2;
 
-   //Form Validator
+  //Form Validator
   req.checkBody('name', 'Name field is required').notEmpty();
   req.checkBody('email', 'Email field is required').notEmpty();
   req.checkBody('email', 'Email is not valid').isEmail();
   req.checkBody('username', 'Username field is required').notEmpty();
   req.checkBody('password', 'Password field is required').notEmpty();
   req.checkBody('password2', 'Passwords do not match').equals(password);
-   //Check errors
+  //Check errors
   var errors = req.validationErrors();
-   if(errors){
+  if(errors){
     console.log('Errors', errors);
     res.render('register', {
       title: 'Register',
@@ -80,16 +86,17 @@ router.get('/', function(req, res, next) {
       username: username,
       password: password
     });
-     User.createUser(newUser, function(err, user){
+    User.createUser(newUser, function(err, user){
       if(err) throw err;
       console.log(user);
     });
-     req.flash('message', 'You are now registered and can login');
-     res.location('/users/login');
-     res.redirect('/users/login');
+    req.flash('message', 'You are now registered and can login');
+    res.location('/users/login');
+    res.redirect('/users/login');
   }
 });
- router.get('/logout', function(req, res){
+
+router.get('/logout', function(req, res){
   req.logout();
   req.flash('message', 'You are now logged out');
   res.redirect('/users/login');
