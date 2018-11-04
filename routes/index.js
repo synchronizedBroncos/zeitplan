@@ -100,6 +100,11 @@ router.get('/home', function(req, res, next) {
   res.render('homepage', { title: 'Zeitplan' });
 });
 
+/* GET p5 Clock page. */
+router.get('/clock', function(req, res, next) {
+  res.render('clock', { title: 'Zeitplan' });
+});
+
 /* Abe's first http get method. */
 router.get('/abe', function(req, res, next) {
   res.send('This is Abe\'s first HTTP get method!');
