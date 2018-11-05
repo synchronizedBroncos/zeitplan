@@ -12,17 +12,31 @@ var bcrypt = require('bcryptjs');
 var mongo = require('mongodb');
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser')
-var db = mongoose.connection;
 
 // require and config dotenv
 require('dotenv').config();
+
+mongoose.connect(process.env.DB_URI, {
+    useCreateIndex: true,
+    useNewUrlParser: true
+  })
+  .then(() => {
+    //server.start();
+    console.log('Connected to db successfully');
+  })
+  .catch((err) => {
+    console.log('Error on start: ' + err.stack);
+    process.exit(1);
+  });
+
+var db = mongoose.connection;
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
 var app = express();
 
-app.use(bodyParser.json())
+app.use(bodyParser.json());
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
