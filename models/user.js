@@ -1,13 +1,6 @@
 var mongoose = require('mongoose');
 var bcrypt = require('bcryptjs');
 
-mongoose.connect(process.env.DB_URI, {
-  useCreateIndex: true,
-  useNewUrlParser: true
-})
-
-var db = mongoose.connection;
-
 //User Schema
 var UserSchema = mongoose.Schema({
   username: {
