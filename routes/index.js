@@ -92,6 +92,7 @@ router.post('/api/tasks', function(req,res,next){
 
 /* GET home page. */
 router.get('/', ensureAuthenticated, function(req, res, next) {
+  console.log(req.user);
   res.render('index', { title: 'Zeitplan', expressFlash: req.flash('message'), flashClass: flashClass });
 });
 
