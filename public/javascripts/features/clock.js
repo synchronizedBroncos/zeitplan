@@ -6,6 +6,10 @@ var secondsLabel = document.getElementById('currentTime');
 var initialTime, currTime, percentage;
 var timer;
 
+var endTime;
+
+var hours, minutes, seconds;
+
 rangeValLabel.innerHTML = slider.value;
 
 function onClick(){
@@ -18,30 +22,47 @@ function onClick(){
         }
     }
     if(selected == 0){
-        initialTime = slider.value * 60;
+        endTime = slider.value * 60;
     }
     else{
-        initialTime = slider.value;
+        endTime = slider.value;
     }
 
-    //initially set timer
-    currTime = initialTime;
-    secondsLabel.innerHTML = String(currTime) + " seconds";
-    percentage = (currTime / initialTime) * 100;
+    currTime = 0;
+
+    distance = endTime - currTime;
+
+    hours = Math.floor((distance / 3600));
+    distance = (distance % 3600);
+    minutes = Math.floor((distance / 60));
+    distance = (distance % 60);
+    seconds = Math.floor((distance));
+
+    secondsLabel.innerHTML = hours + "h "+ minutes + "m " + seconds + "s ";
+    percentage = (endTime / endTime) * 100;
     bar1.set(percentage);
 
     timer = setInterval(function() { 
-      currTime--;
-         
-        if (currTime < 0) {
+      currTime++;
+
+
+      distance = endTime - currTime;
+      hours = Math.floor((distance / 3600));
+      distance = (distance % 3600);
+      minutes = Math.floor((distance / 60));
+      distance = (distance % 60);
+      seconds = Math.floor((distance));
+
+        if (currTime == endTime) {
           clearInterval(timer);
           alert("Time Up!");
           secondsLabel.innerHTML = "Time Up!";
+          bar1.set(0);
         }
         else{
-          var newPercentage = (currTime/initialTime) * 100;
+          var newPercentage = (1 - (currTime/endTime)) * 100;
           bar1.set(newPercentage);
-          secondsLabel.innerHTML = String(currTime) + " seconds";
+          secondsLabel.innerHTML = hours + "h " + minutes + "m " + seconds + "s ";
         }
       }, 1000);
 
