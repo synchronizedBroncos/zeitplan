@@ -39,7 +39,7 @@
           <a class="nav-link" href="#">About</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Sign Out</a>
+          <a class="nav-link" href="/users/logout">Sign Out</a>
         </li>
       </ul>
     </nav>
@@ -88,17 +88,16 @@
           <ng-include src="'logs.html'"></ng-include>
         </div>
         <div ng-switch-when="pomodoro">
+            <ng-include src="'pomodoro.html'"></ng-include>
         </div>
       </div>
       <div id="pomodoroTimer" style="display:none;width:100%">
         <div id = "myItem1" class="ldBar label-center"
-        style="width:100%;height:60px",
+        style="width:100%;height:400px;margin:none;padding:none;",
         data-stroke="data:ldbar/res,gradient(0,1,#9df,#9fd,#df9,#fd9)",
         data-path="M10 20Q20 15 30 20Q40 25 50 20Q60 15 70 20Q80 25 90 20"
         ></div>
         <label id="currentTime">0</label>
-
-
           <form id="typeForm">
               <input type="radio" name="type" value="Minutes" checked> Minutes<br>
               <input type="radio" name="type" value="Seconds" > Seconds<br>
@@ -114,6 +113,7 @@
         </div>
       </div>
     </div>
+
 </body>
 <script src="/javascripts/features/clock.js"></script>
 </html>
