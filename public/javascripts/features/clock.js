@@ -1,6 +1,6 @@
 var bar1 = new ldBar("#myItem1");
 var rangeValLabel = document.getElementById("rangeValLabel");
-var typeSelect = document.getElementById("typeForm")
+var typeSelect = document.getElementById("typeForm");
 var slider = document.getElementById('slider');
 var secondsLabel = document.getElementById('currentTime');
 var initialTime, currTime, percentage;
@@ -42,7 +42,7 @@ function onClick(){
     percentage = (endTime / endTime) * 100;
     bar1.set(percentage);
 
-    timer = setInterval(function() { 
+    timer = setInterval(function() {
       currTime++;
 
 
@@ -73,8 +73,11 @@ function stop(){
   bar1.set(0);
 }
 
-
-
-
-
-
+function showTimer(trigger){
+  var pomodoroTimer = document.getElementById("pomodoroTimer");
+  if (trigger) {
+      pomodoroTimer.style.display = "block";
+  } else {
+      pomodoroTimer.style.display = "none";
+  }
+}

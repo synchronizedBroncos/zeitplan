@@ -56,25 +56,25 @@
     <nav id="sidebar" class = "col-md-2 d-md-block sidebar" ng-class="sidebarActive">
       <ul class="Sidebar_Features list-unstyled">
         <li ng-class="{active: activeTab =='ttr'}">
-          <a id="ttrLink" ng-click='activeTab="ttr"'>TTR</a>
+          <a id="ttrLink" ng-click='activeTab="ttr"' onClick="showTimer(false);">TTR</a>
         </li>
 
         <li ng-class="{active: activeTab == 'schedule'}">
-          <a ng-click='activeTab="schedule"'>SCHEDULE</a>
+          <a ng-click='activeTab="schedule"' onClick="showTimer(false);">SCHEDULE</a>
         </li>
 
         <li ng-class="{active: activeTab == 'logs'}">
-          <a ng-click='activeTab="logs"'>LOGS</a>
+          <a ng-click='activeTab="logs"' onClick="showTimer(false);">LOGS</a>
         </li>
 
         <li ng-class="{active: activeTab == 'pomodoro'}">
-          <a ng-click='activeTab="pomodoro"'>POMODORO</a>
+          <a ng-click='activeTab="pomodoro";' onClick="showTimer(true);">POMODORO</a>
         </li>
       </ul>
       <hr>
     </nav>
 
-    
+
     <!-- Page Content  -->
     <main role="main" class = "col-md-9 ml-sm-auto col-lg-10 px-4 text-center" id = "page-content">
       <div ng-switch='activeTab'>
@@ -88,9 +88,9 @@
           <ng-include src="'logs.html'"></ng-include>
         </div>
         <div ng-switch-when="pomodoro">
-          <ng-include src="'pomodoro.html'"></ng-include>
         </div>
       </div>
+      <div id="pomodoroTimer" style="display:none;width:100%">
         <div id = "myItem1" class="ldBar label-center"
         style="width:100%;height:60px",
         data-stroke="data:ldbar/res,gradient(0,1,#9df,#9fd,#df9,#fd9)",
@@ -112,10 +112,8 @@
           <button class = "btn btn-primary" type="button" onclick="onClick()">Start Timer</button>
           <button class = "btn btn-danger" type="button" onclick="stop()">Stop Timer</button>
         </div>
+      </div>
     </div>
-  </div>
-  </div>
-  
 </body>
 <script src="/javascripts/features/clock.js"></script>
 </html>
