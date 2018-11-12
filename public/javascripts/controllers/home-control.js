@@ -13,3 +13,22 @@ cs480App.controller('HomeCtrl',
    // initialize website to show ttr as first active tab
    $scope.activeTab = "ttr";
 }]);
+
+//Controller for TTR Page
+cs480App.controller('TTRCntrl',
+ ['$scope', 'RestService', function ($scope, RestService) {
+
+  //Return ttr and update ttr page
+  $scope.getTTR = function () {
+
+    };
+
+  //Add a ttr to DB
+  $scope.addTTR = function (){
+
+  };
+  //remove ttr from DB
+  $scope.deleteTTR = function (things){
+
+  };
+}]);

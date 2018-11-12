@@ -173,3 +173,27 @@ a.article:hover {
         display: none;
     }
 }
+
+/* ---------------------------------------------------
+    TTR
+----------------------------------------------------- */
+#ttrDiv{
+  width: 300%;
+  margin-left:10%;
+  margin-top:10%;
+}
+
+#ttrTable td:first-child{
+  width:10%;
+}
+
+#ttrTable td:nth-child(2){
+  width:70%;
+}
+
+#ttrTable td:nth-child(3){
+  width:20%;
+}
+.ttrButton{
+  float:right;
+}
