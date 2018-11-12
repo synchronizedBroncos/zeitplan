@@ -1,57 +1,99 @@
 <!DOCTYPE html>
 <html>
- <head>
-   <title><%= title %></title>
-   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-   <link rel='stylesheet' href='/stylesheets/style.css' />
- </head>
- <body>
-   <div class="container">
-     <ul>
-       <li><a href="/users/login">Login</a></li>
-       <li><a href="/users/register">Register</a></li>
-     </ul>
 
-     <br>
+<head>
+  <title>
+    <%= title %>
+  </title>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+    crossorigin="anonymous">
+  <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ"
+    crossorigin="anonymous"></script>
+  <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY"
+    crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="/stylesheets/homepageStyle.css">
+  <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 
-     <h2 class="page-header">Register</h2>
-     <p>Please register using the form below</p>
+</head>
 
-     <% if ( expressFlash.length > 0 ) { %>
-       <center><h2 class="flashMessage">Message: <%= expressFlash %> </h2></center>
-     <% } %>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+    <span><button type="button" id="sidebarCollapse" class="btn btn-info"><i class="fas fa-align-left"></i></button></span>
+    <!--<a class="navbar-brand" href="#">ZEITPLAN</a>-->
+    <img id="logo" class="text-center" src="/resources/logo2.png">
+    <ul class="navbar-nav mr-auto">
+    </ul>
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="/users/login">Login</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/users/register">Register</a>
+      </li>
+    </ul>
+  </nav>
+  <br>
 
-     <% if (typeof(errors) !== 'undefined' && errors.length > 0) { %>
-       <% for (var i = 0; i < errors.length; i++) { %>
-        <center><h4 class="red">
-          <%= errors[i].msg %>
-        </h4></center>
-       <% } %>
-     <% } %>
+  <div id="margintop" class="container-fluid">
+    <div class="container col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-8">
 
-     <form method="post" action="/users/register">
-       <div class="form-group">
-         <label>Name</label>
-         <input class="form-control" name="name" type="text" placeholder="Enter Name" required/>
-       </div>
-       <div class="form-group">
-         <label>Email</label>
-         <input class="form-control" name="email" type="email" placeholder="Enter Email" required/>
-       </div>
-       <div class="form-group">
-         <label>Username</label>
-         <input class="form-control" name="username" type="text" placeholder="Enter Username" required/>
-       </div>
-       <div class="form-group">
-         <label>Password</label>
-         <input class="form-control" name="password" type="password" placeholder="Enter Password" required/>
-       </div>
-       <div class="form-group">
-         <label>Confirm Password</label>
-         <input class="form-control" name="password2" type="password" placeholder="Confirm Password" required/>
-       </div>
-       <input class="btn btn-primary" type="submit" name="submit" value="Register"/>
-     </form>
-   </div>
- </body>
+      <form method="post" action="/users/register">
+        <h2 class="page-header text-center">Register</h2>
+        <p class="text-center">Please register using the form below</p>
+
+        <% if ( expressFlash.length > 0 ) { %>
+        <center>
+          <h2 class="flashMessage">Message:
+            <%= expressFlash %>
+          </h2>
+        </center>
+        <% } %>
+
+        <% if (typeof(errors) !== 'undefined' && errors.length > 0) { %>
+        <% for (var i = 0; i < errors.length; i++) { %>
+        <center>
+          <h4 class="red">
+            <%= errors[i].msg %>
+          </h4>
+        </center>
+        <% } %>
+        <% } %>
+
+        <hr class="colorgraph">
+
+        <div class="form-group">
+          <label>Name</label>
+          <input class="form-control" name="name" type="text" placeholder="Enter Name" required />
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input class="form-control" name="email" type="email" placeholder="Enter Email" required />
+        </div>
+        <div class="form-group">
+          <label>Username</label>
+          <input class="form-control" name="username" type="text" placeholder="Enter Username" required />
+        </div>
+        <div class="row">
+          <div class="col-xs-12 col-sm-6 col-md-6">
+            <div class="form-group">
+              <label>Password</label>
+              <input class="form-control" name="password" type="password" placeholder="Enter Password" required />
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-6 col-md-6">
+            <div class="form-group">
+              <label>Confirm Password</label>
+              <input class="form-control" name="password2" type="password" placeholder="Confirm Password" required />
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+            <input class="btn btn-primary" type="submit" name="submit" value="Register" />
+        </div>
+
+
+    </div>
+    </form>
+</body>
+
 </html>
