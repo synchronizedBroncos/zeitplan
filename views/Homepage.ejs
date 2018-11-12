@@ -28,8 +28,7 @@
 
 <body ng-controller="HomeCtrl">
 
-  <div class="header">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light nav-fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
       <span><button type="button" id="sidebarCollapse" class="btn btn-info" ng-click="toggleSidebar()"> <i class="fas fa-align-left"></i></button></span>
       <a class="navbar-brand" href="#">ZEITPLAN</a>
       <ul class="navbar-nav mr-auto">
@@ -44,7 +43,6 @@
         </li>
       </ul>
     </nav>
-  </div>
 
   <div id="navbar" class="collapse navbar-collapse">
     <ul class="nav navbar-nav navbar-right">
@@ -52,9 +50,10 @@
     </ul>
   </div>
 
-  <div class="wrapper">
+  <div class="container-fluid">
+    <div class="row">
     <!-- Sidebar -->
-    <nav id="sidebar" ng-class="sidebarActive">
+    <nav id="sidebar" class = "col-md-2 d-md-block sidebar" ng-class="sidebarActive">
       <ul class="Sidebar_Features list-unstyled">
         <li ng-class="{active: activeTab =='ttr'}">
           <a id="ttrLink" ng-click='activeTab="ttr"'>TTR</a>
@@ -77,8 +76,23 @@
 
     
     <!-- Page Content  -->
-    <div class="tab-content">
-        <h1>Countdown Clock</h1>
+    <main role="main" class = "col-md-9 ml-sm-auto col-lg-10 px-4 text-center" id = "page-content">
+      <div ng-switch='activeTab'>
+        <div ng-switch-when="ttr">
+          <ng-include src="'ttr.html'"></ng-include>
+        </div>
+        <div ng-switch-when="schedule">
+          <ng-include src="'schedule.html'"></ng-include>
+        </div>
+        <div ng-switch-when="logs">
+          <ng-include src="'logs.html'"></ng-include>
+        </div>
+        <div ng-switch-when="pomodoro">
+          <ng-include src="'pomodoro.html'"></ng-include>
+        </div>
+      </div>
+
+      <h1>Countdown Clock</h1>
         <div id = "myItem1" class="ldBar label-center"
         style="width:100%;height:60px",
         data-stroke="data:ldbar/res,gradient(0,1,#9df,#9fd,#df9,#fd9)",
@@ -86,7 +100,7 @@
         ></div>
         <label id="currentTime">0</label>
 
-        <div class="row align-items-center justify-content-center">
+
           <form id="typeForm">
               <input type="radio" name="type" value="Minutes" checked> Minutes<br>
               <input type="radio" name="type" value="Seconds" > Seconds<br>
@@ -98,26 +112,8 @@
               <button type="button" onclick="onClick()">Start Timer</button>
           </div>
         </div>
-
-        
-
-      <div ng-switch='activeTab'>
-        <div ng-switch-when="ttr">
-          <ng-include src="'ttr.html'"></ng-include>
-        </div>
-        <div ng-switch-when="schedule">
-          <ng-include src="'schedule.html'"></ng-include>
-        </div>
-        <div ng-switch-when="logs">
-          <ng-include src="'logs.html'"></ng-include>
-        </div>
-        <!--<div ng-switch-when="pomodoro">
-          <ng-include src="'pomodoro.html'"></ng-include>
-        </div>-->
-      </div>
     </div>
-    
-    
+  </div>
   </div>
   
 </body>

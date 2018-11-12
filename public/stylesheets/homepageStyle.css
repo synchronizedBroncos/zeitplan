@@ -58,16 +58,24 @@ a:focus {
 
 .wrapper {
     display: flex;
-    width: 100%;
+    width: 15%;
     align-items: stretch;
 }
 
 #sidebar {
-    min-width: 250px;
-    max-width: 250px;
     background: #7386D5;
     color: #fff;
     transition: all 0.3s;
+}
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 100;
+    padding: 73px 0 0;
+    box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
 }
 
 #sidebar.active {
@@ -151,11 +159,21 @@ a.article:hover {
     CONTENT STYLE
 ----------------------------------------------------- */
 
+[role="main"] {
+    padding-top: 73px;
+}
+
 #content {
     width: 100%;
     padding: 20px;
     min-height: 100vh;
     transition: all 0.3s;
+}
+
+#page-content{
+    width: 100% !important;
+    float: left;
+    align-content: center;
 }
 
 /* ---------------------------------------------------
