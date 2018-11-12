@@ -25,7 +25,7 @@ router.post('/login',
 passport.authenticate('local', {failureRedirect: '/users/login', badRequestMessage : 'Invalid username or password.', failureFlash: true}),
 function(req, res) {
   req.flash('message', 'You are now logged in');
-  res.redirect('/');
+  res.redirect('/home');
 });
 
 passport.serializeUser(function(user, done) {
