@@ -65,8 +65,12 @@ function onClick(){
           secondsLabel.innerHTML = hours + "h " + minutes + "m " + seconds + "s ";
         }
       }, 1000);
+}
 
-
+function stop(){
+  clearInterval(timer);
+  secondsLabel.innerHTML = "0h 0m 0s";
+  bar1.set(0);
 }
 
 
