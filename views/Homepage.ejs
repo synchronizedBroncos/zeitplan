@@ -79,22 +79,24 @@
     <!-- Page Content  -->
     <div class="tab-content">
         <h1>Countdown Clock</h1>
-        <div id="myItem1"
-        class="ldBar label-center"
-        style="width:50%;height:50%"
-        data-preset="bubble"
+        <div id = "myItem1" class="ldBar label-center"
+        style="width:100%;height:60px",
+        data-stroke="data:ldbar/res,gradient(0,1,#9df,#9fd,#df9,#fd9)",
+        data-path="M10 20Q20 15 30 20Q40 25 50 20Q60 15 70 20Q80 25 90 20"
         ></div>
         <label id="currentTime">0</label>
 
-        <form id="typeForm">
-            <input type="radio" name="type" value="Minutes" checked> Minutes<br>
-            <input type="radio" name="type" value="Seconds" > Seconds<br>
-        </form>
+        <div class="row align-items-center justify-content-center">
+          <form id="typeForm">
+              <input type="radio" name="type" value="Minutes" checked> Minutes<br>
+              <input type="radio" name="type" value="Seconds" > Seconds<br>
+          </form>
 
-        <div class="slidecontainer">
-            <label id="rangeValLabel"></label>
-            <input id = "slider" type="range" oninput="document.getElementById('rangeValLabel').innerHTML = this.value;" min="1" max="120" value="50" class="slider" id="myRange">
-            <button type="button" onclick="onClick()">Start Timer</button>
+          <div class="slidecontainer">
+              <label id="rangeValLabel"></label>
+              <input id = "slider" type="range" oninput="document.getElementById('rangeValLabel').innerHTML = this.value;" min="1" max="120" value="50" class="slider" id="myRange">
+              <button type="button" onclick="onClick()">Start Timer</button>
+          </div>
         </div>
 
         
