@@ -71,7 +71,7 @@ module.exports.getItemsByUserId = function(userId, callback){
 
 module.exports.getTtrByUserId = function(userId, callback){
   var query = {user: userId};
-  Items.find(query, callback).select('ttr');
+  Items.findOne(query, callback).select('ttr');
 }
 
 module.exports.addTTRByUserId = function(userId, addTTR, callback){
