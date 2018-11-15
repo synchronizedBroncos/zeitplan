@@ -17,6 +17,35 @@ cs480App.factory('RestService', function($http) {
     return $http.post('https://reqres.in/api/users', userInfo);
   };
 
+  service.getTTR = function(user_id){
+    return $http.get(urlBase + '/api/ttrs/' + user_id);
+  }
+
+  service.addTTR = function(user_id, data){
+    return $http({
+        //headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        url: urlBase + 'api/addTTR/' + user_id,
+        method: "POST",
+        data: data,
+      }).then(function successCallback(response) {
+        return response;
+    }, function errorCallback(response) {
+        return response;
+    });
+  }
+
+  service.deleteTTR = function(user_id, task_id){
+    return $http({
+        url: urlBase + 'api/removeTTR/' + user_id +"/" + task_id,
+        method: "DELETE",
+      }).then(function successCallback(response) {
+        return response;
+    }, function errorCallback(response) {
+        return response;
+    });
+
+  };
+
   service.getTasks = function() {
     return $http.get(urlBase + '/api/tasks');
   };

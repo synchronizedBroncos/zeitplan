@@ -1,9 +1,11 @@
 var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
 
 //Items Schema
 var ItemsSchema = mongoose.Schema({
   user: {
-    type: ObjectId,
+    type: Schema.Types.ObjectId,
+    ref: 'User',
     index: true
   },
   username: {
@@ -69,7 +71,15 @@ module.exports.getItemsByUserId = function(userId, callback){
 
 module.exports.getTtrByUserId = function(userId, callback){
   var query = {user: userId};
-  Items.findOne(query, callback).select('ttr');
+  Items.find(query, callback).select('ttr');
+}
+
+module.exports.addTTRByUserId = function(userId, addTTR, callback){
+  Items.findOneAndUpdate({user:userId},{$push:{ttr:addTTR}}, callback);
+}
+
+module.exports.removeTTRByUserId = function(userId, ttrId, callback){
+  Items.findOneAndUpdate({user:userId},{$pullAll:{ttr:[ttrId]}}, callback);
 }
 
 module.exports.getScheduleByUserId = function(userId, callback){

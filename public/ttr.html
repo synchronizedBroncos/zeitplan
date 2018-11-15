@@ -7,38 +7,14 @@
         <tr>
           <th></th>
           <th scope="col">Description</th>
-          <th scaope ="col">Due Date</th>
+          <th scope ="col">Due Date</th>
         </tr>
       </thead>
-      <!--Temporary layout -->
-      <tr>
-        <td>
-          <input type="checkbox" value="ttrCheck">
-        </td>
-        <td data-toggle="modal" data-id="1" data-target="#ttrEditModal">
-          Add a Description Here
-          </td>
-          <td>
-            10/1/2018
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <input type="checkbox" value="ttrCheck">
-          </td>
-          <td data-toggle="modal" data-id="2" data-target="#ttrEditModal">
-            Add a Description Here
-            </td>
-            <td>
-              10/1/2018
-            </td>
-          </tr>
-        <!-- Going to be similar to this for table
-        <tr ng-repeat="things in things">
+        <tr ng-repeat="ttr in ttrs">
           <td><input type="checkbox" value="ttrCheck"></td>
-          <td data-toggle="modal" data-target="#ttrEditModal">{{ things.description }}</td> data id
-          <td>{{ things.dueDate }}</td>
-        </tr>-->
+          <td data-toggle="modal" ng-click="dataToModal(ttr)" data-target="#ttrEditModal">{{ ttr.description }}</td>
+          <td>{{ ttr.dueDate | date:'MM/dd/yyyy'}}</td>
+        </tr>
         </table>
   <!-- Add Modal -->
   <div class="modal" id="ttrAddModal" tabindex="-1" role="dialog" aria-labelledby="addTTR" aria-hidden="true">
@@ -51,20 +27,20 @@
         </button>
       </div>
       <div class="modal-body">
-        <form name = "AddTTR"> <!--Method ... Action ...  -->
+        <form name = "AddTTR">
           <div class="form-group">
             <label for="descripTTR">Description</label>
-            <input type="text" class="form-control" id="descripTTR"  placeholder="What I need to remember...">
+            <input type="text" class="form-control" id="descripTTR" ng-model="description" placeholder="What I need to remember...">
           </div>
           <div class="form-group">
             <label for="dueDateTTR">Due Date</label>
-            <input type="date" class="form-control" id="dueDateTTR" >
+            <input type="date" class="form-control" id="dueDateTTR" ng-model="dueDate" >
           </div>
           </form>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-info" value = "submit">Add to TTR</button> <!-- need to add ng-click-->
+        <button type="submit" class="btn btn-info" value = "submit" ng-click="addTTR()">Add to TTR</button>
       </div>
     </div>
   </div>
@@ -83,7 +59,7 @@
       <div class="modal-body">
         <button type="button" class="btn btn-info">Add to Schedule</button> <!--ng-click -->
         <button type="button" class="btn btn-warning">Edit</button><!--ng-click -->
-        <button type="button" class="btn btn-danger">Delete</button><!--ng-click -->
+        <button type="button" class="btn btn-danger" ng-click="deleteTTR(ttr)">Delete</button><!--ng-click -->
       </div>
     </div>
   </div>
