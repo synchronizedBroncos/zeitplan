@@ -17,6 +17,7 @@ cs480App.controller('HomeCtrl',
 //Controller for TTR Page
 cs480App.controller('TTRCntrl',
  ['$scope', 'RestService', function ($scope, RestService) {
+   $scope.editModal = new ShowDataToModal();
    $scope.user_id = "5bac44330012b8166ef76f04";
   //Return ttr and update ttr page
   $scope.getTTR = function ( ) {
@@ -44,7 +45,6 @@ cs480App.controller('TTRCntrl',
 
   //remove ttr from DB
   $scope.deleteTTR = function (ttr){
-    console.log(ttr);
     RestService.deleteTTR($scope.user_id, ttr._id)
       .then(function successCallback(response){
           console.log("Removed TTR From DB.");
@@ -52,5 +52,44 @@ cs480App.controller('TTRCntrl',
       }, function errorCallback(response){
           $log.log("Error");
       });
+  };
+}]);
+
+var ShowDataToModal = function () {
+  this.visible = false;
+};
+ShowDataToModal.prototype.open = function(ttr) {
+  this.ttr = ttr;
+  this.visible = true;
+};
+ShowDataToModal.prototype.close = function() {
+  this.visible = false;
+};
+cs480App.directive('editModal', [function() {
+  return {
+    restrict: 'E',
+    scope: {
+      model: '=',
+    },
+    link: function(scope, element, attributes) {
+      scope.$watch('model.visible', function(newValue) {
+        var modalElement = element.find('.modal');
+        modalElement.modal(newValue ? 'show' : 'hide');
+      });
+
+      element.on('shown.bs.modal', function() {
+        scope.$evalAsync(function() {
+            scope.model.visible = true;
+        });
+      });
+
+      element.on('hidden.bs.modal', function() {
+        scope.$evalAsync(function() {
+            scope.model.visible = false;
+        });
+      });
+
+    },
+    templateUrl:'editModal.html' ,
   };
 }]);

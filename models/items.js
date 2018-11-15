@@ -79,7 +79,7 @@ module.exports.addTTRByUserId = function(userId, addTTR, callback){
 }
 
 module.exports.removeTTRByUserId = function(userId, ttrId, callback){
-  Items.findOneAndUpdate({user:userId},{$pullAll:{ttr:[ttrId]}}, callback);
+  Items.findOneAndUpdate({user:userId}, {$pull: {ttr:{_id:ttrId}}}, callback);
 }
 
 module.exports.getScheduleByUserId = function(userId, callback){

@@ -12,10 +12,11 @@
       </thead>
         <tr ng-repeat="ttr in ttrs">
           <td><input type="checkbox" value="ttrCheck"></td>
-          <td data-toggle="modal" ng-click="dataToModal(ttr)" data-target="#ttrEditModal">{{ ttr.description }}</td>
+          <td ng-click="editModal.open(ttr)">{{ ttr.description }}</td> <!-- data-target="#ttrEditModal"-->
           <td>{{ ttr.dueDate | date:'MM/dd/yyyy'}}</td>
         </tr>
         </table>
+        <edit-modal model="editModal"></edit-modal>
   <!-- Add Modal -->
   <div class="modal" id="ttrAddModal" tabindex="-1" role="dialog" aria-labelledby="addTTR" aria-hidden="true">
   <div class="modal-dialog">
@@ -46,8 +47,13 @@
   </div>
   </div>
 
+  </div>
+</div>
+
   <!-- Edit Modal -->
-  <div class="modal" id="ttrEditModal" tabindex="-1" role="dialog" aria-labelledby="editTTR" aria-hidden="true">
+<script type="text/ng-template" id="editModal.html">
+  <div ng-controller="TTRCntrl">
+  <div class="modal" tabindex="-1" role="dialog" aria-labelledby="editTTR" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -59,11 +65,10 @@
       <div class="modal-body">
         <button type="button" class="btn btn-info">Add to Schedule</button> <!--ng-click -->
         <button type="button" class="btn btn-warning">Edit</button><!--ng-click -->
-        <button type="button" class="btn btn-danger" ng-click="deleteTTR(ttr)">Delete</button><!--ng-click -->
+        <button type="button" class="btn btn-danger" ng-click="deleteTTR(model.ttr)">Delete</button><!--ng-click -->
       </div>
     </div>
   </div>
   </div>
-
   </div>
-</div>
+  </script>
