@@ -10,6 +10,7 @@ require("dotenv").config()
 
 //Require task model
 Task = require('../models/tasks')
+Items = require('../models/items')
 
 //Nodemailer
 const nodemailer = require('nodemailer');
@@ -40,6 +41,55 @@ function ensureAuthenticated(req, res, next){
   }
   res.redirect('/users/login');
 }
+
+//API Call to return ttr from DB
+router.get('/api/ttrs/:user_id', function(req,res,next){
+  Items.getTtrByUserId(req.params.user_id, function(err,ttrs){
+    if(err){
+      throw err;
+    }
+    else{
+      res.json(ttrs);
+    }
+  });
+});
+
+router.post('/api/editTTR/:user_id', function(req,res,next){
+    let ttr = req.body;
+    Items.editTTRByUserId(req.params.user_id, ttr, function(err,ttr){
+    if(err){
+      throw err;
+    }
+    else{
+      res.json(ttr);
+    }
+    });
+  });
+
+router.post('/api/addTTR/:user_id', function(req,res,next){
+    let ttr = req.body;
+    Items.addTTRByUserId(req.params.user_id, ttr, function(err,ttr){
+    if(err){
+      throw err;
+    }
+    else{
+      res.json(ttr);
+    }
+    });
+  });
+
+  //API Call to delete specific ttr
+  router.delete('/api/removeTTR/:user_id/:task_id', function(req,res){
+    let ttr = req.body;
+    Items.removeTTRByUserId(req.params.user_id, req.params.task_id, function(err,ttr){
+      if(err){
+        throw err;
+      }
+      else{
+        res.json({message : "Sucessfully Deleted TTR!"});
+      }
+    });
+  });
 
 //API Call to return tasks from DB
 router.get('/api/tasks', function(req,res,next){

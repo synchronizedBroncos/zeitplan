@@ -1,1 +1,83 @@
-<h1>TTR</h1>
+<div ng-controller="TTRCntrl">
+  <div id="ttrDiv">
+    <button type="button" class="btn btn-danger ttrButton">Delete</button> <!--ng-click -->
+    <button type="button" class="button btn btn-primary ttrButton" data-toggle="modal" data-target="#ttrAddModal" >Add</button>
+    <table id = "ttrTable" class="table table-striped">
+      <thead>
+        <tr>
+          <th></th>
+          <th scope="col">Description</th>
+          <th scope ="col">Due Date</th>
+        </tr>
+      </thead>
+        <tr ng-repeat="ttr in ttrs">
+          <td><input type="checkbox" value="ttrCheck"></td>
+          <td ng-click="editModal.open(ttr)">{{ ttr.description }}</td> <!-- data-target="#ttrEditModal"-->
+          <td>{{ ttr.dueDate | date:'MM/dd/yyyy'}}</td>
+        </tr>
+        </table>
+        <edit-modal model="editModal"></edit-modal>
+  <!-- Add Modal -->
+  <div class="modal" id="ttrAddModal" tabindex="-1" role="dialog" aria-labelledby="addTTR" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addTTR">Add a TTR</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form name = "AddTTR">
+          <div class="form-group">
+            <label for="descripTTR">Description</label>
+            <input type="text" class="form-control" id="descripTTR" ng-model="description" placeholder="What I need to remember...">
+          </div>
+          <div class="form-group">
+            <label for="dueDateTTR">Due Date</label>
+            <input type="date" class="form-control" id="dueDateTTR" ng-model="dueDate" >
+          </div>
+          </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-info" value = "submit" ng-click="addTTR()">Add to TTR</button>
+      </div>
+    </div>
+  </div>
+  </div>
+
+  </div>
+</div>
+
+  <!-- Edit Modal -->
+<script type="text/ng-template" id="editModal.html">
+  <div ng-controller="TTRCntrl">
+  <div class="modal" tabindex="-1" role="dialog" aria-labelledby="editTTR" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editTTR">TTR</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="editDescrip">Description</label>
+          <input type="text" class="form-control" id="editDescrip" ng-model="newDescrip" text="HI">
+        </div>
+        <div class="form-group">
+          <label for="editDate">Due Date</label>
+          <input type="date" class="form-control" id="editDate" ng-model="newDate" placeholder="{{model.ttr.dueDate}}" >
+        </div>
+        </form>
+        <button type="button" class="btn btn-info">Add to Schedule</button> <!--ng-click -->
+        <button type="button" class="btn btn-warning" ng-click="editTTR(model.ttr._id)">Edit</button><!--ng-click -->
+        <button type="button" class="btn btn-danger" ng-click="deleteTTR(model.ttr)">Delete</button><!--ng-click -->
+      </div>
+    </div>
+  </div>
+  </div>
+  </div>
+  </script>
