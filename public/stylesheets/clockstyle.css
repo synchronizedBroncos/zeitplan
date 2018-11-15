@@ -1,0 +1,8 @@
+.ldBar-label:after {
+    content: "";
+    color: #000;
+    margin-left: 5px;
+    font-family: courier new;
+    font-size: 14;
+    font-weight: 200;
+}

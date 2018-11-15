@@ -8,9 +8,12 @@
 
   <title>Homepage</title>
 
+
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
   <link rel="stylesheet" href="/stylesheets/homepageStyle.css">
   <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="/stylesheets/loading-bar.css"/>
+  <link rel="stylesheet" type="text/css" href="/stylesheets/clockstyle.css"/>
   <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
   <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.5/angular.min.js" integrity="sha256-QRJz3b0/ZZC4ilKmBRRjY0MgnVhQ+RR1tpWLYaRRjSo=" crossorigin="anonymous"></script>
@@ -19,12 +22,13 @@
   <script src="/javascripts/controllers/ttr-control.js"></script>
   <script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"></script>
+  <script src="/javascripts/libraries/loading-bar.js"></script>
+  <script src="/javascripts/features/clock.js"></script>
 </head>
 
 <body ng-controller="HomeCtrl">
 
-  <div class="header">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light nav-fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
       <span><button type="button" id="sidebarCollapse" class="btn btn-info" ng-click="toggleSidebar()"> <i class="fas fa-align-left"></i></button></span>
       <a class="navbar-brand" href="#">ZEITPLAN</a>
       <ul class="navbar-nav mr-auto">
@@ -35,11 +39,10 @@
           <a class="nav-link" href="#">About</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Sign Out</a>
+          <a class="nav-link" href="/users/logout">Sign Out</a>
         </li>
       </ul>
     </nav>
-  </div>
 
   <div id="navbar" class="collapse navbar-collapse">
     <ul class="nav navbar-nav navbar-right">
@@ -47,30 +50,34 @@
     </ul>
   </div>
 
-  <div class="wrapper">
+  <div class="container-fluid">
+    <div class="row">
     <!-- Sidebar -->
-    <nav id="sidebar" ng-class="sidebarActive">
+    <nav id="sidebar" class = "col-md-2 d-md-block sidebar" ng-class="sidebarActive">
       <ul class="Sidebar_Features list-unstyled">
         <li ng-class="{active: activeTab =='ttr'}">
-          <a id="ttrLink" ng-click='activeTab="ttr"'>TTR</a>
+          <a id="ttrLink" ng-click='activeTab="ttr"' onClick="showTimer(false);">TTR</a>
         </li>
 
         <li ng-class="{active: activeTab == 'schedule'}">
-          <a ng-click='activeTab="schedule"'>SCHEDULE</a>
+          <a ng-click='activeTab="schedule"' onClick="showTimer(false);">SCHEDULE</a>
         </li>
 
         <li ng-class="{active: activeTab == 'logs'}">
-          <a ng-click='activeTab="logs"'>LOGS</a>
+          <a ng-click='activeTab="logs"' onClick="showTimer(false);">LOGS</a>
         </li>
 
         <li ng-class="{active: activeTab == 'pomodoro'}">
-          <a ng-click='activeTab="pomodoro"'>POMODORO</a>
+          <a ng-click='activeTab="pomodoro";' onClick="showTimer(true);">POMODORO</a>
         </li>
       </ul>
       <hr>
     </nav>
+
+
     <!-- Page Content  -->
     <div class="tab-content" style="width:100%">
+    <main role="main" class = "col-md-9 ml-sm-auto col-lg-10 px-4 text-center" id = "page-content">
       <div ng-switch='activeTab'>
         <div ng-switch-when="ttr">
           <ng-include src="'ttr.html'"></ng-include>
@@ -82,12 +89,34 @@
           <ng-include src="'logs.html'"></ng-include>
         </div>
         <div ng-switch-when="pomodoro">
-          <ng-include src="'pomodoro.html'"></ng-include>
+            <ng-include src="'pomodoro.html'"></ng-include>
+        </div>
+      </div>
+      <div id="pomodoroTimer" style="display:none;width:100%">
+        <div id = "myItem1" class="ldBar label-center"
+        style="width:100%;height:400px;margin:none;padding:none;",
+        data-stroke="data:ldbar/res,gradient(0,1,#9df,#9fd,#df9,#fd9)",
+        data-path="M10 20Q20 15 30 20Q40 25 50 20Q60 15 70 20Q80 25 90 20"
+        ></div>
+        <label id="currentTime">0</label>
+          <form id="typeForm">
+              <input type="radio" name="type" value="Minutes" checked> Minutes<br>
+              <input type="radio" name="type" value="Seconds" > Seconds<br>
+          </form>
+
+          <div class="slidecontainer">
+              <label id="rangeValLabel"></label>
+              <input id = "slider" type="range" oninput="document.getElementById('rangeValLabel').innerHTML = this.value;" min="1" max="120" value="50" class="slider" id="myRange">
+          </div>
+
+          <button class = "btn btn-primary" type="button" onclick="onClick()">Start Timer</button>
+          <button class = "btn btn-danger" type="button" onclick="stop()">Stop Timer</button>
         </div>
       </div>
     </div>
-
   </div>
 </body>
 
+</body>
+<script src="/javascripts/features/clock.js"></script>
 </html>
