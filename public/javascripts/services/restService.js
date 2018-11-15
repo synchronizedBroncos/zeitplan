@@ -21,9 +21,20 @@ cs480App.factory('RestService', function($http) {
     return $http.get(urlBase + '/api/ttrs/' + user_id);
   }
 
+  service.editTTR = function(user_id, data){
+    return $http({
+        url: urlBase + 'api/editTTR/' + user_id,
+        method: "POST",
+        data: data,
+      }).then(function successCallback(response) {
+        return response;
+    }, function errorCallback(response) {
+        return response;
+    });
+  }
+
   service.addTTR = function(user_id, data){
     return $http({
-        //headers: {'Content-Type': 'application/x-www-form-urlencoded'},
         url: urlBase + 'api/addTTR/' + user_id,
         method: "POST",
         data: data,

@@ -82,6 +82,11 @@ module.exports.removeTTRByUserId = function(userId, ttrId, callback){
   Items.findOneAndUpdate({user:userId}, {$pull: {ttr:{_id:ttrId}}}, callback);
 }
 
+module.exports.editTTRByUserId = function(userId, ttr, callback){
+  Items.findOneAndUpdate({user:userId, "ttr._id": ttr._id},{
+    $set: {'ttr.$.description': ttr.description, 'ttr.$.dueDate': ttr.dueDate}}, callback);
+}
+
 module.exports.getScheduleByUserId = function(userId, callback){
   var query = {user: userId};
   Items.findOne(query, callback).select('schedule');

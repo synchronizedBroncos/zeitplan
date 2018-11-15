@@ -63,8 +63,17 @@
         </button>
       </div>
       <div class="modal-body">
+        <div class="form-group">
+          <label for="editDescrip">Description</label>
+          <input type="text" class="form-control" id="editDescrip" ng-model="newDescrip" placeholder="{{model.ttr.description}}" >
+        </div>
+        <div class="form-group">
+          <label for="editDate">Due Date</label>
+          <input type="date" class="form-control" id="editDate" ng-model="newDate" placeholder="{{model.ttr.dueDate}}" >
+        </div>
+        </form>
         <button type="button" class="btn btn-info">Add to Schedule</button> <!--ng-click -->
-        <button type="button" class="btn btn-warning">Edit</button><!--ng-click -->
+        <button type="button" class="btn btn-warning" ng-click="editTTR(model.ttr._id)">Edit</button><!--ng-click -->
         <button type="button" class="btn btn-danger" ng-click="deleteTTR(model.ttr)">Delete</button><!--ng-click -->
       </div>
     </div>

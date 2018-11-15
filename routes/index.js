@@ -54,6 +54,18 @@ router.get('/api/ttrs/:user_id', function(req,res,next){
   });
 });
 
+router.post('/api/editTTR/:user_id', function(req,res,next){
+    let ttr = req.body;
+    Items.editTTRByUserId(req.params.user_id, ttr, function(err,ttr){
+    if(err){
+      throw err;
+    }
+    else{
+      res.json(ttr);
+    }
+    });
+  });
+
 router.post('/api/addTTR/:user_id', function(req,res,next){
     let ttr = req.body;
     Items.addTTRByUserId(req.params.user_id, ttr, function(err,ttr){
