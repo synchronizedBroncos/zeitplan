@@ -3,12 +3,12 @@ cs480App.controller('TTRCntrl',
  ['$scope', 'RestService', function ($scope, RestService) {
    $scope.editModal = new ShowDataToModal();
    $scope.user_id = "5bac44330012b8166ef76f04";
-   
+
   //Return ttr and update ttr page
   $scope.getTTR = function ( ) {
     RestService.getTTR($scope.user_id)
         .then(function successCallback(response){
-            $scope.ttrs = response.data[0].ttr;
+            $scope.ttrs = response.data.ttr;
         }, function errorCallback(response){
            console.log("Error in getting TTR");
         });
@@ -45,10 +45,10 @@ cs480App.controller('TTRCntrl',
     RestService.deleteTTR($scope.user_id, ttr._id)
       .then(function successCallback(response){
           console.log("Removed TTR From DB.");
-          $scope.getTTR();
       }, function errorCallback(response){
           $log.log("Error");
       });
+      $scope.getTTR();
   };
 }]);
 
