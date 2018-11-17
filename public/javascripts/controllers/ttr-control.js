@@ -30,6 +30,7 @@ cs480App.controller('TTRCntrl',
     RestService.getTTR($scope.user_id)
         .then(function successCallback(response){
             $scope.ttrs = response.data.ttr;
+            $scope.selectTTR.length = 0;
         }, function errorCallback(response){
            console.log("Error in getting TTR");
         });
@@ -140,8 +141,7 @@ cs480App.directive('addModal', [function() {
       element.on('shown.bs.modal', function() {
         scope.$evalAsync(function() {
             scope.model.visible = true;
-            scope.description ='';
-            scope.dueDate = new Date();
+            scope.description = '';
             element.find('.modal').find('form').trigger('reset');
         });
       });
