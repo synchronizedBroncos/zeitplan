@@ -2,14 +2,9 @@ var cs480App = angular.module('cs480App');
 cs480App.controller('TTRCntrl',
  ['$scope', 'RestService', function ($scope, RestService) {
    $scope.editModal = new ShowDataToModal();
+   $scope.addModal = new ShowDataToModal();
    $scope.user_id = "5bac44330012b8166ef76f04";
    $scope.selectTTR = [];
-   $scope.dueDate = new Date();
-   $scope.description = '';
-
-   $('#ttrAddModal').on('shown.bs.modal', function () {
-    $(this).find('form').trigger('reset');
-   })
 
    $scope.selectedTTR = function (ttrId, checkStatus){
      if(!$scope.selectTTR.includes(ttrId) && checkStatus == false){
@@ -88,6 +83,9 @@ ShowDataToModal.prototype.open = function(ttr) {
   this.ttr = ttr;
   this.visible = true;
 };
+ShowDataToModal.prototype.openAdd = function() {
+  this.visible = true;
+};
 ShowDataToModal.prototype.close = function() {
   this.visible = false;
 };
@@ -108,8 +106,6 @@ cs480App.directive('editModal', [function() {
       element.on('shown.bs.modal', function() {
         scope.$evalAsync(function() {
             scope.model.visible = true;
-            //scope.$parent.description = scope.model.ttr.description;
-            //scope.$parent.dueDate = new Date(scope.model.ttr.dueDate);
             scope.description = scope.model.ttr.description;
             scope.dueDate = new Date(scope.model.ttr.dueDate);
         });
@@ -144,21 +140,19 @@ cs480App.directive('addModal', [function() {
       element.on('shown.bs.modal', function() {
         scope.$evalAsync(function() {
             scope.model.visible = true;
-            //scope.$parent.description = scope.model.ttr.description;
-            //scope.$parent.dueDate = new Date(scope.model.ttr.dueDate);
-            scope.description = scope.model.ttr.description;
-            scope.dueDate = new Date(scope.model.ttr.dueDate);
+            scope.description ='';
+            scope.dueDate = new Date();
+            element.find('.modal').find('form').trigger('reset');
         });
       });
 
       element.on('hidden.bs.modal', function() {
         scope.$evalAsync(function() {
             scope.model.visible = false;
-            element.find('.modal').find('form').trigger('reset');
         });
       });
 
     },
-    templateUrl:'editModal.html' ,
+    templateUrl:'addModal.html',
   };
 }]);
