@@ -1,7 +1,10 @@
 <div ng-controller="TTRCntrl">
+  <edit-modal model="editModal" description="$parent.description" due-date="$parent.dueDate"></edit-modal>
+  <add-modal model="addModal" description="$parent.description" due-date="$parent.dueDate"></add-modal>
   <div id="ttrDiv">
-    <button type="button" class="btn btn-danger ttrButton">Delete</button> <!--ng-click -->
-    <button type="button" class="button btn btn-primary ttrButton" data-toggle="modal" data-target="#ttrAddModal" >Add</button>
+    <button type="button" class="btn btn-danger ttrButton" ng-click="deleteSelectedTTR()">Delete</button>
+    <button type="button" class="btn btn-info ttrButton">Add to Schedule</button>
+    <button type="button" class="button btn btn-primary ttrButton" ng-click="addModal.openAdd()">Add</button>
     <table id = "ttrTable" class="table table-striped">
       <thead>
         <tr>
@@ -11,49 +14,49 @@
         </tr>
       </thead>
         <tr ng-repeat="ttr in ttrs">
-          <td><input type="checkbox" value="ttrCheck"></td>
-          <td ng-click="editModal.open(ttr)">{{ ttr.description }}</td> <!-- data-target="#ttrEditModal"-->
+          <td><input type="checkbox" ng-model="checkStatus" ng-init='checkStatus=false' value="ttrCheck" ng-click="selectedTTR(ttr._id, checkStatus)"></td>
+          <td ng-click="editModal.open(ttr)">{{ ttr.description }}</td>
           <td>{{ ttr.dueDate | date:'MM/dd/yyyy'}}</td>
         </tr>
         </table>
-        <edit-modal model="editModal"></edit-modal>
-  <!-- Add Modal -->
-  <div class="modal" id="ttrAddModal" tabindex="-1" role="dialog" aria-labelledby="addTTR" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="addTTR">Add a TTR</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form name = "AddTTR">
-          <div class="form-group">
-            <label for="descripTTR">Description</label>
-            <input type="text" class="form-control" id="descripTTR" ng-model="description" placeholder="What I need to remember...">
-          </div>
-          <div class="form-group">
-            <label for="dueDateTTR">Due Date</label>
-            <input type="date" class="form-control" id="dueDateTTR" ng-model="dueDate" >
-          </div>
-          </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-info" value = "submit" ng-click="addTTR()">Add to TTR</button>
-      </div>
-    </div>
-  </div>
-  </div>
-
   </div>
 </div>
 
+<!-- Add Modal -->
+<script type="text/ng-template" id="addModal.html">
+<div class="modal" id="ttrAddModal" tabindex="-1" role="dialog" aria-labelledby="addTTR" aria-hidden="true">
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="addTTR">Add a TTR</h5>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form name = "AddTTR">
+        <div class="form-group">
+          <label for="descripTTR">Description</label>
+          <input type="text" class="form-control" id="descripTTR" ng-model="description" ng-value="" placeholder="What I need to remember...">
+        </div>
+        <div class="form-group">
+          <label for="dueDateTTR">Due Date</label>
+          <input type="date" class="form-control" id="dueDateTTR" ng-model="dueDate" ng-value="{{model.ttr.dueDate| date:'yyyy-MM-dd'}}">
+        </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      <button type="submit" class="btn btn-info" value = "submit" ng-click="$parent.addTTR()">Add to TTR</button>
+    </div>
+  </div>
+</div>
+</div>
+</script>
+
   <!-- Edit Modal -->
 <script type="text/ng-template" id="editModal.html">
-  <div ng-controller="TTRCntrl">
-  <div class="modal" tabindex="-1" role="dialog" aria-labelledby="editTTR" aria-hidden="true">
+  <div class="modal" tabindex="-1" id="editModalDiv" role="dialog" aria-labelledby="editTTR" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -63,21 +66,21 @@
         </button>
       </div>
       <div class="modal-body">
-        <div class="form-group">
-          <label for="editDescrip">Description</label>
-          <input type="text" class="form-control" id="editDescrip" ng-model="newDescrip" text="HI">
-        </div>
-        <div class="form-group">
-          <label for="editDate">Due Date</label>
-          <input type="date" class="form-control" id="editDate" ng-model="newDate" placeholder="{{model.ttr.dueDate}}" >
-        </div>
+        <form name="editTTR">
+          <div class="form-group">
+            <label for="editDescrip">Description</label>
+            <input type="text" class="form-control" id="editDescrip" ng-init='model.ttr.description'ng-model="description" ng-value="model.ttr.description">
+          </div>
+          <div class="form-group">
+            <label for="editDate">Due Date</label>
+            <input type="date" class="form-control" id="editDate" ng-model="dueDate" ng-value="model.ttr.dueDate | date:'yyyy-MM-dd'">
+          </div>
         </form>
         <button type="button" class="btn btn-info">Add to Schedule</button> <!--ng-click -->
-        <button type="button" class="btn btn-warning" ng-click="editTTR(model.ttr._id)">Edit</button><!--ng-click -->
-        <button type="button" class="btn btn-danger" ng-click="deleteTTR(model.ttr)">Delete</button><!--ng-click -->
+        <button type="button" class="btn btn-warning" ng-click="$parent.editTTR(model.ttr._id)">Edit</button>
+        <button type="button" class="btn btn-danger" ng-click="$parent.deleteTTR(model.ttr._id)">Delete</button>
       </div>
     </div>
-  </div>
   </div>
   </div>
   </script>
