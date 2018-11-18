@@ -56,7 +56,7 @@ router.get('/api/ttrs/:user_id', function(req,res,next){
 
 //API Call to return logs from DB
 router.get('/api/logs/:user_id', function(req,res,next){
-  Items.getLogs(req.params.user_id, function(err,logs){
+  Items.getLogsByUserId(req.params.user_id, function(err,logs){
     if(err){
       throw err;
     }
