@@ -2,10 +2,6 @@
 	padding: 25px 50px 25px 50px;
 }
 
-#log_container {
-	/* padding: 10px 10px 10px 10px; */
-}
-
 .sample-show-hide {
   transition: all linear 0.5s;
 }

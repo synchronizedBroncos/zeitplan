@@ -1,37 +1,11 @@
 <div ng-controller="LogCtrl">
 	<h1>LOGS</h1>
-	<!-- Test Data -->
-	<!-- <div ng-init="logs = [{description: 'walk the dog', reason: 'already did it', startDate: '11-12-2018', endDate: '11-13-2018', completed: true},
-												{description: 'worked on zeitplan', reason: 'wow', startDate: '11-12-2018', endDate: '11-13-2018', completed: true},
-												{description: 'said hello world 10 times', reason: 'not done yet', startDate: '11-12-2018', endDate: '11-13-2018', completed: false}
-	]">
-	</div> -->
+
 	<div class="btn-group btn-group-toggle" data-toggle="buttons" role="group" aria-label="Basic example">
 	<button ng-click = "myFilter = {completed}" type="button" class="btn btn-outline-dark" data-toggle="button" aria-pressed="false" autocomplete="off">All</button>
 	<button ng-click = "myFilter = {completed:true}" type="button" class="btn btn-outline-success" data-toggle="button" aria-pressed="false" autocomplete="off">Complete</button>
 	<button ng-click = "myFilter = {completed:false}" type="button" class="btn btn-outline-danger" data-toggle="button" aria-pressed="false" autocomplete="off">Incomplete</button>
 </div>
-
-
-<!-- Original -->
-<!-- <ul id="log_cards" class="pre-scrollable mt-3">
-<div id="log_container" ng-repeat="log in logs | filter:myFilter" class="container content-area sample-show-hide">
-<div class="row">
-<div class="col-sm-6">
-<h5 class="col-sm-12 mb-1">Description: {{ log.description }}</h5>
-<h6 class="col-sm-12">Reason: {{ log.reason }}</h6>
-</div>
-<div class="col-sm-6">
-<small class="col-sm-12">Start Date: {{ log.startDate | date: MM-dd-yyyy }}</small>
-<br>
-<small class="col-sm-12">End Date: {{ log.endDate | date: MM-dd-yyyy }}</small>
-<br>
-<small>Completed: {{ log.completed }}</small>
-</div>
-</div>
-<hr id="log_container">
-</div>
-</ul> -->
 
 <ul id="log_cards" class="pre-scrollable mt-3">
 	<hr id="log_separator">
