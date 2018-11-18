@@ -1,20 +1,29 @@
 <div ng-controller="LogCtrl">
 	<h1>LOGS</h1>
-	<div class="btn-group" role="group" aria-label="Basic example">
-		<button type="button" class="btn btn-outline-dark" data-toggle="button" aria-pressed="false" autocomplete="off">All</button>
-		<button type="button" class="btn btn-outline-success" data-toggle="button" aria-pressed="false" autocomplete="off">Complete</button>
-		<button type="button" class="btn btn-outline-danger" data-toggle="button" aria-pressed="false" autocomplete="off">Incomplete</button>
-	</div>
 
-	<ul id="log_cards">
-		<div ng-repeat="log in logs" class="list-group">
-			<a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-				<div class="d-flex w-100 justify-content-between">
-					<small>Started: {{ log.startDate }} End: {{ log.endDate }} </small>
-				</div>
-				<p class="mb-1">{{ log.description }}</p>
-				<small>Completed: {{ log.completed }} </small>
-			</a>
+	<div class="btn-group btn-group-toggle" data-toggle="buttons" role="group" aria-label="Basic example">
+	<button ng-click = "myFilter = {completed}" type="button" class="btn btn-outline-dark" data-toggle="button" aria-pressed="false" autocomplete="off">All</button>
+	<button ng-click = "myFilter = {completed:true}" type="button" class="btn btn-outline-success" data-toggle="button" aria-pressed="false" autocomplete="off">Complete</button>
+	<button ng-click = "myFilter = {completed:false}" type="button" class="btn btn-outline-danger" data-toggle="button" aria-pressed="false" autocomplete="off">Incomplete</button>
+</div>
+
+<ul id="log_cards" class="pre-scrollable mt-3">
+	<hr id="log_separator">
+	<div id="log_container" class="container content-area sample-show-hide" ng-repeat="log in logs | filter:myFilter">
+		<div class="row">
+			<div class="col-sm-6">
+				<h5 class="col-sm-12 mb-1">Description: {{log.description}}</h5>
+				<small class="col-sm-12">Reason: {{log.reason}}</small>
+			</div>
+			<div class="col-sm-6">
+				<small class="col-sm-12">Start Date: {{log.startDate}}</small>
+				<br>
+				<small class="col-sm-12">End Date: {{log.endDate}}</small>
+				<br>
+				<small>Completed:{{log.completed}} </small>
+			</div>
 		</div>
-	</ul>
+		<hr id="log_separator">
+	</div>
+</ul>
 </div>
