@@ -68,13 +68,13 @@ router.get('/api/logs/:user_id', function (req, res, next) {
 
 //POST request to add log to DB
 router.post('/api/addLog/:user_id', function (req, res, next) {
-  let ttr = req.body;
-  Items.addTTRByUserId(req.params.user_id, ttr, function (err, ttr) {
+  let log = req.body;
+  Items.addTTRByUserId(req.params.user_id, log, function (err, log) {
     if (err) {
       throw err;
     }
     else {
-      res.json(ttr);
+      res.json(log);
     }
   });
 });
