@@ -25,7 +25,7 @@ router.post('/login',
 passport.authenticate('local', {failureRedirect: '/users/login', badRequestMessage : 'Invalid username or password.', failureFlash: true}),
 function(req, res) {
   req.flash('message', 'You are now logged in');
-  res.redirect('/home');
+  res.redirect('/');
 });
 
 passport.serializeUser(function(user, done) {
@@ -59,6 +59,7 @@ router.post('/register', function(req, res, next) {
   var name = req.body.name;
   var email = req.body.email;
   var username = req.body.username;
+  var phoneNumber = req.body.phoneNumber;
   var password = req.body.password;
   var password2 = req.body.password2;
 
@@ -67,6 +68,8 @@ router.post('/register', function(req, res, next) {
   req.checkBody('email', 'Email field is required').notEmpty();
   req.checkBody('email', 'Email is not valid').isEmail();
   req.checkBody('username', 'Username field is required').notEmpty();
+  req.checkBody('phoneNumber', 'Phone number is required').notEmpty();
+  req.checkBody('phoneNumber', 'Phone number is not valid').isMobilePhone();
   req.checkBody('password', 'Password field is required').notEmpty();
   req.checkBody('password2', 'Passwords do not match').equals(password);
   //Check errors
@@ -83,6 +86,7 @@ router.post('/register', function(req, res, next) {
     var newUser = new User({
       name: name,
       email: email,
+      phoneNumber: phoneNumber,
       username: username,
       password: password
     });

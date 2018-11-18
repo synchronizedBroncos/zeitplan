@@ -153,13 +153,14 @@ router.post('/api/tasks', function(req,res,next){
 });
 
 /* GET home page. */
+// router.get('/', ensureAuthenticated, function(req, res, next) {
+//   console.log(req.user);
+//   res.render('index', { title: 'Zeitplan', expressFlash: req.flash('message'), flashClass: flashClass });
+// });
+
 router.get('/', ensureAuthenticated, function(req, res, next) {
   console.log(req.user);
-  res.render('index', { title: 'Zeitplan', expressFlash: req.flash('message'), flashClass: flashClass });
-});
-
-router.get('/home', ensureAuthenticated, function(req, res, next) {
-  res.render('homepage', { title: 'Zeitplan', name: req.user.name });
+  res.render('homepage', { title: 'Zeitplan', name: req.user.name, expressFlash: req.flash('message'), flashClass: flashClass });
 });
 
 /* Abe's first http get method. */
