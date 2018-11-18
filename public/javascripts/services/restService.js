@@ -19,11 +19,12 @@ cs480App.factory('RestService', function($http) {
 
   service.getTTR = function(user_id){
     return $http.get(urlBase + '/api/ttrs/' + user_id);
-  };
+  }
 
   service.getLogs = function(user_id){
     return $http.get(urlBase + '/api/logs/' + user_id);
-  };
+  }
+  
 
   service.editTTR = function(user_id, data){
     return $http({
@@ -35,7 +36,7 @@ cs480App.factory('RestService', function($http) {
     }, function errorCallback(response) {
         return response;
     });
-  };
+  }
 
   service.addTTR = function(user_id, data){
     return $http({
@@ -47,7 +48,7 @@ cs480App.factory('RestService', function($http) {
     }, function errorCallback(response) {
         return response;
     });
-  };
+  }
 
   service.deleteTTR = function(user_id, task_id){
     return $http({
