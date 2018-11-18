@@ -24,15 +24,13 @@ cs480App.controller('ScheduleCtrl',
         .then(function successCallback(response){
             console.log("Inserted schedule in DB.");
             $scope.getSchedule();
-            $('#scheduleAddModal').modal('hide');
+            $scope.addModalSchedule.close();
         }, function errorCallback(response){
             console.log("Error in adding schdule");
         });
   };
 
-
   //Edit a schedule to DB
-  
   $scope.editSchedule = function (scheduleId){
     var schedule = {"_id": scheduleId, "description" : $scope.description, "startDate" : $scope.startDate, "endDate" : $scope.endDate};
       RestService.editSchedule($scope.user_id, schedule)
@@ -64,10 +62,9 @@ cs480App.directive('editModalSchedule', [function() {
       element.on('shown.bs.modal', function() {
         scope.$evalAsync(function() {
             scope.model.visible = true;
-            console.log(scope);
-            scope.description = scope.model.ttr.description;//change ttr to data later
-            scope.startDate = new Date(scope.model.ttr.startDate);
-            scope.endDate = new Date(scope.model.ttr.endDate);
+            scope.description = scope.model.data.description;
+            scope.startDate = new Date(scope.model.data.startDate);
+            scope.endDate = new Date(scope.model.data.endDate);
         });
       });
 

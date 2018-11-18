@@ -5,7 +5,7 @@
      <edit-modal-schedule model="editModalSchedule", description="$parent.description", start-date="$parent.startDate", end-date="$parent.endDate"></edit-modal-schedule>
      <add-modal-schedule model="addModalSchedule",  description="$parent.description" ,start-date="$parent.startDate", end-date="$parent.endDate"></add-modal-schedule>
 
-    <button type="button" class="button btn btn-primary scheduleButton" data-toggle="modal" data-target="#scheduleAddModal">Add</button>
+    <button type="button" class="button btn btn-primary scheduleButton" ng-click='addModalSchedule.open()'>Add</button>
     <button type="button" class="btn btn-danger scheduleButton">Delete</button> <!--ng-click -->
     <br><br>
     <table id = "scheduleTable" class="table">
