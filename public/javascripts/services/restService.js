@@ -9,9 +9,46 @@ cs480App.factory('RestService', function($http) {
       return $http.get(urlBase + '/requestify');
   };
 
+  service.getCurrentUserId = function() {
+      return $http.get(urlBase + '/api/currentUserId');
+  };
+
   /* service.postUser = function(id){
       return $http.get(urlBase + '/user/' + id);
   }; */
+
+  service.getSettings = function(user_id) {
+      return $http.get(urlBase + '/api/getSettings/' + user_id);
+  };
+
+  service.editSettings = function(user_id, data){
+    return $http({
+        url: urlBase + 'api/changeSettings/' + user_id,
+        method: "POST",
+        data: data,
+      }).then(function successCallback(response) {
+        return response;
+    }, function errorCallback(response) {
+        return response;
+    });
+  }
+
+
+  service.getSchedule = function(user_id){
+    return $http.get(urlBase + '/api/schedule/' + user_id);
+  }
+
+  service.addSchedule = function(user_id, data){
+    return $http({
+        url: urlBase + 'api/addSchedule/' + user_id,
+        method: "POST",
+        data: data,
+      }).then(function successCallback(response) {
+        return response;
+    }, function errorCallback(response) {
+        return response;
+    });
+  }
 
   service.postUser = function(userInfo){
     return $http.post('https://reqres.in/api/users', userInfo);
@@ -36,8 +73,20 @@ cs480App.factory('RestService', function($http) {
         return response;
     });
   }
-  
 
+  service.editSchedule = function(user_id, data){
+    console.log("edit");
+    return $http({
+        url: urlBase + 'api/editSchedule/' + user_id,
+        method: "POST",
+        data: data,
+      }).then(function successCallback(response) {
+        return response;
+    }, function errorCallback(response) {
+        return response;
+    });
+  }
+  
   service.editTTR = function(user_id, data){
     return $http({
         url: urlBase + 'api/editTTR/' + user_id,
@@ -71,7 +120,6 @@ cs480App.factory('RestService', function($http) {
     }, function errorCallback(response) {
         return response;
     });
-
   };
 
   service.getTasks = function() {

@@ -3,7 +3,15 @@ cs480App.controller('TTRCntrl',
  ['$scope', 'RestService', function ($scope, RestService) {
    $scope.editModal = new ShowDataToModal();
    $scope.addModal = new ShowDataToModal();
-   $scope.user_id = "5bac44330012b8166ef76f04";
+
+   $scope.user_id = "unresolved";
+   RestService.getCurrentUserId()
+       .then(function successCallback(response){
+           $scope.user_id = response.data;
+           $scope.getTTR();
+       }, function errorCallback(response){
+          console.log("Error in getting current user id");
+       });
    $scope.selectTTR = [];
 
    $scope.selectedTTR = function (ttrId, checkStatus){
@@ -36,8 +44,6 @@ cs480App.controller('TTRCntrl',
         });
   };
 
-  $scope.getTTR();
-
   //Edit a ttr to DB
   $scope.editTTR = function (ttrId){
     var ttr = {"_id": ttrId, "description" : $scope.description, "dueDate" : $scope.dueDate};
@@ -68,28 +74,15 @@ cs480App.controller('TTRCntrl',
   $scope.deleteTTR = function (ttrId){
     RestService.deleteTTR($scope.user_id, ttrId)
       .then(function successCallback(response){
-          console.log("Removed TTR From DB.");
+          console.log("Removed TTR from DB.");
           $scope.getTTR();
           $scope.editModal.close();
       }, function errorCallback(response){
-          $log.log("Error");
+          $log.log("Error removing TTR from DB.");
       });
   };
 }]);
 
-var ShowDataToModal = function () {
-  this.visible = false;
-};
-ShowDataToModal.prototype.open = function(ttr) {
-  this.ttr = ttr;
-  this.visible = true;
-};
-ShowDataToModal.prototype.openAdd = function() {
-  this.visible = true;
-};
-ShowDataToModal.prototype.close = function() {
-  this.visible = false;
-};
 cs480App.directive('editModal', [function() {
   return {
     restrict: 'E',
@@ -107,8 +100,12 @@ cs480App.directive('editModal', [function() {
       element.on('shown.bs.modal', function() {
         scope.$evalAsync(function() {
             scope.model.visible = true;
-            scope.description = scope.model.ttr.description;
-            scope.dueDate = new Date(scope.model.ttr.dueDate);
+            scope.description = scope.model.data.description;
+            if(scope.model.data.dueDate !=null){
+                scope.dueDate = new Date(scope.model.data.dueDate);
+            }else{
+                scope.dueDate = null;
+            }
         });
       });
 
@@ -142,6 +139,7 @@ cs480App.directive('addModal', [function() {
         scope.$evalAsync(function() {
             scope.model.visible = true;
             scope.description = '';
+            scope.dueDate = undefined;
             element.find('.modal').find('form').trigger('reset');
         });
       });

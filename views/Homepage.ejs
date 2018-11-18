@@ -14,10 +14,12 @@
   <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
   <link rel="stylesheet" type="text/css" href="/stylesheets/loading-bar.css"/>
   <link rel="stylesheet" type="text/css" href="/stylesheets/clockstyle.css"/>
+  <link rel="stylesheet" href="/stylesheets/logsStyle.css"/>
   <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
   <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.5/angular.min.js" integrity="sha256-QRJz3b0/ZZC4ilKmBRRjY0MgnVhQ+RR1tpWLYaRRjSo=" crossorigin="anonymous"></script>
   <script src="/javascripts/services/restService.js"></script>
+  <script src="/javascripts/controllers/schedule-control.js"></script>
   <script src="/javascripts/controllers/home-control.js"></script>
   <script src="/javascripts/controllers/ttr-control.js"></script>
   <script src="/javascripts/controllers/log-control.js"></script>
@@ -28,7 +30,7 @@
 </head>
 
 <body ng-controller="HomeCtrl">
-
+  <setting-modal model="settingModal" user_id="user_id" text-status="textStatus" email-status="emailStatus" push-status="pushStatus"></setting-modal>
     <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
       <span><button type="button" id="sidebarCollapse" class="btn btn-info" ng-click="toggleSidebar()"> <i class="fas fa-align-left"></i></button></span>
       <a class="navbar-brand" href="#">ZEITPLAN</a>
@@ -36,6 +38,9 @@
 
       </ul>
       <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="#" ng-click="settingModal.open();getSettings()">Settings</a>
+        </li>
         <li class="nav-item">
           <a class="nav-link" href="#">About</a>
         </li>
@@ -118,4 +123,40 @@
 
 </body>
 <script src="/javascripts/features/clock.js"></script>
+<!--setting Modal-->
+<script type="text/ng-template" id="setting.html">
+  <div class="modal" tabindex="-1" role="dialog" aria-labelledby="settingModal" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="settingModal">Settings</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h6>Notification Types</h6>
+        <form name="editTTR" style="text-align:center">
+          <div>
+            <label for="txtMsg">Text Message</label>
+            <input type="checkbox" id="txtMsg" ng-model="textStatus" ng-init='textStatus=$parent.textStatus' ng-value='$parent.textStatus'>
+          </div>
+          <div>
+            <label for="email">Email</label>
+            <input type="checkbox" id="email" ng-model="emailStatus" ng-init='emailStatus=$parent.emailStatus' ng-value='$parent.emailStatus'>
+          </div>
+          <div>
+            <label for="pushNotification">Push Notification</label>
+            <input type="checkbox" id="pushNotification" ng-model="pushStatus" ng-init='pushStatus=$parent.pushStatus' ng-value='$parent.pushStatus'>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-info" ng-click="$parent.changeSettings($parent.user_id)">Done</button>
+      </div>
+    </div>
+  </div>
+  </div>
+  </script>
 </html>

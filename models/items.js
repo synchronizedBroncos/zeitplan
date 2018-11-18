@@ -87,13 +87,34 @@ module.exports.editTTRByUserId = function(userId, ttr, callback){
     $set: {'ttr.$.description': ttr.description, 'ttr.$.dueDate': ttr.dueDate}}, callback).select('ttr');
 }
 
+// return schedules and user who it belongs to
+module.exports.getAllSchedules = function(callback){
+  Items.find(callback).select('schedule user');
+}
+
+// only gets object with itemId for schedule, scheduleId not working here
+module.exports.getScheduleByIds = function(itemId, scheduleId, callback){
+  var query = { _id:itemId, "schedule._id": scheduleId};
+  Items.findOne(query, callback).select('schedule');
+}
+
 module.exports.getScheduleByUserId = function(userId, callback){
   var query = {user: userId};
   Items.findOne(query, callback).select('schedule');
 }
 
+
 module.exports.addLogByUserId = function(userId, addLog, callback){
   Items.findOneAndUpdate({user:userId},{$push:{logs:addLog}}, callback).select('logs');
+
+module.exports.addScheduleByUserId = function(userId, addSchedule, callback){
+  Items.findOneAndUpdate({user:userId},{$push:{schedule:addSchedule}}, callback).select('schedule');
+}
+
+module.exports.editScheduleByUserId = function(userId, schedule, callback){
+  Items.findOneAndUpdate({user:userId, "schedule._id": schedule._id},{
+    $set: {'schedule.$.description': schedule.description, 'schedule.$.startDate': schedule.startDate, 'schedule.$.endDate': schedule.endDate}}, callback).select('schedule');
+  }
 }
 
 module.exports.getLogsByUserId = function(userId, callback){

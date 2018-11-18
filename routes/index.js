@@ -6,11 +6,12 @@ var getUri = require('get-uri');
 
 let flashClass = "green";
 
-require("dotenv").config()
+require("dotenv").config();
 
 //Require task model
-Task = require('../models/tasks')
-Items = require('../models/items')
+const Task = require('../models/tasks');
+const Items = require('../models/items');
+const Users = require('../models/user');
 
 //Nodemailer
 const nodemailer = require('nodemailer');
@@ -42,6 +43,46 @@ function ensureAuthenticated(req, res, next) {
   res.redirect('/users/login');
 }
 
+//API CALL to return schedule from DB
+router.get('/api/schedule/:user_id', function(req,res,next){
+  Items.getScheduleByUserId(req.params.user_id, function(err,schedule){
+    if(err){
+      throw err;
+    }
+    else{
+      res.json(schedule);
+    }
+  });
+});
+
+router.post('/api/editSchedule/:user_id', function(req,res,next){
+    let schedule = req.body;
+    Items.editScheduleByUserId(req.params.user_id, schedule, function(err,ttr){
+    if(err){
+      throw err;
+    }
+    else{
+      res.json(schedule);
+    }
+    });
+  });
+
+router.post('/api/addSchedule/:user_id', function(req,res,next){
+    let schedule = req.body;
+    Items.addScheduleByUserId(req.params.user_id, schedule, function(err,schedule){
+    if(err){
+      throw err;
+    }
+    else{
+      res.json(schedule);
+    }
+    });
+  });
+
+router.get('/api/currentUserId', ensureAuthenticated, function(req,res,next){
+  res.send(req.user.id);
+});
+
 //API Call to return ttr from DB
 router.get('/api/ttrs/:user_id', function (req, res, next) {
   Items.getTtrByUserId(req.params.user_id, function (err, ttrs) {
@@ -69,8 +110,44 @@ router.get('/api/logs/:user_id', function (req, res, next) {
 //POST request to add log to DB
 router.post('/api/addLog/:user_id', function (req, res, next) {
   let log = req.body;
-  Items.addTTRByUserId(req.params.user_id, log, function (err, log) {
-    if (err) {
+  Items.addScheduleByUserId(req.params.user_id, log, function(err,log){
+  if(err){
+    throw err;
+  }
+  else{
+    res.json(log);
+  }
+  });
+});
+
+
+router.get('/api/getSettings/:user_id', function(req,res,next){
+  Users.getSettingsByUserId(req.params.user_id, function(err,settings){
+    if(err){
+      throw err;
+    }
+    else{
+      res.json(settings);
+    }
+  });
+});
+
+router.post('/api/changeSettings/:user_id', function(req,res,next){
+    let data = req.body;
+    Users.editSettingsByUserId(req.params.user_id, data, function(err,data){
+    if(err){
+      throw err;
+    }
+    else{
+      res.json(data);
+    }
+    });
+  });
+
+router.post('/api/editTTR/:user_id', function(req,res,next){
+    let ttr = req.body;
+    Items.editTTRByUserId(req.params.user_id, ttr, function(err,ttr){
+    if(err){
       throw err;
     }
     else {
