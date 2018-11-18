@@ -5,16 +5,17 @@ cs480App.controller('LogCtrl',
    console.log("load log");
    // initialize ng class for sidebar as active
    $scope.getLogs = function ( ) {
-
      RestService.getLogs($scope.user_id)
          .then(function successCallback(response){
              $scope.logs = response.data.logs;
-             console.log(response.data);
          }, function errorCallback(response){
             console.log("Error in getting Logs");
          });
    };
 
+   // $scope.buttonFilled = function() {
+   //   let clicked = true;
+   //
+   // }
    $scope.getLogs();
-
 }]);

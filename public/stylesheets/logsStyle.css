@@ -1,12 +1,23 @@
 #container {
 	padding: 25px 50px 25px 50px;
+
 }
 
- #log_cards {
-	padding: 25px 0px;
+#log_container {
+	background-color: #F2F4F5;
+	border: solid;
+	border-radius: 10px;
+	border-width: 1px;
+	padding: 10px 10px 10px 10px;
 }
 
-.scrolls {
-  height:394px;
-  overflow-y: scroll;
+#log_cards {
+	padding-top: 20px;
+}
+
+.sample-show-hide {
+  transition: all linear 0.5s;
+}
+.sample-show-hide.ng-hide {
+  opacity: 0;
 }
