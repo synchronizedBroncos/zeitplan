@@ -73,6 +73,9 @@ router.post('/sendEmail', (req, res) => {
   });
 });
 
+//TODO: make functions to call from within the routes
+//TODO: export functions to use them in notifications
+
 // validation methods with Joi module
 function validateSMS(input) {
   const schema = {
