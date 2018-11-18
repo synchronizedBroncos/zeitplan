@@ -3,7 +3,6 @@
   <add-modal model="addModal" description="$parent.description" due-date="$parent.dueDate"></add-modal>
   <div id="ttrDiv">
     <button type="button" class="btn btn-danger ttrButton" ng-click="deleteSelectedTTR()">Delete</button>
-    <button type="button" class="btn btn-info ttrButton">Add to Schedule</button>
     <button type="button" class="button btn btn-primary ttrButton" ng-click="addModal.openAdd()">Add</button>
     <table id = "ttrTable" class="table table-striped">
       <thead>
@@ -41,7 +40,7 @@
         </div>
         <div class="form-group">
           <label for="dueDateTTR">Due Date</label>
-          <input type="date" class="form-control" id="dueDateTTR" ng-model="dueDate" ng-value="{{model.ttr.dueDate| date:'yyyy-MM-dd'}}">
+          <input type="date" class="form-control" id="dueDateTTR" ng-model="dueDate">
         </div>
         </form>
     </div>
