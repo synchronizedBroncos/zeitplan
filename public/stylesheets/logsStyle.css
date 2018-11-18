@@ -2,13 +2,6 @@
 	padding: 25px 50px 25px 50px;
 }
 
-.sample-show-hide {
-  transition: all linear 0.5s;
-}
-.sample-show-hide.ng-hide {
-  opacity: 0;
-}
-
 #log_separator {
     border: 0;
     height: 1px;
