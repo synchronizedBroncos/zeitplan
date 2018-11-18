@@ -54,6 +54,18 @@ router.get('/api/ttrs/:user_id', function(req,res,next){
   });
 });
 
+//API Call to return logs from DB
+router.get('/api/logs/:user_id', function(req,res,next){
+  Items.getLogs(req.params.user_id, function(err,logs){
+    if(err){
+      throw err;
+    }
+    else{
+      res.json(logs);
+    }
+  });
+});
+
 router.post('/api/editTTR/:user_id', function(req,res,next){
     let ttr = req.body;
     Items.editTTRByUserId(req.params.user_id, ttr, function(err,ttr){
