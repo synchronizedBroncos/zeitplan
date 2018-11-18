@@ -92,6 +92,10 @@ module.exports.getScheduleByUserId = function(userId, callback){
   Items.findOne(query, callback).select('schedule');
 }
 
+module.exports.addLogByUserId = function(userId, addLog, callback){
+  Items.findOneAndUpdate({user:userId},{$push:{ttr:addLog}}, callback).select('logs');
+}
+
 module.exports.getLogsByUserId = function(userId, callback){
   var query = {user: userId};
   Items.findOne(query, callback).select('logs');

@@ -24,6 +24,18 @@ cs480App.factory('RestService', function($http) {
   service.getLogs = function(user_id){
     return $http.get(urlBase + '/api/logs/' + user_id);
   }
+
+  service.addLog = function(user_id, data){
+    return $http({
+        url: urlBase + 'api/addLog/' + user_id,
+        method: "POST",
+        data: data,
+      }).then(function successCallback(response) {
+        return response;
+    }, function errorCallback(response) {
+        return response;
+    });
+  }
   
 
   service.editTTR = function(user_id, data){
