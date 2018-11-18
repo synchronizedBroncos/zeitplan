@@ -82,16 +82,16 @@ module.exports.getTtrByUserId = function(userId, callback){
 }
 
 module.exports.addTTRByUserId = function(userId, addTTR, callback){
-  Items.findOneAndUpdate({user:userId},{$push:{ttr:addTTR}}, callback);
+  Items.findOneAndUpdate({user:userId},{$push:{ttr:addTTR}}, callback).select('ttr');
 }
 
 module.exports.removeTTRByUserId = function(userId, ttrId, callback){
-  Items.findOneAndUpdate({user:userId}, {$pull: {ttr:{_id:ttrId}}}, callback);
+  Items.findOneAndUpdate({user:userId}, {$pull: {ttr:{_id:ttrId}}}, callback).select('ttr');
 }
 
 module.exports.editTTRByUserId = function(userId, ttr, callback){
   Items.findOneAndUpdate({user:userId, "ttr._id": ttr._id},{
-    $set: {'ttr.$.description': ttr.description, 'ttr.$.dueDate': ttr.dueDate}}, callback);
+    $set: {'ttr.$.description': ttr.description, 'ttr.$.dueDate': ttr.dueDate}}, callback).select('ttr');
 }
 
 module.exports.getScheduleByUserId = function(userId, callback){

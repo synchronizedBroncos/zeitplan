@@ -3,7 +3,15 @@ cs480App.controller('TTRCntrl',
  ['$scope', 'RestService', function ($scope, RestService) {
    $scope.editModal = new ShowDataToModal();
    $scope.addModal = new ShowDataToModal();
-   $scope.user_id = "5bac44330012b8166ef76f04";
+
+   $scope.user_id = "unresolved";
+   RestService.getCurrentUserId()
+       .then(function successCallback(response){
+           $scope.user_id = response.data;
+           $scope.getTTR();
+       }, function errorCallback(response){
+          console.log("Error in getting current user id");
+       });
    $scope.selectTTR = [];
 
    $scope.selectedTTR = function (ttrId, checkStatus){
@@ -30,12 +38,11 @@ cs480App.controller('TTRCntrl',
     RestService.getTTR($scope.user_id)
         .then(function successCallback(response){
             $scope.ttrs = response.data.ttr;
+            $scope.selectTTR.length = 0;
         }, function errorCallback(response){
            console.log("Error in getting TTR");
         });
   };
-
-  $scope.getTTR();
 
   //Edit a ttr to DB
   $scope.editTTR = function (ttrId){
@@ -140,8 +147,7 @@ cs480App.directive('addModal', [function() {
       element.on('shown.bs.modal', function() {
         scope.$evalAsync(function() {
             scope.model.visible = true;
-            scope.description ='';
-            scope.dueDate = new Date();
+            scope.description = '';
             element.find('.modal').find('form').trigger('reset');
         });
       });

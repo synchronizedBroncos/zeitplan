@@ -54,6 +54,9 @@ router.get('/api/schedule/:user_id', function(req,res,next){
   });
 });
 
+router.get('/api/currentUserId', ensureAuthenticated, function(req,res,next){
+  res.send(req.user.id);
+});
 
 //API Call to return ttr from DB
 router.get('/api/ttrs/:user_id', function(req,res,next){
@@ -63,6 +66,18 @@ router.get('/api/ttrs/:user_id', function(req,res,next){
     }
     else{
       res.json(ttrs);
+    }
+  });
+});
+
+//API Call to return logs from DB
+router.get('/api/logs/:user_id', function(req,res,next){
+  Items.getLogsByUserId(req.params.user_id, function(err,logs){
+    if(err){
+      throw err;
+    }
+    else{
+      res.json(logs);
     }
   });
 });
@@ -157,13 +172,14 @@ router.post('/api/tasks', function(req,res,next){
 
 
 /* GET home page. */
+// router.get('/', ensureAuthenticated, function(req, res, next) {
+//   console.log(req.user);
+//   res.render('index', { title: 'Zeitplan', expressFlash: req.flash('message'), flashClass: flashClass });
+// });
+
 router.get('/', ensureAuthenticated, function(req, res, next) {
   console.log(req.user);
-  res.render('index', { title: 'Zeitplan', expressFlash: req.flash('message'), flashClass: flashClass });
-});
-
-router.get('/home', ensureAuthenticated, function(req, res, next) {
-  res.render('homepage', { title: 'Zeitplan', name: req.user.name });
+  res.render('homepage', { title: 'Zeitplan', name: req.user.name, expressFlash: req.flash('message'), flashClass: flashClass });
 });
 
 /* Abe's first http get method. */
