@@ -75,11 +75,11 @@ cs480App.controller('TTRCntrl',
   $scope.deleteTTR = function (ttrId){
     RestService.deleteTTR($scope.user_id, ttrId)
       .then(function successCallback(response){
-          console.log("Removed TTR From DB.");
+          console.log("Removed TTR from DB.");
           $scope.getTTR();
           $scope.editModal.close();
       }, function errorCallback(response){
-          $log.log("Error");
+          $log.log("Error removing TTR from DB.");
       });
   };
 }]);

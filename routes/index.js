@@ -42,6 +42,18 @@ function ensureAuthenticated(req, res, next){
   res.redirect('/users/login');
 }
 
+//API CALL to return schedule from DB
+router.get('/api/schedule/:user_id', function(req,res,next){
+  Items.getScheduleByUserId(req.params.user_id, function(err,schedule){
+    if(err){
+      throw err;
+    }
+    else{
+      res.json(schedule);
+    }
+  });
+});
+
 router.get('/api/currentUserId', ensureAuthenticated, function(req,res,next){
   res.send(req.user.id);
 });
