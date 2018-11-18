@@ -13,9 +13,6 @@ cs480App.controller('LogCtrl',
          });
    };
 
-   // $scope.buttonFilled = function() {
-   //   let clicked = true;
-   //
-   // }
+
    $scope.getLogs();
 }]);
