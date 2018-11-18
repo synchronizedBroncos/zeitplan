@@ -3,7 +3,15 @@ cs480App.controller('TTRCntrl',
  ['$scope', 'RestService', function ($scope, RestService) {
    $scope.editModal = new ShowDataToModal();
    $scope.addModal = new ShowDataToModal();
-   $scope.user_id = "5bac44330012b8166ef76f04";
+
+   $scope.user_id = "unresolved";
+   RestService.getCurrentUserId()
+       .then(function successCallback(response){
+           $scope.user_id = response.data;
+           $scope.getTTR();
+       }, function errorCallback(response){
+          console.log("Error in getting current user id");
+       });
    $scope.selectTTR = [];
 
    $scope.selectedTTR = function (ttrId, checkStatus){
@@ -36,8 +44,6 @@ cs480App.controller('TTRCntrl',
         });
   };
 
-  $scope.getTTR();
-
   //Edit a ttr to DB
   $scope.editTTR = function (ttrId){
     var ttr = {"_id": ttrId, "description" : $scope.description, "dueDate" : $scope.dueDate};
@@ -68,11 +74,11 @@ cs480App.controller('TTRCntrl',
   $scope.deleteTTR = function (ttrId){
     RestService.deleteTTR($scope.user_id, ttrId)
       .then(function successCallback(response){
-          console.log("Removed TTR From DB.");
+          console.log("Removed TTR from DB.");
           $scope.getTTR();
           $scope.editModal.close();
       }, function errorCallback(response){
-          $log.log("Error");
+          $log.log("Error removing TTR from DB.");
       });
   };
 }]);
@@ -90,6 +96,7 @@ ShowDataToModal.prototype.openAdd = function() {
 ShowDataToModal.prototype.close = function() {
   this.visible = false;
 };
+
 cs480App.directive('editModal', [function() {
   return {
     restrict: 'E',
