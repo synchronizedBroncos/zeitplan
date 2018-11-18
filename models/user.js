@@ -45,6 +45,16 @@ module.exports.getUserByUsername = function(username, callback){
   User.findOne(query, callback);
 }
 
+module.exports.getSettingsByUserId = function(userId, callback){
+  var query = {_id: userId};
+  User.findOne(query, callback).select('settings');
+}
+
+module.exports.editSettingsByUserId = function(user_id, data, callback){
+  User.findOneAndUpdate({_id:user_id},{$set: {'settings.notificationTypes.textMessage': data.textMessage,
+   'settings.notificationTypes.email': data.email, 'settings.notificationTypes.pushNotification' : data.pushNotification}}, callback).select('settings');
+}
+
 module.exports.comparePassword = function(candidatePassword, hash, callback){
   bcrypt.compare(candidatePassword, hash, function(err, isMatch) {
     callback(null, isMatch);

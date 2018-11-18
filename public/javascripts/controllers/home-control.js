@@ -12,8 +12,26 @@ cs480App.controller('HomeCtrl',
           console.log("Error in getting current user id");
        });
 
-   $scope.changeSettings = function(userId){
-     console.log(userId);
+   $scope.changeSettings = function(){
+     let data = {"textMessage": $scope.textStatus, "email": $scope.emailStatus, "pushNotification": $scope.pushStatus};
+     RestService.editSettings($scope.user_id, data)
+       .then(function successCallback(response){
+           console.log("Changed User Settings in DB.");
+           $scope.settingModal.close();
+       }, function errorCallback(response){
+           console.log("Error in Changing User Settings");
+       });
+   };
+
+   $scope.getSettings = function () {
+     RestService.getSettings($scope.user_id)
+         .then(function successCallback(response){
+           $scope.textStatus = response.data.settings.notificationTypes.textMessage;
+           $scope.emailStatus =response.data.settings.notificationTypes.email;
+           $scope.pushStatus =response.data.settings.notificationTypes.pushNotification;
+         }, function errorCallback(response){
+            console.log("Error in getting Settings");
+         });
    };
    // initialize ng class for sidebar as active
    $scope.sidebarActive = '';
@@ -49,7 +67,10 @@ cs480App.directive('settingModal', [function() {
     restrict: 'E',
     scope: {
       model: '=',
-      user_id: '='
+      user_id: '=',
+      textStatus: '=',
+      emailStatus: '=',
+      pushStatus:'='
     },
     link: function(scope, element, attributes) {
       scope.$watch('model.visible', function(newValue) {
@@ -60,7 +81,6 @@ cs480App.directive('settingModal', [function() {
       element.on('shown.bs.modal', function() {
         scope.$evalAsync(function() {
             scope.model.visible = true;
-            //Use scope.$parent.user_id to get user_id
         });
       });
 

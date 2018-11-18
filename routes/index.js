@@ -6,11 +6,12 @@ var getUri = require('get-uri');
 
 let flashClass = "green";
 
-require("dotenv").config()
+require("dotenv").config();
 
 //Require task model
-Task = require('../models/tasks')
-Items = require('../models/items')
+const Task = require('../models/tasks');
+const Items = require('../models/items');
+const Users = require('../models/user');
 
 //Nodemailer
 const nodemailer = require('nodemailer');
@@ -81,6 +82,29 @@ router.get('/api/logs/:user_id', function(req,res,next){
     }
   });
 });
+
+router.get('/api/getSettings/:user_id', function(req,res,next){
+  Users.getSettingsByUserId(req.params.user_id, function(err,settings){
+    if(err){
+      throw err;
+    }
+    else{
+      res.json(settings);
+    }
+  });
+});
+
+router.post('/api/changeSettings/:user_id', function(req,res,next){
+    let data = req.body;
+    Users.editSettingsByUserId(req.params.user_id, data, function(err,data){
+    if(err){
+      throw err;
+    }
+    else{
+      res.json(data);
+    }
+    });
+  });
 
 router.post('/api/editTTR/:user_id', function(req,res,next){
     let ttr = req.body;
