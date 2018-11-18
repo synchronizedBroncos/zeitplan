@@ -92,6 +92,15 @@ module.exports.getScheduleByUserId = function(userId, callback){
   Items.findOne(query, callback).select('schedule');
 }
 
+module.exports.addScheduleByUserId = function(userId, addSchedule, callback){
+  Items.findOneAndUpdate({user:userId},{$push:{schedule:addSchedule}}, callback).select('schedule');
+}
+
+module.exports.editScheduleByUserId = function(userId, schedule, callback){
+  Items.findOneAndUpdate({user:userId, "schedule._id": schedule._id},{
+    $set: {'schedule.$.description': schedule.description, 'schedule.$.startDate': schedule.startDate, 'schedule.$.endDate': schedule.endDate}}, callback).select('schedule');
+}
+
 module.exports.getLogsByUserId = function(userId, callback){
   var query = {user: userId};
   Items.findOne(query, callback).select('logs');
