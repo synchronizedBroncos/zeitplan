@@ -10,11 +10,27 @@ var UserSchema = mongoose.Schema({
   password: {
     type: String
   },
+  name: {
+    type: String
+  },
   email: {
     type: String
   },
-  name: {
+  phoneNumber: {
     type: String
+  },
+  settings: {
+    notificationTypes: {
+      textMessage: {
+        type: Boolean
+      },
+      email: {
+        type: Boolean
+      },
+      pushNotification: {
+        type: Boolean
+      }
+    }
   }
 });
 
