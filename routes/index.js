@@ -42,6 +42,10 @@ function ensureAuthenticated(req, res, next){
   res.redirect('/users/login');
 }
 
+router.get('/api/currentUserId', ensureAuthenticated, function(req,res,next){
+  res.send(req.user.id);
+});
+
 //API Call to return ttr from DB
 router.get('/api/ttrs/:user_id', function(req,res,next){
   Items.getTtrByUserId(req.params.user_id, function(err,ttrs){
