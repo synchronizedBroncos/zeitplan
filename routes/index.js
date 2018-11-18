@@ -55,6 +55,30 @@ router.get('/api/schedule/:user_id', function(req,res,next){
   });
 });
 
+router.post('/api/editSchedule/:user_id', function(req,res,next){
+    let schedule = req.body;
+    Items.editScheduleByUserId(req.params.user_id, schedule, function(err,ttr){
+    if(err){
+      throw err;
+    }
+    else{
+      res.json(schedule);
+    }
+    });
+  });
+
+router.post('/api/addSchedule/:user_id', function(req,res,next){
+    let schedule = req.body;
+    Items.addScheduleByUserId(req.params.user_id, schedule, function(err,schedule){
+    if(err){
+      throw err;
+    }
+    else{
+      res.json(schedule);
+    }
+    });
+  });
+
 router.get('/api/currentUserId', ensureAuthenticated, function(req,res,next){
   res.send(req.user.id);
 });

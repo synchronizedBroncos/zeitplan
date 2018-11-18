@@ -38,6 +38,18 @@ cs480App.factory('RestService', function($http) {
     return $http.get(urlBase + '/api/schedule/' + user_id);
   }
 
+  service.addSchedule = function(user_id, data){
+    return $http({
+        url: urlBase + 'api/addSchedule/' + user_id,
+        method: "POST",
+        data: data,
+      }).then(function successCallback(response) {
+        return response;
+    }, function errorCallback(response) {
+        return response;
+    });
+  }
+
   service.postUser = function(userInfo){
     return $http.post('https://reqres.in/api/users', userInfo);
   };
@@ -50,6 +62,18 @@ cs480App.factory('RestService', function($http) {
     return $http.get(urlBase + '/api/logs/' + user_id);
   }
 
+  service.editSchedule = function(user_id, data){
+    console.log("edit");
+    return $http({
+        url: urlBase + 'api/editSchedule/' + user_id,
+        method: "POST",
+        data: data,
+      }).then(function successCallback(response) {
+        return response;
+    }, function errorCallback(response) {
+        return response;
+    });
+  }
 
   service.editTTR = function(user_id, data){
     return $http({
@@ -84,7 +108,6 @@ cs480App.factory('RestService', function($http) {
     }, function errorCallback(response) {
         return response;
     });
-
   };
 
   service.getTasks = function() {
