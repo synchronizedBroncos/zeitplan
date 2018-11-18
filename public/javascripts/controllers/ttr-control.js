@@ -10,6 +10,7 @@ cs480App.controller('TTRCntrl',
            $scope.user_id = response.data;
            $scope.getTTR();
        }, function errorCallback(response){
+          console.log("Error in getting current user id");
        });
    $scope.selectTTR = [];
 
@@ -39,7 +40,7 @@ cs480App.controller('TTRCntrl',
             $scope.ttrs = response.data.ttr;
             $scope.selectTTR.length = 0;
         }, function errorCallback(response){
-
+           console.log("Error in getting TTR");
         });
   };
 
@@ -48,9 +49,11 @@ cs480App.controller('TTRCntrl',
     var ttr = {"_id": ttrId, "description" : $scope.description, "dueDate" : $scope.dueDate};
       RestService.editTTR($scope.user_id, ttr)
         .then(function successCallback(response){
+            console.log("Updated Data in DB.");
             $scope.getTTR();
             $scope.editModal.close();
         }, function errorCallback(response){
+            console.log("Error in updating TTR");
         });
   };
 
@@ -59,9 +62,11 @@ cs480App.controller('TTRCntrl',
     var ttr = {"description" : $scope.description, "dueDate" : $scope.dueDate};
       RestService.addTTR($scope.user_id, ttr)
         .then(function successCallback(response){
+            console.log("Inserted Data in DB.");
             $scope.getTTR();
             $('#ttrAddModal').modal('hide');
         }, function errorCallback(response){
+            console.log("Error in adding TTR");
         });
   };
 
@@ -69,10 +74,11 @@ cs480App.controller('TTRCntrl',
   $scope.deleteTTR = function (ttrId){
     RestService.deleteTTR($scope.user_id, ttrId)
       .then(function successCallback(response){
+          console.log("Removed TTR from DB.");
           $scope.getTTR();
           $scope.editModal.close();
       }, function errorCallback(response){
-          $log.log("Error");
+          $log.log("Error removing TTR from DB.");
       });
   };
 }]);
