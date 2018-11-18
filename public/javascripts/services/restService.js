@@ -17,6 +17,11 @@ cs480App.factory('RestService', function($http) {
       return $http.get(urlBase + '/user/' + id);
   }; */
 
+
+  service.getSchedule = function(user_id){
+    return $http.get(urlBase + '/api/schedule/' + user_id);
+  }
+
   service.postUser = function(userInfo){
     return $http.post('https://reqres.in/api/users', userInfo);
   };
