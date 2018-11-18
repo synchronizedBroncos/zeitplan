@@ -9,6 +9,10 @@ cs480App.factory('RestService', function($http) {
       return $http.get(urlBase + '/requestify');
   };
 
+  service.getCurrentUserId = function() {
+      return $http.get(urlBase + '/api/currentUserId');
+  };
+
   /* service.postUser = function(id){
       return $http.get(urlBase + '/user/' + id);
   }; */
@@ -24,7 +28,7 @@ cs480App.factory('RestService', function($http) {
   service.getLogs = function(user_id){
     return $http.get(urlBase + '/api/logs/' + user_id);
   }
-  
+
 
   service.editTTR = function(user_id, data){
     return $http({
