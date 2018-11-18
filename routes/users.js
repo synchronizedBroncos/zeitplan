@@ -88,7 +88,14 @@ router.post('/register', function(req, res, next) {
       email: email,
       phoneNumber: phoneNumber,
       username: username,
-      password: password
+      password: password,
+      settings: {
+        notificationTypes: {
+          textMessage: true,
+          email: true,
+          pushNotification: true
+        }
+      }
     });
     User.createUser(newUser, function(err, user){
       if(err) throw err;
