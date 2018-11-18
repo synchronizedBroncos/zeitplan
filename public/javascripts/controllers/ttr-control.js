@@ -83,20 +83,6 @@ cs480App.controller('TTRCntrl',
   };
 }]);
 
-var ShowDataToModal = function () {
-  this.visible = false;
-};
-ShowDataToModal.prototype.open = function(ttr) {
-  this.ttr = ttr;
-  this.visible = true;
-};
-ShowDataToModal.prototype.openAdd = function() {
-  this.visible = true;
-};
-ShowDataToModal.prototype.close = function() {
-  this.visible = false;
-};
-
 cs480App.directive('editModal', [function() {
   return {
     restrict: 'E',
@@ -114,8 +100,12 @@ cs480App.directive('editModal', [function() {
       element.on('shown.bs.modal', function() {
         scope.$evalAsync(function() {
             scope.model.visible = true;
-            scope.description = scope.model.ttr.description;
-            scope.dueDate = new Date(scope.model.ttr.dueDate);
+            scope.description = scope.model.data.description;
+            if(scope.model.data.dueDate !=null){
+                scope.dueDate = new Date(scope.model.data.dueDate);
+            }else{
+                scope.dueDate = null;
+            }
         });
       });
 
@@ -149,6 +139,7 @@ cs480App.directive('addModal', [function() {
         scope.$evalAsync(function() {
             scope.model.visible = true;
             scope.description = '';
+            scope.dueDate = undefined;
             element.find('.modal').find('form').trigger('reset');
         });
       });

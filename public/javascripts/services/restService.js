@@ -17,6 +17,22 @@ cs480App.factory('RestService', function($http) {
       return $http.get(urlBase + '/user/' + id);
   }; */
 
+  service.getSettings = function(user_id) {
+      return $http.get(urlBase + '/api/getSettings/' + user_id);
+  };
+
+  service.editSettings = function(user_id, data){
+    return $http({
+        url: urlBase + 'api/changeSettings/' + user_id,
+        method: "POST",
+        data: data,
+      }).then(function successCallback(response) {
+        return response;
+    }, function errorCallback(response) {
+        return response;
+    });
+  }
+
 
   service.getSchedule = function(user_id){
     return $http.get(urlBase + '/api/schedule/' + user_id);

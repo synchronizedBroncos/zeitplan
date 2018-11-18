@@ -68,16 +68,16 @@
         <form name="editTTR">
           <div class="form-group">
             <label for="editDescrip">Description</label>
-            <input type="text" class="form-control" id="editDescrip" ng-init='model.ttr.description'ng-model="description" ng-value="model.ttr.description">
+            <input type="text" class="form-control" id="editDescrip" ng-init='model.data.description'ng-model="description" ng-value="model.ttr.description">
           </div>
           <div class="form-group">
             <label for="editDate">Due Date</label>
-            <input type="date" class="form-control" id="editDate" ng-model="dueDate" ng-value="model.ttr.dueDate | date:'yyyy-MM-dd'">
+            <input type="date" class="form-control" id="editDate" ng-model="dueDate" ng-value="model.data.dueDate | date:'yyyy-MM-dd'">
           </div>
         </form>
         <button type="button" class="btn btn-info">Add to Schedule</button> <!--ng-click -->
-        <button type="button" class="btn btn-warning" ng-click="$parent.editTTR(model.ttr._id)">Edit</button>
-        <button type="button" class="btn btn-danger" ng-click="$parent.deleteTTR(model.ttr._id)">Delete</button>
+        <button type="button" class="btn btn-warning" ng-click="$parent.editTTR(model.data._id)">Edit</button>
+        <button type="button" class="btn btn-danger" ng-click="$parent.deleteTTR(model.data._id)">Delete</button>
       </div>
     </div>
   </div>

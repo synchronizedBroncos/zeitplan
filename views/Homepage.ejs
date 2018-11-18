@@ -30,7 +30,7 @@
 </head>
 
 <body ng-controller="HomeCtrl">
-
+  <setting-modal model="settingModal" user_id="user_id" text-status="textStatus" email-status="emailStatus" push-status="pushStatus"></setting-modal>
     <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
       <span><button type="button" id="sidebarCollapse" class="btn btn-info" ng-click="toggleSidebar()"> <i class="fas fa-align-left"></i></button></span>
       <a class="navbar-brand" href="#">ZEITPLAN</a>
@@ -38,6 +38,9 @@
 
       </ul>
       <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="#" ng-click="settingModal.open();getSettings()">Settings</a>
+        </li>
         <li class="nav-item">
           <a class="nav-link" href="#">About</a>
         </li>
@@ -120,4 +123,40 @@
 
 </body>
 <script src="/javascripts/features/clock.js"></script>
+<!--setting Modal-->
+<script type="text/ng-template" id="setting.html">
+  <div class="modal" tabindex="-1" role="dialog" aria-labelledby="settingModal" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="settingModal">Settings</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h6>Notification Types</h6>
+        <form name="editTTR" style="text-align:center">
+          <div>
+            <label for="txtMsg">Text Message</label>
+            <input type="checkbox" id="txtMsg" ng-model="textStatus" ng-init='textStatus=$parent.textStatus' ng-value='$parent.textStatus'>
+          </div>
+          <div>
+            <label for="email">Email</label>
+            <input type="checkbox" id="email" ng-model="emailStatus" ng-init='emailStatus=$parent.emailStatus' ng-value='$parent.emailStatus'>
+          </div>
+          <div>
+            <label for="pushNotification">Push Notification</label>
+            <input type="checkbox" id="pushNotification" ng-model="pushStatus" ng-init='pushStatus=$parent.pushStatus' ng-value='$parent.pushStatus'>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-info" ng-click="$parent.changeSettings($parent.user_id)">Done</button>
+      </div>
+    </div>
+  </div>
+  </div>
+  </script>
 </html>
