@@ -4,6 +4,7 @@
 
      <edit-modal-schedule model="editModalSchedule", description="$parent.description", start-date="$parent.startDate", end-date="$parent.endDate"></edit-modal-schedule>
      <add-modal-schedule model="addModalSchedule",  description="$parent.description" ,start-date="$parent.startDate", end-date="$parent.endDate"></add-modal-schedule>
+     <add-modal-log model="moveToLogModal",  description="$parent.description" ,start-date="$parent.startDate", end-date="$parent.endDate"></add-modal-log>
 
     <button type="button" class="button btn btn-primary scheduleButton" ng-click='addModalSchedule.open()'>Add</button>
     <button type="button" class="btn btn-danger scheduleButton">Delete</button> <!--ng-click -->
@@ -15,6 +16,7 @@
           <th scope="col">Description</th>
           <th scope="col">Start Date</th>
           <th scope="col">End Date</th>
+          <th scope="col">Mark as Complete</th>
         </tr>
       </thead>
 
@@ -23,6 +25,9 @@
           <td ng-click="editModalSchedule.open(schedule)">{{ schedule.description }}</td> <!-- data-target="#ttrEditModal"-->
           <td>{{ schedule.startDate | date:'MM/dd/yyyy' }}</td>
           <td>{{ schedule.endDate | date:'MM/dd/yyyy' }}</td>
+          <td ng-click="moveToLogModal.open(schedule)">
+          <button ng-click="moveToLogModal.open(schedule)"> Click </button>
+          </td>
         </tr>
 
         </table>
@@ -64,6 +69,37 @@
   </div>
 </div>
 </script>
+
+
+  <script type="text/ng-template" id="moveToLogModal.html">
+    <div ng-controller="ScheduleCtrl">
+    <div class="modal" tabindex="-1" id="moveLogDiv" role="dialog" aria-labelledby="moveToLog" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="moveToLogLabel">Move To Logs?</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form name = "AddLog">
+            <div class="form-group">
+              <label for="completed">Completed?</label>
+              <input type="checkbox" class="form-control" id="completedInput" ng-model="completed">
+            </div>
+            <div class="form-group">
+              <label for="reason">Reason</label>
+              <input type="text" class="form-control" id="reasonInput" ng-model="reason" placeholder="I (completed/did not complete) this because..." >
+            </div>
+          </form>
+          <button type="button" class="btn btn-warning" ng-click="$parent.addLog(model.schedule._id); $parent.deleteSchedule(model.schedule._id)">Edit</button>
+        </div>
+      </div>
+    </div>
+    </div>
+    </div>
+    </script>
 
   <!-- Edit Modal-->
 <script type="text/ng-template" id="editModalSchedule.html">

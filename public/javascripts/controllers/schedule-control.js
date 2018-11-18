@@ -3,6 +3,8 @@ cs480App.controller('ScheduleCtrl',
  ['$scope', 'RestService', function ($scope, RestService) {
    $scope.editModalSchedule = new ShowDataToModal();
    $scope.addModalSchedule = new ShowDataToModal();
+   $scope.moveToLogModal = new ShowDataToModal();
+   
    $scope.user_id = "5bf0fa700322c304dc96db7f";
 
   //Return schedule and update schedule page
@@ -29,6 +31,19 @@ cs480App.controller('ScheduleCtrl',
             console.log("Error in adding schdule");
         });
   };
+
+    //Add a schedule to DB
+    $scope.addLog = function (scheduleId){
+      var log = {"_id" : scheduleId, "description" : $scope.description, "startDate" : $scope.startDate, "endDate" : $scope.endDate, "completed" : $scope.completed, "reason": $scope.reason};
+        RestService.addLog($scope.user_id, log)
+          .then(function successCallback(response){
+              console.log("Inserted Log in DB.");
+              $scope.getSchedule();
+              $scope.addModalSchedule.close();
+          }, function errorCallback(response){
+              console.log("Error in adding schdule");
+          });
+    };
 
   //Edit a schedule to DB
   $scope.editSchedule = function (scheduleId){
@@ -76,6 +91,41 @@ cs480App.directive('editModalSchedule', [function() {
       });
     },
     templateUrl:'editModalSchedule.html' ,
+  };
+}]);
+
+cs480App.directive('moveToLogModal', [function() {
+  return {
+    restrict: 'E',
+    scope: {
+      model: '=',
+      description: '=',
+      startDate: '=', 
+      endDate: '='
+    },
+    link: function(scope, element, attributes) {
+      scope.$watch('model.visible', function(newValue) {
+        var modalElement = element.find('.modal');
+        modalElement.modal(newValue ? 'show' : 'hide');
+      });
+
+      element.on('shown.bs.modal', function() {
+        scope.$evalAsync(function() {
+            scope.model.visible = true;
+            scope.description = scope.model.data.description;
+            scope.startDate = new Date(scope.model.data.startDate);
+            scope.endDate = new Date(scope.model.data.endDate);
+        });
+      });
+
+      element.on('hidden.bs.modal', function() {
+        scope.$evalAsync(function() {
+            scope.model.visible = false;
+            element.find('.modal').find('form').trigger('reset');
+        });
+      });
+    },
+    templateUrl:'moveToLogModal.html' ,
   };
 }]);
 
