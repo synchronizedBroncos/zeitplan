@@ -21,6 +21,12 @@ var ItemsSchema = mongoose.Schema({
     }
   }],
   schedule: [{
+
+    title: 
+    {
+      type: String
+    },
+
     description: {
       type: String
     },
@@ -70,6 +76,7 @@ module.exports.getItemsByUserId = function(userId, callback){
 }
 
 module.exports.getTtrByUserId = function(userId, callback){
+  console.log("HIIIIIIIIIIII ttr");
   var query = {user: userId};
   Items.findOne(query, callback).select('ttr');
 }
@@ -88,9 +95,26 @@ module.exports.editTTRByUserId = function(userId, ttr, callback){
 }
 
 module.exports.getScheduleByUserId = function(userId, callback){
+  console.log("HIIIIIIIIIIII");
   var query = {user: userId};
   Items.findOne(query, callback).select('schedule');
 }
+
+/*
+module.exports.addScheduleByUserId = function(userId, callback){
+  var query = {user: userId};
+  Items.findOneAndUpdate({user:userId},{$push:{schdule:addSchedule}}, callback);
+}
+
+module.exports.removeScheduleByUserId = function(userId, scheduleId, callback){
+  Items.findOneAndUpdate({user:userId}, {$pull: {schedule:{_id:scheduleId}}}, callback);
+}
+
+module.exports.editScheduleByUserId = function(userId, schdule, callback){
+  Items.findOneAndUpdate({user:userId, "schedule._id": schedule._id},{
+    $set: {'schdule.$.title': schedule.newTitle  ,schdule.description, 'schdule.$.description': schdule.description, 'schdule.$.startDate': schdule.newStartDate, 'schedule.$.endDate': schedule.newEndDate}}, callback);
+}
+*/
 
 module.exports.getLogsByUserId = function(userId, callback){
   var query = {user: userId};
