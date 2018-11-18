@@ -1,1 +1,20 @@
-<h1>LOGS</h1>
+	<div ng-controller="LogCtrl">
+		<h1>LOGS</h1>
+		<div class="btn-group" role="group" aria-label="Basic example">
+			<button type="button" class="btn btn-outline-dark" data-toggle="button" aria-pressed="false" autocomplete="off">All</button>
+			<button type="button" class="btn btn-outline-success" data-toggle="button" aria-pressed="false" autocomplete="off">Complete</button>
+			<button type="button" class="btn btn-outline-danger" data-toggle="button" aria-pressed="false" autocomplete="off">Incomplete</button>
+		</div>
+
+			<ul id="log_cards">
+				<div ng-repeat="log in logs" class="list-group">
+					<a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+						<div class="d-flex w-100 justify-content-between">
+							<small>Started: {{ log.startDate }} End: {{ log.endDate }} </small>
+						</div>
+						<p class="mb-1">{{ log.description }}</p>
+						<small>Completed: {{ log.completed }} </small>
+					</a>
+				</div>
+			</ul>
+		</div>
