@@ -3,6 +3,7 @@ var router = express.Router();
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var User = require('../models/user');
+var Item = require('../models/items');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
@@ -100,6 +101,17 @@ router.post('/register', function(req, res, next) {
     User.createUser(newUser, function(err, user){
       if(err) throw err;
       console.log(user);
+      var newItem = new Item({
+        user: user.id,
+        username: user.username,
+        ttr: [],
+        schedule: [],
+        logs: []
+      });
+      Item.createItem(newItem, function(err, item){
+        if(err) throw err;
+        console.log(item);
+      });
     });
     req.flash('message', 'You are now registered and can login');
     res.location('/users/login');
