@@ -18,6 +18,19 @@ var UserSchema = mongoose.Schema({
   },
   phoneNumber: {
     type: String
+  },
+  settings: {
+    notificationTypes: {
+      textMessage: {
+        type: Boolean
+      },
+      email: {
+        type: Boolean
+      },
+      pushNotification: {
+        type: Boolean
+      }
+    }
   }
 });
 
