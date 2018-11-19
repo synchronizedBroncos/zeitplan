@@ -9,10 +9,12 @@ var LocalStrategy = require('passport-local').Strategy;
 var expressValidator = require('express-validator');
 var flash = require('connect-flash');
 var bcrypt = require('bcryptjs');
-var bodyParser = require('body-parser')
+var bodyParser = require('body-parser');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var senderRouter = require('./routes/sender');
+var notificationsRouter = require('./routes/notifications');
 
 var app = express();
 
@@ -71,6 +73,8 @@ app.get('*', function(req, res, next){
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/api/sender', senderRouter);
+app.use('/api/notifications', notificationsRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
