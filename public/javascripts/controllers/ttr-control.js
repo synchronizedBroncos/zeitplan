@@ -38,7 +38,6 @@ cs480App.controller('TTRCntrl',
 
   //Return ttr and update ttr page
   $scope.getTTR = function ( ) {
-    console.log("user id to use:", $scope.user_id);
     RestService.getTTR($scope.user_id)
         .then(function successCallback(response){
             $scope.ttrs = response.data.ttr;
