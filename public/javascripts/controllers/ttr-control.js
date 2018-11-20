@@ -4,14 +4,17 @@ cs480App.controller('TTRCntrl',
    $scope.editModal = new ShowDataToModal();
    $scope.addModal = new ShowDataToModal();
 
-   $scope.user_id = "unresolved";
-   RestService.getCurrentUserId()
-       .then(function successCallback(response){
-           $scope.user_id = response.data;
-           $scope.getTTR();
-       }, function errorCallback(response){
-          console.log("Error in getting current user id");
-       });
+   $scope.checkUserId = function checkUserId() {
+     $scope.$watch('$parent.user_id', function(newVal, oldVal){
+       $scope.user_id = newVal;
+       if($scope.user_id !== "unresolved") {
+         $scope.getTTR();
+       }
+     });
+   }
+
+   $scope.checkUserId();
+
    $scope.selectTTR = [];
 
    $scope.selectedTTR = function (ttrId, checkStatus){
@@ -35,6 +38,7 @@ cs480App.controller('TTRCntrl',
 
   //Return ttr and update ttr page
   $scope.getTTR = function ( ) {
+    console.log("user id to use:", $scope.user_id);
     RestService.getTTR($scope.user_id)
         .then(function successCallback(response){
             $scope.ttrs = response.data.ttr;
