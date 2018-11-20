@@ -108,7 +108,7 @@ router.get('/api/logs/:user_id', function (req, res, next) {
 });
 
 //POST request to add log to DB
-router.post('/api/addLog/:user_id', function (req, res, next) {
+router.post('/api/logs/:user_id', function (req, res, next) {
   let log = req.body;
   Items.addScheduleByUserId(req.params.user_id, log, function(err,log){
   if(err){
@@ -152,18 +152,6 @@ router.post('/api/editTTR/:user_id', function(req,res,next){
     }
     else {
       res.json(log);
-    }
-  });
-});
-
-router.post('/api/editTTR/:user_id', function (req, res, next) {
-  let ttr = req.body;
-  Items.editTTRByUserId(req.params.user_id, ttr, function (err, ttr) {
-    if (err) {
-      throw err;
-    }
-    else {
-      res.json(ttr);
     }
   });
 });

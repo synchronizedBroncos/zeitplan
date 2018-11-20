@@ -64,7 +64,7 @@ cs480App.factory('RestService', function($http) {
 
   service.addLog = function(user_id, data){
     return $http({
-        url: urlBase + 'api/addLog/' + user_id,
+        url: urlBase + 'api/logs/' + user_id,
         method: "POST",
         data: data,
       }).then(function successCallback(response) {
