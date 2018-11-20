@@ -66,16 +66,24 @@
       </div>
       <div class="modal-body">
         <form name="editTTR">
-          <div class="form-group">
+          <div ng-show="!showSchedule" class="form-group">
             <label for="editDescrip">Description</label>
-            <input type="text" class="form-control" id="editDescrip" ng-init='model.data.description'ng-model="description" ng-value="model.ttr.description">
+            <input type="text" class="form-control" id="editDescrip" ng-model="description" ng-value="model.data.description">
           </div>
-          <div class="form-group">
+          <div ng-show="!showSchedule" class="form-group">
             <label for="editDate">Due Date</label>
             <input type="date" class="form-control" id="editDate" ng-model="dueDate" ng-value="model.data.dueDate | date:'yyyy-MM-dd'">
           </div>
+          <div ng-show="showSchedule" class="form-group">
+            <label for="editDescrip">Schedule!!</label>
+            <input type="text" class="form-control" id="editDescrip" ng-model="description" ng-value="model.data.description">
+          </div>
+          <div ng-show="showSchedule" class="form-group">
+            <label for="editDate">Start Date!!!</label>
+            <input type="date" class="form-control" id="editDate" ng-model="dueDate" ng-value="model.data.dueDate | date:'yyyy-MM-dd'">
+          </div>
         </form>
-        <button type="button" class="btn btn-info">Add to Schedule</button> <!--ng-click -->
+        <button type="button" class="btn btn-info" ng-click="showSchedule=true">Add to Schedule</button> <!--ng-click -->
         <button type="button" class="btn btn-warning" ng-click="$parent.editTTR(model.data._id)">Edit</button>
         <button type="button" class="btn btn-danger" ng-click="$parent.deleteTTR(model.data._id)">Delete</button>
       </div>
