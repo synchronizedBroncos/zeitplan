@@ -4,7 +4,7 @@ cs480App.controller('ScheduleCtrl',
    $scope.editModalSchedule = new ShowDataToModal();
    $scope.addModalSchedule = new ShowDataToModal();
    $scope.moveToLogModal = new ShowDataToModal();
-   
+
    $scope.user_id = "5bf0fa700322c304dc96db7f";
 
   //Return schedule and update schedule page
@@ -17,7 +17,7 @@ cs480App.controller('ScheduleCtrl',
         });
   };
 
-  $scope.getSchedule();   
+  $scope.getSchedule();
 
   //Add a schedule to DB
   $scope.addSchedule = function (){
@@ -65,7 +65,7 @@ cs480App.directive('editModalSchedule', [function() {
     scope: {
       model: '=',
       description: '=',
-      startDate: '=', 
+      startDate: '=',
       endDate: '='
     },
     link: function(scope, element, attributes) {
@@ -100,7 +100,7 @@ cs480App.directive('moveToLogModal', [function() {
     scope: {
       model: '=',
       description: '=',
-      startDate: '=', 
+      startDate: '=',
       endDate: '='
     },
     link: function(scope, element, attributes) {

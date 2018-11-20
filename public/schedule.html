@@ -4,7 +4,7 @@
 
      <edit-modal-schedule model="editModalSchedule", description="$parent.description", start-date="$parent.startDate", end-date="$parent.endDate"></edit-modal-schedule>
      <add-modal-schedule model="addModalSchedule",  description="$parent.description" ,start-date="$parent.startDate", end-date="$parent.endDate"></add-modal-schedule>
-     <add-modal-log model="moveToLogModal",  description="$parent.description" ,start-date="$parent.startDate", end-date="$parent.endDate"></add-modal-log>
+     <move-to-log-modal model="moveToLogModal",  description="$parent.description" ,start-date="$parent.startDate", end-date="$parent.endDate"></move-to-log-modal>
 
     <button type="button" class="button btn btn-primary scheduleButton" ng-click='addModalSchedule.open()'>Add</button>
     <button type="button" class="btn btn-danger scheduleButton">Delete</button> <!--ng-click -->
@@ -72,7 +72,7 @@
 
 
   <script type="text/ng-template" id="moveToLogModal.html">
-    <div ng-controller="ScheduleCtrl">
+    <div>
     <div class="modal" tabindex="-1" id="moveLogDiv" role="dialog" aria-labelledby="moveToLog" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
