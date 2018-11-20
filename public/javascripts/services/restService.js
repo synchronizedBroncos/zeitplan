@@ -50,6 +50,29 @@ cs480App.factory('RestService', function($http) {
     });
   }
 
+  service.editSchedule = function(user_id, data){
+    return $http({
+        url: urlBase + 'api/editSchedule/' + user_id,
+        method: "POST",
+        data: data,
+      }).then(function successCallback(response) {
+        return response;
+    }, function errorCallback(response) {
+        return response;
+    });
+  }
+
+  service.deleteSchedule = function(user_id, schedule_id){
+    return $http({
+        url: urlBase + 'api/removeSchedule/' + user_id +"/" + schedule_id,
+        method: "DELETE",
+      }).then(function successCallback(response) {
+        return response;
+    }, function errorCallback(response) {
+        return response;
+    });
+  };
+
   service.postUser = function(userInfo){
     return $http.post('https://reqres.in/api/users', userInfo);
   };
@@ -60,19 +83,6 @@ cs480App.factory('RestService', function($http) {
 
   service.getLogs = function(user_id){
     return $http.get(urlBase + '/api/logs/' + user_id);
-  }
-
-  service.editSchedule = function(user_id, data){
-    console.log("edit");
-    return $http({
-        url: urlBase + 'api/editSchedule/' + user_id,
-        method: "POST",
-        data: data,
-      }).then(function successCallback(response) {
-        return response;
-    }, function errorCallback(response) {
-        return response;
-    });
   }
 
   service.editTTR = function(user_id, data){

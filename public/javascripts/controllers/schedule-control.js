@@ -3,7 +3,17 @@ cs480App.controller('ScheduleCtrl',
  ['$scope', 'RestService', function ($scope, RestService) {
    $scope.editModalSchedule = new ShowDataToModal();
    $scope.addModalSchedule = new ShowDataToModal();
-   $scope.user_id = "5bf0fa700322c304dc96db7f";
+
+  $scope.user_id = "unresolved";
+   RestService.getCurrentUserId()
+       .then(function successCallback(response){
+           $scope.user_id = response.data;
+           $scope.getSchedule();
+       }, function errorCallback(response){
+          console.log("Error in getting current user id");
+       });
+       
+  $scope.selectSchedule = [];
 
   //Return schedule and update schedule page
   $scope.getSchedule = function ( ) {
@@ -13,9 +23,37 @@ cs480App.controller('ScheduleCtrl',
         }, function errorCallback(response){
            console.log("Error in getting Schedule");
         });
-  };
+  };  
 
-  $scope.getSchedule();   
+   $scope.selectedSchedule = function (scheduleId, checkStatus){
+     if(!$scope.selectSchedule.includes(scheduleId) && checkStatus == false){
+       $scope.selectSchedule.push(scheduleId);
+     }
+     if(checkStatus==true){
+       var index = $scope.selectSchedule.indexOf(scheduleId);
+       $scope.selectSchedule.splice(index, 1);
+     }
+   };
+
+   $scope.deleteSelectedSchedule = function(){
+     if($scope.selectSchedule.length > 0){
+       angular.forEach($scope.selectSchedule, function(value,key){
+         $scope.deleteSchedule(value);
+       });
+       $scope.selectSchedule.length = 0;
+     }
+   };
+
+    $scope.deleteSchedule = function (scheduleId){
+    RestService.deleteSchedule($scope.user_id, scheduleId)
+      .then(function successCallback(response){
+          console.log("Removed Schedule from DB.");
+          $scope.getSchedule();
+          $scope.editModalSchedule.close();
+      }, function errorCallback(response){
+          $log.log("Error removing Schedule from DB.");
+      });
+  };
 
   //Add a schedule to DB
   $scope.addSchedule = function (){
@@ -36,6 +74,7 @@ cs480App.controller('ScheduleCtrl',
       RestService.editSchedule($scope.user_id, schedule)
         .then(function successCallback(response){
             console.log("Updated Data in DB.");
+            console.log(response);
             $scope.getSchedule();
             $scope.editModalSchedule.close();
         }, function errorCallback(response){
@@ -85,8 +124,8 @@ cs480App.directive('addModalSchedule', [function() {
     scope: {
       model: '=',
       description: '=',
-      startDate: '=',
-      endDate: '='
+      startDate: '=', 
+      endDate : '='
     },
     link: function(scope, element, attributes) {
       scope.$watch('model.visible', function(newValue) {
@@ -98,6 +137,10 @@ cs480App.directive('addModalSchedule', [function() {
         scope.$evalAsync(function() {
             scope.model.visible = true;
             scope.description = '';
+            scope.startDate = undefined;
+            scope.endDate = undefined;
+            scope.startTime = '';
+            scope.endTime = '';
             element.find('.modal').find('form').trigger('reset');
         });
       });
@@ -107,7 +150,6 @@ cs480App.directive('addModalSchedule', [function() {
             scope.model.visible = false;
         });
       });
-
     },
     templateUrl:'addModalSchedule.html',
   };

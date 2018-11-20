@@ -55,18 +55,6 @@ router.get('/api/schedule/:user_id', function(req,res,next){
   });
 });
 
-router.post('/api/editSchedule/:user_id', function(req,res,next){
-    let schedule = req.body;
-    Items.editScheduleByUserId(req.params.user_id, schedule, function(err,ttr){
-    if(err){
-      throw err;
-    }
-    else{
-      res.json(schedule);
-    }
-    });
-  });
-
 router.post('/api/addSchedule/:user_id', function(req,res,next){
     let schedule = req.body;
     Items.addScheduleByUserId(req.params.user_id, schedule, function(err,schedule){
@@ -76,6 +64,30 @@ router.post('/api/addSchedule/:user_id', function(req,res,next){
     else{
       res.json(schedule);
     }
+    });
+  });
+
+router.post('/api/editSchedule/:user_id', function(req,res,next){
+    let schedule = req.body;
+    Items.editScheduleByUserId(req.params.user_id, schedule, function(err,schedule){
+    if(err){
+      throw err;
+    }
+    else{
+      res.json(schedule);
+    }
+    });
+  });
+
+router.delete('/api/removeSchedule/:user_id/:schedule_id', function(req,res){
+    let schedule = req.body;
+    Items.removeScheduleByUserId(req.params.user_id, req.params.schedule_id, function(err,schedule){
+      if(err){
+        throw err;
+      }
+      else{
+        res.json({message : "Sucessfully Deleted schedule!"});
+      }
     });
   });
 
