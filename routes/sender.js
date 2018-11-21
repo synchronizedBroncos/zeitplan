@@ -19,7 +19,7 @@ router.post('/sendSMS', (req, res) => {
 });
 
 // requires the email to send to, subject, and text
-router.post('/sendEmail', async (req, res) => {
+router.post('/sendEmail', (req, res) => {
   const { error } = validateEmail(req.body); //result.error
   if(error) return res.status(400).send(error.details[0].message);
 
