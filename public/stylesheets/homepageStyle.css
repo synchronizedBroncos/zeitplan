@@ -45,6 +45,16 @@ a:focus {
     border: none;
 }
 
+#bottomNavbar{
+    background-color: black;
+    overflow: hidden;
+    bottom: 0;
+    width: 100%;
+    display:none;
+    text-align: center;
+    z-index:999;
+}
+
 .line {
     width: 100%;
     height: 1px;
@@ -207,13 +217,27 @@ a.article:hover {
 ----------------------------------------------------- */
 
 @media (max-width: 768px) {
+    #bottomNavbar{
+      display:inline-block;
+      position:fixed;
+    }
+    #bottomNavbar a {
+        float: left;
+        display: inline-block;
+        color: white;
+        padding: 2%;
+        width:25%;
+    }
+    #menuSelect{
+      display:none;
+    }
     #sidebar {
-        margin-left: -250px;
+      display: none;
     }
     #sidebar.active {
         margin-left: 0;
     }
-    #sidebarCollapse span {
+    #sidebarCollapse {
         display: none;
     }
 }

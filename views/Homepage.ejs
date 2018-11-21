@@ -3,15 +3,16 @@
 
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
   <title>Homepage</title>
 
-
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-  <link rel="stylesheet" href="/stylesheets/homepageStyle.css">
   <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+  <script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="/stylesheets/homepageStyle.css">
   <link rel="stylesheet" type="text/css" href="/stylesheets/loading-bar.css"/>
   <link rel="stylesheet" type="text/css" href="/stylesheets/clockstyle.css"/>
   <link rel="stylesheet" href="/stylesheets/logsStyle.css"/>
@@ -23,21 +24,16 @@
   <script src="/javascripts/controllers/schedule-control.js"></script>
   <script src="/javascripts/controllers/ttr-control.js"></script>
   <script src="/javascripts/controllers/log-control.js"></script>
-  <script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"></script>
   <script src="/javascripts/libraries/loading-bar.js"></script>
   <script src="/javascripts/features/clock.js"></script>
 </head>
 
 <body ng-controller="HomeCtrl">
   <setting-modal model="settingModal" user_id="user_id" text-status="textStatus" email-status="emailStatus" push-status="pushStatus"></setting-modal>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+    <nav id="topNavbar" class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
       <span><button type="button" id="sidebarCollapse" class="btn btn-info" ng-click="toggleSidebar()"> <i class="fas fa-align-left"></i></button></span>
       <a class="navbar-brand" href="#">ZEITPLAN</a>
-      <ul class="navbar-nav mr-auto">
-
-      </ul>
-      <ul class="navbar-nav">
+      <ul id="menuSelect" class="navbar-nav">
         <li class="nav-item">
           <a class="nav-link" href="#" ng-click="settingModal.open();getSettings()">Settings</a>
         </li>
@@ -48,13 +44,25 @@
           <a class="nav-link" href="/users/logout">Sign Out</a>
         </li>
       </ul>
-    </nav>
+      <div class="dropdown">
+  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Dropdown
+  </button>
+  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+    <a class="dropdown-item" href="#">Action</a>
+    <a class="dropdown-item" href="#">Another action</a>
+    <a class="dropdown-item" href="#">Something else here</a>
+  </div>
+</div>
 
+    </nav>
+<!-- Is this needed?-->
   <div id="navbar" class="collapse navbar-collapse">
     <ul class="nav navbar-nav navbar-right">
       <li><a href="#">Sign Out</a></li>
     </ul>
   </div>
+
 
   <div class="container-fluid">
     <div class="row">
@@ -62,7 +70,7 @@
     <nav id="sidebar" class = "col-md-2 d-md-block sidebar" ng-class="sidebarActive">
       <ul class="Sidebar_Features list-unstyled">
         <li ng-class="{active: activeTab =='ttr'}">
-          <a id="ttrLink" ng-click='activeTab="ttr"' onClick="showTimer(false);">TTR</a>
+          <a ng-click='activeTab="ttr"' onClick="showTimer(false);">TTR</a>
         </li>
 
         <li ng-class="{active: activeTab == 'schedule'}">
@@ -79,6 +87,14 @@
       </ul>
       <hr>
     </nav>
+
+    <!-- Bottom SideBar-->
+    <div id="bottomNavbar" class="navbar-fixed-bottom">
+      <a ng-click='activeTab="ttr"' onClick="showTimer(false);">TTR</a>
+      <a ng-click='activeTab="schedule"' onClick="showTimer(false);">SCHED</a>
+      <a ng-click='activeTab="logs"' onClick="showTimer(false);">LOGS</a>
+      <a ng-click='activeTab="pomodoro";' onClick="showTimer(true);">POMO</a>
+    </div>
 
 
     <!-- Page Content  -->
