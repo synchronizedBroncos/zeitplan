@@ -57,6 +57,17 @@ cs480App.controller('TTRCntrl',
         });
   };
 
+  $scope.addTTRToSchedule = function (){
+    var schedule = {"description" : $scope.description, "endDate" : $scope.endDate, "startDate" : $scope.startDate, "notification": $scope.notifySchedule};
+    RestService.addSchedule($scope.user_id, schedule)
+      .then(function successCallback(response){
+          console.log("Added TTR to Schedule.");
+          $scope.editModal.close();
+      }, function errorCallback(response){
+          $log.log("Error add TTR to Schedule.");
+      });
+  };
+
   //Add a ttr to DB
   $scope.addTTR = function (){
     var ttr = {"description" : $scope.description, "dueDate" : $scope.dueDate};
@@ -89,7 +100,10 @@ cs480App.directive('editModal', [function() {
     scope: {
       model: '=',
       description: '=',
-      dueDate: '='
+      dueDate: '=',
+      endDate: '=',
+      startDate: '=',
+      notifySchedule: '='
     },
     link: function(scope, element, attributes) {
       scope.$watch('model.visible', function(newValue) {
@@ -113,6 +127,7 @@ cs480App.directive('editModal', [function() {
         scope.$evalAsync(function() {
             scope.model.visible = false;
             element.find('.modal').find('form').trigger('reset');
+            scope.showSchedule = false;
         });
       });
 
