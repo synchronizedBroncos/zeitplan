@@ -23,7 +23,7 @@ Items.getAllSchedules(function(err,schedules) {
           let job = NodeSchedule.scheduleJob(Date.now() + 1000, function() {
             // item id is schedules[i].id
             // schedule id is schedules[i].schedule[j].id
-            notificationAction(schedules[i].user, schedules[i].schedule[j]);
+            // notificationAction(schedules[i].user, schedules[i].schedule[j]); //MOST IMPORTANT LINE HERE
           });
           map.set(schedules[i].schedule[j].id, job);
         }
