@@ -19,8 +19,8 @@
   <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.5/angular.min.js" integrity="sha256-QRJz3b0/ZZC4ilKmBRRjY0MgnVhQ+RR1tpWLYaRRjSo=" crossorigin="anonymous"></script>
   <script src="/javascripts/services/restService.js"></script>
-  <script src="/javascripts/controllers/schedule-control.js"></script>
   <script src="/javascripts/controllers/home-control.js"></script>
+  <script src="/javascripts/controllers/schedule-control.js"></script>
   <script src="/javascripts/controllers/ttr-control.js"></script>
   <script src="/javascripts/controllers/log-control.js"></script>
   <script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>
@@ -42,7 +42,7 @@
           <a class="nav-link" href="#" ng-click="settingModal.open();getSettings()">Settings</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">About</a>
+          <a class="nav-link" ng-click='activeTab="about";' onClick="showTimer(false);">About</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="/users/logout">Sign Out</a>
@@ -96,6 +96,9 @@
         <div ng-switch-when="pomodoro">
             <ng-include src="'pomodoro.html'"></ng-include>
         </div>
+        <div ng-switch-when="about">
+            <ng-include src="'about.html'"></ng-include>
+        </div>
       </div>
       <div id="pomodoroTimer" style="display:none;width:100%">
         <div id = "myItem1" class="ldBar label-center"
@@ -116,6 +119,14 @@
 
           <button class = "btn btn-primary" type="button" onclick="onClick()">Start Timer</button>
           <button class = "btn btn-danger" type="button" onclick="stop()">Stop Timer</button>
+          <script>
+            bar1 = new ldBar("#myItem1");
+            rangeValLabel = document.getElementById("rangeValLabel");
+            typeSelect = document.getElementById("typeForm");
+            slider = document.getElementById('slider');
+            secondsLabel = document.getElementById('currentTime');
+            rangeValLabel.innerHTML = slider.value;
+          </script>
         </div>
       </div>
     </div>
