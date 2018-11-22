@@ -3,8 +3,8 @@ var cs480App = angular.module('cs480App');
 cs480App.controller('HomeCtrl',
  ['$scope', 'RestService', function ($scope, RestService) {
    $scope.settingModal = new ShowDataToModal();
+   
    $scope.user_id = "unresolved";
-
    RestService.getCurrentUserId()
        .then(function successCallback(response){
            $scope.user_id = response.data;

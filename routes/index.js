@@ -13,6 +13,9 @@ const Task = require('../models/tasks');
 const Items = require('../models/items');
 const Users = require('../models/user');
 
+// require modules
+const Notifications = require('../modules/notificationsModule');
+
 //Nodemailer
 const nodemailer = require('nodemailer');
 
