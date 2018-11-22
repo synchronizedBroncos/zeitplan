@@ -73,6 +73,18 @@ cs480App.factory('RestService', function($http) {
     });
   };
 
+  service.sendScheduleToLogs = function(user_id, data){
+    return $http({
+        url: urlBase + 'api/sendScheduleToLogs/' + user_id,
+        method: "POST",
+        data: data,
+      }).then(function successCallback(response) {
+        return response;
+    }, function errorCallback(response) {
+        return response;
+    });
+  }
+
   service.postUser = function(userInfo){
     return $http.post('https://reqres.in/api/users', userInfo);
   };

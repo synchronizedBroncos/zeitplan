@@ -57,7 +57,7 @@ cs480App.controller('ScheduleCtrl',
 
   //Add a schedule to DB
   $scope.addSchedule = function (){
-    var schedule = {"description" : $scope.description, "startDate" : $scope.startDate, "endDate" : $scope.endDate};
+    var schedule = {"description" : $scope.description, "startDate" : $scope.startDate, "endDate" : $scope.endDate, "reason" : $scope.reason, "notification" : $scope.notification};
       RestService.addSchedule($scope.user_id, schedule)
         .then(function successCallback(response){
             console.log("Inserted schedule in DB.");
@@ -70,11 +70,23 @@ cs480App.controller('ScheduleCtrl',
 
   //Edit a schedule to DB
   $scope.editSchedule = function (scheduleId){
-    var schedule = {"_id": scheduleId, "description" : $scope.description, "startDate" : $scope.startDate, "endDate" : $scope.endDate};
+    var schedule = {"_id": scheduleId, "description" : $scope.description, "startDate" : $scope.startDate, "endDate" : $scope.endDate, "reason" : $scope.reason, "notification" : $scope.notification};
       RestService.editSchedule($scope.user_id, schedule)
         .then(function successCallback(response){
             console.log("Updated Data in DB.");
-            console.log(response);
+            $scope.getSchedule();
+            $scope.editModalSchedule.close();
+        }, function errorCallback(response){
+            console.log("Error in updating schedule");
+        });
+  };
+
+  $scope.sendScheduleToLogs = function (scheduleId){
+    var schedule = {"_id": scheduleId, "description" : $scope.description, "startDate" : $scope.startDate, "endDate" : $scope.endDate, "reason" : $scope.reason};
+      RestService.sendScheduleToLogs($scope.user_id, schedule)
+        .then(function successCallback(response){
+            console.log("Updated Data in DB.");
+            $scope.deleteSchedule(scheduleId);
             $scope.getSchedule();
             $scope.editModalSchedule.close();
         }, function errorCallback(response){
@@ -90,7 +102,9 @@ cs480App.directive('editModalSchedule', [function() {
       model: '=',
       description: '=',
       startDate: '=', 
-      endDate: '='
+      endDate: '=',
+      reason: '=',
+      notification: "="
     },
     link: function(scope, element, attributes) {
       scope.$watch('model.visible', function(newValue) {
@@ -102,8 +116,10 @@ cs480App.directive('editModalSchedule', [function() {
         scope.$evalAsync(function() {
             scope.model.visible = true;
             scope.description = scope.model.data.description;
+            scope.reason = scope.model.data.reason;
             scope.startDate = new Date(scope.model.data.startDate);
             scope.endDate = new Date(scope.model.data.endDate);
+            scope.notification = scope.model.data.notification;
         });
       });
 
@@ -125,7 +141,9 @@ cs480App.directive('addModalSchedule', [function() {
       model: '=',
       description: '=',
       startDate: '=', 
-      endDate : '='
+      endDate: '=',
+      reason: '=',
+      notification: "="
     },
     link: function(scope, element, attributes) {
       scope.$watch('model.visible', function(newValue) {
@@ -137,10 +155,10 @@ cs480App.directive('addModalSchedule', [function() {
         scope.$evalAsync(function() {
             scope.model.visible = true;
             scope.description = '';
+            scope.reason = '';
             scope.startDate = undefined;
             scope.endDate = undefined;
-            scope.startTime = '';
-            scope.endTime = '';
+            scope.notification = false;
             element.find('.modal').find('form').trigger('reset');
         });
       });

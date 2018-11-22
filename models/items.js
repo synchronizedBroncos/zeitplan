@@ -30,6 +30,9 @@ var ItemsSchema = mongoose.Schema({
     endDate: {
       type: Date
     },
+    reason: {
+      type: String
+    },
     notification: {
       type: Boolean
     }
@@ -113,7 +116,11 @@ module.exports.removeScheduleByUserId = function(userId, scheduleId, callback){
 
 module.exports.editScheduleByUserId = function(userId, schedule, callback){
   Items.findOneAndUpdate({user:userId, "schedule._id": schedule._id},{
-    $set: {'schedule.$.description': schedule.description, 'schedule.$.startDate': schedule.startDate, 'schedule.$.endDate': schedule.endDate}}, callback).select('schedule');
+    $set: {'schedule.$.description': schedule.description, 'schedule.$.startDate': schedule.startDate, 'schedule.$.endDate': schedule.endDate, 'schedule.$.reason': schedule.reason, 'schedule.$.notification': schedule.notification}}, callback).select('schedule');
+}
+
+module.exports.sendScheduleToLogs = function(userId, addSchedule, callback){
+  Items.findOneAndUpdate({user:userId},{$push:{logs:addSchedule}}, callback).select('logs');
 }
 
 module.exports.getLogsByUserId = function(userId, callback){

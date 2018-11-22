@@ -91,6 +91,18 @@ router.delete('/api/removeSchedule/:user_id/:schedule_id', function(req,res){
     });
   });
 
+router.post('/api/sendScheduleToLogs/:user_id', function(req,res,next){
+    let schedule = req.body;
+    Items.sendScheduleToLogs(req.params.user_id, schedule, function(err,schedule){
+    if(err){
+      throw err;
+    }
+    else{
+      res.json(schedule);
+    }
+    });
+  });
+
 router.get('/api/currentUserId', ensureAuthenticated, function(req,res,next){
   res.send(req.user.id);
 });
