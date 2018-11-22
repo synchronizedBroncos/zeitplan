@@ -3,7 +3,7 @@
     <h1> SCHEDULE </h1>
 
      <edit-modal-schedule model="editModalSchedule", description="$parent.description", start-date="$parent.startDate", end-date="$parent.endDate", reason="$parent.reason", notification="$parent.notification"></edit-modal-schedule>
-     <move-to-log-modal model="moveToLogModal",  description="$parent.description" ,start-date="$parent.startDate", end-date="$parent.endDate"></move-to-log-modal>
+     <move-to-log-modal model="moveToLogModal",  description="$parent.description" ,start-date="$parent.startDate", end-date="$parent.endDate", notification="$parent.notification"></move-to-log-modal>
      <add-modal-schedule model="addModalSchedule",  description="$parent.description", start-date="$parent.startDate", end-date="$parent.endDate", reason="$parent.reason", notification="$parent.notification"></add-modal-schedule>
 
     <button type="button" class="button btn btn-primary scheduleButton" ng-click='addModalSchedule.open()'>Add</button>
@@ -72,6 +72,7 @@
   </div>
 </script>
 
+<!-- Move To Logs Modal -->
 <script type="text/ng-template" id="moveToLogModal.html">
   <div>
   <div class="modal" tabindex="-1" id="moveLogDiv" role="dialog" aria-labelledby="moveToLog" aria-hidden="true">
