@@ -30,9 +30,6 @@ var ItemsSchema = mongoose.Schema({
     endDate: {
       type: Date
     },
-    reason: {
-      type: String
-    },
     notification: {
       type: Boolean
     }
