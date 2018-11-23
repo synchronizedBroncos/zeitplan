@@ -5,16 +5,19 @@ cs480App.controller('ScheduleCtrl',
    $scope.addModalSchedule = new ShowDataToModal();
    $scope.moveToLogModal = new ShowDataToModal();
 
-  $scope.user_id = "unresolved";
-   RestService.getCurrentUserId()
-       .then(function successCallback(response){
-           $scope.user_id = response.data;
-           $scope.getSchedule();
-       }, function errorCallback(response){
-          console.log("Error in getting current user id");
-       });
+   $scope.checkUserId = function checkUserId() {
+    $scope.$watch('$parent.user_id', function(newVal, oldVal){
+      $scope.user_id = newVal;
+      if($scope.user_id !== "unresolved") {
+        $scope.getSchedule();
+      }
+    });
+  }
+
+  $scope.checkUserId();
        
   $scope.selectSchedule = [];
+  
 
   //Return schedule and update schedule page
   $scope.getSchedule = function ( ) {
