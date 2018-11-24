@@ -1,4 +1,5 @@
 @import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
+
 body {
     font-family: 'Poppins', sans-serif;
     background: #fafafa;
@@ -43,6 +44,16 @@ a:focus {
     box-shadow: none;
     outline: none !important;
     border: none;
+}
+
+#bottomNavbar{
+    background-color: black;
+    overflow: hidden;
+    bottom: 0;
+    width: 100%;
+    display:none;
+    text-align: center;
+    z-index:999;
 }
 
 .line {
@@ -118,12 +129,20 @@ a[data-toggle="collapse"] {
     position: relative;
 }
 
-.dropdown-toggle::after {
+/* .dropdown-toggle::after {
     display: block;
     position: absolute;
     top: 50%;
     right: 20px;
     transform: translateY(-50%);
+} */
+
+
+.dropdown > .dropdown-menu {
+  display: none; //hides .dropdown-menu directly inside .dropdown
+}
+.dropdown.show > .dropdown-menu {
+  display: block; //shows .dropdown-menu directly inside .dropdown if it has class .show
 }
 
 ul ul a {
@@ -181,6 +200,7 @@ a.article:hover {
 }
 
 
+
 /* ---------------------------------------------------
     CONTENT STYLE
 ----------------------------------------------------- */
@@ -207,26 +227,43 @@ a.article:hover {
 ----------------------------------------------------- */
 
 @media (max-width: 768px) {
+  #mobileNav{
+    display:inline !important;
+    width:100%;
+  }
+  #desktopNav{
+    display:none;
+  }
+    #sidbarToggle{
+      display:none;
+    }
+    #bottomNavbar{
+      display:inline-block;
+      position:fixed;
+    }
+    #bottomNavbar a {
+        float: left;
+        display: inline-block;
+        color: white;
+        padding: 2%;
+        width:25%;
+    }
     #sidebar {
-        margin-left: -250px;
+      display: none;
     }
-    #sidebar.active {
-        margin-left: 0;
-    }
-    #sidebarCollapse span {
+    #sidebarCollapse {
         display: none;
+    }
+    #page-content{
+        margin-top:5%;
+        max-height: 85vh;
+        overflow-y: auto;
     }
 }
 
 /* ---------------------------------------------------
     TTR
 ----------------------------------------------------- */
-#ttrDiv{
-  width: 80%;
-  margin-top:1%;
-  margin-left: 5%;
-}
-
 #ttrTable td:first-child{
   width:10%;
 }
