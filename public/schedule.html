@@ -136,12 +136,9 @@
             <input type="checkbox" id="notifications" ng-model="notification" ng-value="false" ng-init='notification=false'>
           </div>
           </form>
-        <button type="button" class="btn btn-warning" ng-click="$parent.editSchedule(model.data._id)">Edit</button>
+        <button type="button" class="btn btn-success" ng-click="$parent.editSchedule(model.data._id)">Save</button>
         <button type="button" class="btn btn-danger" ng-click="$parent.deleteSchedule(model.data._id)">Delete</button>
         <br>
-        <br>
-        <button type="button" class="btn btn-success" ng-click="$parent.sendScheduleToLogs(model.data._id)">Complete</button>
-        <button type="button" class="btn btn-warning" ng-click="$parent.sendScheduleToLogs(model.data._id)">Incomplete</button>
       </div>
     </div>
   </div>
