@@ -19,6 +19,9 @@ var UserSchema = mongoose.Schema({
   phoneNumber: {
     type: String
   },
+  deviceTokens: [{
+    type: String
+  }],
   settings: {
     notificationTypes: {
       textMessage: {
@@ -47,6 +50,14 @@ module.exports.getNotificationInfoById = function(id, callback){
 module.exports.getUserByUsername = function(username, callback){
   var query = {username: username};
   User.findOne(query, callback);
+}
+
+module.exports.getDeviceTokensByUserId = function(userId, callback){
+  User.findOne({ _id: userId}, callback).select('deviceTokens');
+}
+
+module.exports.addDeviceTokenByUserId = function(userId, deviceToken, callback){
+  User.findOneAndUpdate({ _id: userId }, { $push: {deviceTokens: deviceToken} }, {new: true}, callback).select('deviceTokens');
 }
 
 module.exports.getSettingsByUserId = function(userId, callback){
