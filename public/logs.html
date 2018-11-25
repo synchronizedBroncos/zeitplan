@@ -14,9 +14,9 @@
 				<small class="col-sm-12">Reason: {{log.reason}}</small>
 			</div>
 			<div class="col-sm-6">
-				<small class="col-sm-12">Start Date: {{log.startDate}}</small>
+				<small class="col-sm-12">Start Date: {{log.startDate | date:'MM/dd/yyyy'}}</small>
 				<br>
-				<small class="col-sm-12">End Date: {{log.endDate}}</small>
+				<small class="col-sm-12">End Date: {{log.endDate | date:'MM/dd/yyyy'}}</small>
 				<br>
 				<small>Completed:{{log.completed}} </small>
 			</div>
