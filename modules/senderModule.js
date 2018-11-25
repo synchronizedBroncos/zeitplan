@@ -1,5 +1,6 @@
 const twilio = require('twilio');
 const nodemailer = require('nodemailer');
+const requestify = require('requestify');
 
 // required for twilio
 const accountSid = process.env.TWILIO_ACCOUNT_SID; // Your Account SID from www.twilio.com/console
@@ -54,6 +55,36 @@ module.exports.sendEmail = (email, subject, text) => {
       } else {
         resolve(info.response);
       }
+    });
+  });
+  return promise;
+}
+
+module.exports.sendPushNotification = (deviceTokenRecipient, notificationObject) => {
+  const promise = new Promise(function(resolve, reject) {
+    requestify.request('https://fcm.googleapis.com/fcm/send', {
+      method: 'POST',
+      body: {
+        notification: {
+          title: notificationObject.title,
+          body: notificationObject.body,
+          icon: notificationObject.icon,
+          click_action: notificationObject.click_action
+        },
+        to: deviceTokenRecipient
+      },
+      headers: {
+        'Authorization': 'key=' + process.env.FCM_SERVER_KEY
+      },
+      dataType: 'json'
+    })
+    .then(function(response) {
+      // get the response body
+      const responseBody = response.getBody();
+      resolve(responseBody);
+    }).catch(function(err) {
+      console.error("sendPushNotification Error:", err);
+      reject(Error(err))
     });
   });
   return promise;

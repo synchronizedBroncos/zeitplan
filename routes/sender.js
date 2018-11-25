@@ -33,6 +33,27 @@ router.post('/sendEmail', (req, res) => {
   });
 });
 
+router.post('/sendPushNotification', (req, res) => {
+  const { error } = validatePushNotification(req.body); //result.error
+  if(error) return res.status(400).send(error.details[0].message);
+
+  const notificationObject = {
+    title: req.body.title,
+    body: req.body.body,
+    icon: req.body.icon,
+    click_action: req.body.click_action
+  }
+
+  const pushPromise = Sender.sendPushNotification(req.body.deviceToken, notificationObject);
+  pushPromise.then(function(result) {
+    console.log("sendPushNotification Successful:", result);
+    res.send(result);
+  }, function(err) {
+    console.error("sendPushNotification Error:", err);
+    res.send(err);
+  });
+});
+
 // validation methods with Joi module
 function validateSMS(input) {
   const schema = {
@@ -48,6 +69,18 @@ function validateEmail(input) {
     email: Joi.string().email().required(),
     subject: Joi.string().required(),
     text: Joi.string().required()
+  };
+
+  return Joi.validate(input, schema);
+}
+
+function validatePushNotification(input) {
+  const schema = {
+    deviceToken: Joi.string().required(),
+    title: Joi.string().required(),
+    body: Joi.string().required(),
+    icon: Joi.string().required(),
+    click_action: Joi.string().required()
   };
 
   return Joi.validate(input, schema);

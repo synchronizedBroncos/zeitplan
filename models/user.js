@@ -44,7 +44,7 @@ module.exports.getUserById = function(id, callback){
 }
 
 module.exports.getNotificationInfoById = function(id, callback){
-  User.findById(id, callback).select('settings email phoneNumber -_id');
+  User.findById(id, callback).select('settings email phoneNumber deviceTokens -_id');
 }
 
 module.exports.getUserByUsername = function(username, callback){
