@@ -20,6 +20,8 @@
   <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.5/angular.min.js" integrity="sha256-QRJz3b0/ZZC4ilKmBRRjY0MgnVhQ+RR1tpWLYaRRjSo=" crossorigin="anonymous"></script>
   <script src="/javascripts/services/restService.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/5.5.9/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/5.5.9/firebase-messaging.js"></script>
   <script src="/javascripts/controllers/home-control.js"></script>
   <script src="/javascripts/controllers/schedule-control.js"></script>
   <script src="/javascripts/controllers/ttr-control.js"></script>
@@ -124,11 +126,12 @@
         </div>
       </div>
       <div id="pomodoroTimer" style="display:none;width:100%">
-        <div id = "myItem1" class="ldBar label-center"
-        style="width:100%;height:400px;margin:none;padding:none;",
+        <div id = "myItem1" class="ldBar"
+        style="width:100%;height:100%;display:block;margin:none;padding:none;",
         data-stroke="data:ldbar/res,gradient(0,1,#9df,#9fd,#df9,#fd9)",
         data-path="M10 20Q20 15 30 20Q40 25 50 20Q60 15 70 20Q80 25 90 20"
         ></div>
+        <div id="info">
         <label id="currentTime">0</label>
           <form id="typeForm">
               <input type="radio" name="type" value="Minutes" checked> Minutes<br>
@@ -151,14 +154,12 @@
             rangeValLabel.innerHTML = slider.value;
           </script>
         </div>
+        </div>
       </div>
     </div>
 </body>
 
 </body>
-<script src="https://www.gstatic.com/firebasejs/5.5.9/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/5.5.9/firebase-messaging.js"></script>
-<script src="/javascripts/features/firebaseNotifications.js"></script>
 <script src="/javascripts/features/clock.js"></script>
 <!--setting Modal-->
 <script type="text/ng-template" id="setting.html">

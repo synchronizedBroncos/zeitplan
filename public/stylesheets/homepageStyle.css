@@ -139,10 +139,10 @@ a[data-toggle="collapse"] {
 
 
 .dropdown > .dropdown-menu {
-  display: none; //hides .dropdown-menu directly inside .dropdown
+  display: none; 
 }
 .dropdown.show > .dropdown-menu {
-  display: block; //shows .dropdown-menu directly inside .dropdown if it has class .show
+  display: block; 
 }
 
 ul ul a {

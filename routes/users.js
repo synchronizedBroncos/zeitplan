@@ -5,11 +5,6 @@ var LocalStrategy = require('passport-local').Strategy;
 var User = require('../models/user');
 var Item = require('../models/items');
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
-});
-
 router.get('/register', checkAuthenticated, function(req, res, next) {
   res.render('register', {title: 'Register', expressFlash: req.flash('message'), errors: []});
 });
@@ -20,6 +15,41 @@ router.get('/login', checkAuthenticated, function(req, res, next) {
     message = req.flash('message');
   }
   res.render('login', {title: 'Login', expressFlash: message});
+});
+
+router.post('/addDeviceToken/:userId', function(req,res,next){
+  const deviceToken = req.body.deviceToken;
+  User.getDeviceTokensByUserId(req.params.userId, function(err,queryObject){
+    if(err){
+      console.error(err);
+      throw err;
+    }
+    else{
+      console.log("deviceTokens",queryObject);
+      let deviceTokenFound = false;
+      let counter = 0;
+      while(!deviceTokenFound && counter < queryObject.deviceTokens.length) {
+        if(queryObject.deviceTokens[counter] === deviceToken) {
+          deviceTokenFound = true;
+        }
+        counter++;
+      }
+
+      if(deviceTokenFound) {
+        res.send("Device token already found in DB.");
+      } else {
+        User.addDeviceTokenByUserId(req.params.userId, deviceToken, function(err,deviceTokens){
+          if(err){
+            console.error(err);
+            throw err;
+          }
+          else{
+            res.json(deviceTokens);
+          }
+        });
+      }
+    }
+  });
 });
 
 router.post('/login',
@@ -90,11 +120,12 @@ router.post('/register', function(req, res, next) {
       phoneNumber: phoneNumber,
       username: username,
       password: password,
+      deviceTokens: [],
       settings: {
         notificationTypes: {
-          textMessage: true,
-          email: true,
-          pushNotification: true
+          textMessage: false,
+          email: false,
+          pushNotification: false
         }
       }
     });
