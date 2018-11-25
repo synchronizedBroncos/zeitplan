@@ -124,11 +124,12 @@
         </div>
       </div>
       <div id="pomodoroTimer" style="display:none;width:100%">
-        <div id = "myItem1" class="ldBar label-center"
-        style="width:100%;height:400px;margin:none;padding:none;",
+        <div id = "myItem1" class="ldBar"
+        style="width:100%;height:100%;display:block;margin:none;padding:none;",
         data-stroke="data:ldbar/res,gradient(0,1,#9df,#9fd,#df9,#fd9)",
         data-path="M10 20Q20 15 30 20Q40 25 50 20Q60 15 70 20Q80 25 90 20"
         ></div>
+        <div id="info">
         <label id="currentTime">0</label>
           <form id="typeForm">
               <input type="radio" name="type" value="Minutes" checked> Minutes<br>
@@ -150,6 +151,7 @@
             secondsLabel = document.getElementById('currentTime');
             rangeValLabel.innerHTML = slider.value;
           </script>
+        </div>
         </div>
       </div>
     </div>
