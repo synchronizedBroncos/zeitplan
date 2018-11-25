@@ -33,6 +33,18 @@ cs480App.factory('RestService', function($http) {
     });
   }
 
+  service.addDeviceToken = function(userId, deviceToken) {
+    return $http({
+      url: urlBase + '/users/addDeviceToken/' + userId,
+      method: "POST",
+      data: {deviceToken: deviceToken},
+    }).then(function successCallback(response) {
+      return response;
+    }, function errorCallback(response) {
+      return response;
+    });
+  }
+
 
   service.getSchedule = function(user_id){
     return $http.get(urlBase + '/api/schedule/' + user_id);

@@ -19,13 +19,13 @@ Items.getAllSchedules(function(err,schedules) {
         for(let j = 0; j < schedules[i].schedule.length; j++) {
           // date from schedule is line below, use that where Date.now() is currently
           // schedules[i].schedule[j].startDate
-          // TODO: check if schedules[i].schedule[j].notification is true before scheduling and adding to hashmap
-          let job = NodeSchedule.scheduleJob(Date.now() + 1000, function() {
-            // item id is schedules[i].id
-            // schedule id is schedules[i].schedule[j].id
-            // notificationAction(schedules[i].user, schedules[i].schedule[j]); //MOST IMPORTANT LINE HERE
-          });
-          map.set(schedules[i].schedule[j].id, job);
+          if(schedules[i].schedule[j].notification) {
+            let job = NodeSchedule.scheduleJob(Date.now() + 1000, function() { // TODO: change date here
+              // item id is schedules[i].id, schedule id is schedules[i].schedule[j].id
+              // notificationAction(schedules[i].user, schedules[i].schedule[j]); //MOST IMPORTANT LINE HERE
+            });
+            map.set(schedules[i].schedule[j].id, job);
+          }
         }
       }
     }
@@ -69,7 +69,15 @@ function notificationAction(userId, scheduleObject) {
 
       if(userObject.settings.notificationTypes.pushNotification) {
         // send push notification with schedule object info
-        // TODO: implement push notifications
+        const notificationObject = {
+          title: scheduleObject.description,
+          body: "From " + scheduleObject.startDate + " to " + scheduleObject.endDate,
+          icon: "https://banner2.kisspng.com/20180629/osc/kisspng-pet-sitting-puppy-dog-walking-dogs-for-good-dementia-5b364aa80fde58.445968431530284712065.jpg",
+          click_action: "http://localhost:3000"
+        }
+        for(let i = 0; i < userObject.deviceTokens.length; i++) {
+          sendPushNotification(userObject.deviceTokens[i], notificationObject);
+        }
       }
     }
   });
@@ -93,9 +101,13 @@ function sendEmailNotification(email, subject, text) {
   });
 }
 
-// TODO: complete push notification integration
-function sendPushNotification() {
-
+function sendPushNotification(deviceToken, notificationObject) {
+  const pushPromise = Sender.sendPushNotification(deviceToken, notificationObject);
+  pushPromise.then(function(result) {
+    console.log("SendPushNotification Successful:", result);
+  }, function(err) {
+    console.error("SendPushNotification Error:", err);
+  });
 }
 
 // function exports to be used in the schedule api calls
