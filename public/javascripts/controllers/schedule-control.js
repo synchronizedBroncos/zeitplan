@@ -15,9 +15,9 @@ cs480App.controller('ScheduleCtrl',
   }
 
   $scope.checkUserId();
-       
+
   $scope.selectSchedule = [];
-  
+
 
   //Return schedule and update schedule page
   $scope.getSchedule = function ( ) {
@@ -27,7 +27,7 @@ cs480App.controller('ScheduleCtrl',
         }, function errorCallback(response){
            console.log("Error in getting Schedule");
         });
-  };  
+  };
 
    $scope.selectedSchedule = function (scheduleId, checkStatus){
      if(!$scope.selectSchedule.includes(scheduleId) && checkStatus == false){
@@ -61,7 +61,21 @@ cs480App.controller('ScheduleCtrl',
 
   //Add a schedule to DB
   $scope.addSchedule = function (){
-    var schedule = {"description" : $scope.description, "startDate" : $scope.startDate, "endDate" : $scope.endDate, "reason" : $scope.reason, "notification" : $scope.notification};
+    $scope.startTime.setDate($scope.date.getDate());
+    $scope.startTime.setFullYear($scope.date.getFullYear());
+    $scope.startTime.setMonth($scope.date.getMonth());
+
+    $scope.endTime.setDate($scope.date.getDate());
+    $scope.endTime.setFullYear($scope.date.getFullYear());
+    $scope.endTime.setMonth($scope.date.getMonth());
+
+    if($scope.endTime < $scope.startTime){
+      $scope.endTime.setDate($scope.endTime.getDate() + 1);
+    }
+
+    var schedule = {"description" : $scope.description, "date" : $scope.date, "startTime" : $scope.startTime,
+    "endTime" : $scope.endTime, "notification" : $scope.notification};
+    console.log(schedule);
       RestService.addSchedule($scope.user_id, schedule)
         .then(function successCallback(response){
             console.log("Inserted schedule in DB.");
@@ -105,9 +119,8 @@ cs480App.directive('editModalSchedule', [function() {
     scope: {
       model: '=',
       description: '=',
-      startDate: '=', 
+      startDate: '=',
       endDate: '=',
-      reason: '=',
       notification: "="
     },
     link: function(scope, element, attributes) {
@@ -146,7 +159,9 @@ cs480App.directive('moveToLogModal', [function() {
       model: '=',
       description: '=',
       startDate: '=',
-      endDate: '='
+      endDate: '=',
+      notification: '='
+
     },
     link: function(scope, element, attributes) {
       scope.$watch('model.visible', function(newValue) {
@@ -180,9 +195,9 @@ cs480App.directive('addModalSchedule', [function() {
     scope: {
       model: '=',
       description: '=',
-      startDate: '=', 
-      endDate: '=',
-      reason: '=',
+      date: '=',
+      startTime: '=',
+      endTime: '=',
       notification: "="
     },
     link: function(scope, element, attributes) {
