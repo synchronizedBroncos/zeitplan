@@ -17,12 +17,10 @@ Items.getAllSchedules(function(err,schedules) {
     for(let i = 0; i < schedules.length; i++) {
       if(schedules[i].schedule.length > 0) {
         for(let j = 0; j < schedules[i].schedule.length; j++) {
-          // date from schedule is line below, use that where Date.now() is currently
-          // schedules[i].schedule[j].startDate
-          if(schedules[i].schedule[j].notification) {
-            let job = NodeSchedule.scheduleJob(Date.now() + 1000, function() { // TODO: change date here
+          if(schedules[i].schedule[j].notification && schedules[i].schedule[j].startDate && schedules[i].schedule[j].startDate.getTime() > new Date().getTime()) {
+            let job = NodeSchedule.scheduleJob(schedules[i].schedule[j].startDate, function() {
               // item id is schedules[i].id, schedule id is schedules[i].schedule[j].id
-              // notificationAction(schedules[i].user, schedules[i].schedule[j]); //MOST IMPORTANT LINE HERE
+              notificationAction(schedules[i].user, schedules[i].schedule[j]); //MOST IMPORTANT LINE HERE
             });
             map.set(schedules[i].schedule[j].id, job);
           }
@@ -31,11 +29,6 @@ Items.getAllSchedules(function(err,schedules) {
     }
   }
 });
-
-//TODO: handle edit schedule with hash map, you will need to get by objectId
-// you will need to edit the job by rescheduling
-//TODO: handle edit delete schedule
-// you will need to cancel the job
 
 // userId is the id of the user, used to get the settings
 // scheduleObject is the object of the schedule that we will notify the user of
@@ -111,16 +104,35 @@ function sendPushNotification(deviceToken, notificationObject) {
 }
 
 // function exports to be used in the schedule api calls
-// TODO: complete following methods
-// TODO: decide what parameters are necessary
-module.exports.addScheduleNotification = () => {
-
+module.exports.addScheduleNotification = (userId, scheduleObject) => {
+  // if notification is desired and start time is in future, schedule the notification
+  if(scheduleObject.notification && scheduleObject.startDate && scheduleObject.startDate.getTime() > new Date().getTime()) {
+    let job = NodeSchedule.scheduleJob(scheduleObject.startDate, function() {
+      notificationAction(userId, scheduleObject); //MOST IMPORTANT LINE HERE
+    });
+    map.set(scheduleObject.id, job);
+  }
 }
 
-module.exports.editScheduleNotification = () => {
+module.exports.editScheduleNotification = (userId, scheduleObject) => {
+  // if exists, cancel job
+  if(map.get(scheduleObject.id) !== null) {
+    map.get(scheduleObject.id).cancel();
+  }
 
+  // if notification is desired and start time is in future, schedule the notification
+  if(scheduleObject.notification && scheduleObject.startDate && scheduleObject.startDate.getTime() > new Date().getTime()) {
+    let job = NodeSchedule.scheduleJob(scheduleObject.startDate, function() {
+      notificationAction(userId, scheduleObject);
+    });
+    map.set(scheduleObject.id, job);
+  }
 }
 
-module.exports.removeScheduleNotification = () => {
-
+module.exports.removeScheduleNotification = (scheduleObject) => {
+  // if exists, cancel job and delete notification from hash map
+  if(map.get(scheduleObject.id) !== null) {
+    map.get(scheduleObject.id).cancel();
+    map.delete(scheduleObject.id);
+  }
 }
