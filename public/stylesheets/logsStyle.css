@@ -2,13 +2,13 @@
 	padding: 25px 50px 25px 50px;
 }
 
-#log_separator {
+.log-separator {
     border: 0;
     height: 1px;
     background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
 }
 
-#removeLogButton {
+.remove-log-btn {
 	padding: 5px;
 	border: none;
 	background: none;
