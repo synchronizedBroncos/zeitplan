@@ -19,7 +19,7 @@
           <th scope="col">End Time</th>
         </tr>
       </thead>
-      <tr ng-repeat="schedule in schedules">
+      <tr ng-repeat="schedule in schedules | orderBy: 'startDate'">
           <td><input type="checkbox" value="scheduleCheck" ng-model="checkStatus" ng-init='checkStatus=false' ng-click="selectedSchedule(schedule._id, checkStatus)"></td>
           <td ng-click="editModalSchedule.open(schedule)">{{ schedule.description }}</td>
           <td ng-click="editModalSchedule.open(schedule)">{{ schedule.startDate | date:'MM/dd/yyyy' }}</td>

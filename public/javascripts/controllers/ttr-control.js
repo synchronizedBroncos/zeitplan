@@ -61,7 +61,14 @@ cs480App.controller('TTRCntrl',
   };
 
   $scope.addTTRToSchedule = function (){
-    var schedule = {"description" : $scope.description, "endDate" : $scope.endDate, "startDate" : $scope.startDate, "notification": $scope.notifySchedule};
+    var schedule = {"description" : $scope.description, "date" : $scope.date, "endDate" : $scope.endDate, "startDate" : $scope.startDate, "notification": $scope.notifySchedule};
+    $scope.startDate.setDate($scope.$parent.date.getDate());
+    $scope.startDate.setFullYear($scope.$parent.date.getFullYear());
+    $scope.startDate.setMonth($scope.$parent.date.getMonth());
+
+    $scope.endDate.setDate($scope.$parent.date.getDate());
+    $scope.endDate.setFullYear($scope.$parent.date.getFullYear());
+    $scope.endDate.setMonth($scope.$parent.date.getMonth());
     RestService.addSchedule($scope.user_id, schedule)
       .then(function successCallback(response){
           console.log("Added TTR to Schedule.");
@@ -106,7 +113,8 @@ cs480App.directive('editModal', [function() {
       dueDate: '=',
       endDate: '=',
       startDate: '=',
-      notifySchedule: '='
+      notifySchedule: '=',
+      date: '='
     },
     link: function(scope, element, attributes) {
       scope.$watch('model.visible', function(newValue) {
@@ -123,6 +131,10 @@ cs480App.directive('editModal', [function() {
             }else{
                 scope.dueDate = null;
             }
+            scope.endDate = undefined;
+            scope.startDate = undefined;
+            scope.notifySchedule = false;
+            scope.date = undefined;
         });
       });
 
