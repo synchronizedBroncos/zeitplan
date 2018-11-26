@@ -17,8 +17,8 @@ Items.getAllSchedules(function(err,schedules) {
     for(let i = 0; i < schedules.length; i++) {
       if(schedules[i].schedule.length > 0) {
         for(let j = 0; j < schedules[i].schedule.length; j++) {
-          console.log("should get notification, here is the start date:", schedules[i].schedule[j].startDate);
           if(schedules[i].schedule[j].notification && schedules[i].schedule[j].startDate && schedules[i].schedule[j].startDate.getTime() > new Date().getTime()) {
+            // notification will be scheduled, all criteria met
             let job = NodeSchedule.scheduleJob(schedules[i].schedule[j].startDate, function() {
               // item id is schedules[i].id, schedule id is schedules[i].schedule[j].id
               notificationAction(schedules[i].user, schedules[i].schedule[j]); //MOST IMPORTANT LINE HERE
@@ -28,6 +28,7 @@ Items.getAllSchedules(function(err,schedules) {
         }
       }
     }
+    console.log("Finished setting up notifications for all users");
   }
 });
 
@@ -42,7 +43,7 @@ function notificationAction(userId, scheduleObject) {
   // notification: true }
   let reminderDescription = "Reminder: " + scheduleObject.description +
    "\nStart: " + scheduleObject.startDate;
-  if(scheduleObject.endDate !== null) {
+  if(!(scheduleObject.endDate == null)) {
     reminderDescription += "\nEnd: " + scheduleObject.endDate;
   }
 
@@ -118,22 +119,22 @@ module.exports.addScheduleNotification = (userId, scheduleObject) => {
 
 module.exports.editScheduleNotification = (userId, scheduleObject) => {
   // if exists, cancel job
-  if(map.get(scheduleObject.id) !== null) {
-    map.get(scheduleObject.id).cancel();
+  if(!(map.get(scheduleObject._id) == null)) {
+    map.get(scheduleObject._id).cancel();
   }
 
   // if notification is desired and start time is in future, schedule the notification
-  if(scheduleObject.notification && scheduleObject.startDate && scheduleObject.startDate.getTime() > new Date().getTime()) {
+  if(scheduleObject.notification && scheduleObject.startDate && new Date(scheduleObject.startDate).getTime() > new Date().getTime()) {
     let job = NodeSchedule.scheduleJob(scheduleObject.startDate, function() {
       notificationAction(userId, scheduleObject);
     });
-    map.set(scheduleObject.id, job);
+    map.set(scheduleObject._id, job);
   }
 }
 
 module.exports.removeScheduleNotification = (scheduleObject) => {
   // if exists, cancel job and delete notification from hash map
-  if(map.get(scheduleObject.id) !== null) {
+  if(!(map.get(scheduleObject.id) == null)) {
     map.get(scheduleObject.id).cancel();
     map.delete(scheduleObject.id);
   }
