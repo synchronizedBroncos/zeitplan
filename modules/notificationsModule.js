@@ -17,6 +17,7 @@ Items.getAllSchedules(function(err,schedules) {
     for(let i = 0; i < schedules.length; i++) {
       if(schedules[i].schedule.length > 0) {
         for(let j = 0; j < schedules[i].schedule.length; j++) {
+          console.log("should get notification, here is the start date:", schedules[i].schedule[j].startDate);
           if(schedules[i].schedule[j].notification && schedules[i].schedule[j].startDate && schedules[i].schedule[j].startDate.getTime() > new Date().getTime()) {
             let job = NodeSchedule.scheduleJob(schedules[i].schedule[j].startDate, function() {
               // item id is schedules[i].id, schedule id is schedules[i].schedule[j].id
@@ -39,10 +40,11 @@ function notificationAction(userId, scheduleObject) {
   // endDate: 2019-03-03T00:03:00.000Z,
   // startDate: 2019-05-05T10:30:00.000Z,
   // notification: true }
-
-  // TODO: if endDate is empty, do not include it in the reminder
-  const reminderDescription = "Reminder: " + scheduleObject.description +
-   "\nStart: " + scheduleObject.startDate + "\nEnd: " + scheduleObject.endDate;
+  let reminderDescription = "Reminder: " + scheduleObject.description +
+   "\nStart: " + scheduleObject.startDate;
+  if(scheduleObject.endDate !== null) {
+    reminderDescription += "\nEnd: " + scheduleObject.endDate;
+  }
 
   User.getNotificationInfoById(userId, function(error, userObject) {
     if(error) {

@@ -78,16 +78,16 @@ module.exports.getTtrByUserId = function(userId, callback){
 }
 
 module.exports.addTTRByUserId = function(userId, addTTR, callback){
-  Items.findOneAndUpdate({user:userId},{$push:{ttr:addTTR}}, callback).select('ttr');
+  Items.findOneAndUpdate({user:userId},{$push:{ttr:addTTR}}, {new: true}, callback).select('ttr');
 }
 
 module.exports.removeTTRByUserId = function(userId, ttrId, callback){
-  Items.findOneAndUpdate({user:userId}, {$pull: {ttr:{_id:ttrId}}}, callback).select('ttr');
+  Items.findOneAndUpdate({user:userId}, {$pull: {ttr:{_id:ttrId}}}, {new: true}, callback).select('ttr');
 }
 
 module.exports.editTTRByUserId = function(userId, ttr, callback){
   Items.findOneAndUpdate({user:userId, "ttr._id": ttr._id},{
-    $set: {'ttr.$.description': ttr.description, 'ttr.$.dueDate': ttr.dueDate}}, callback).select('ttr');
+    $set: {'ttr.$.description': ttr.description, 'ttr.$.dueDate': ttr.dueDate}}, {new: true}, callback).select('ttr');
 }
 
 // return schedules and user who it belongs to
@@ -107,21 +107,20 @@ module.exports.getScheduleByUserId = function(userId, callback){
 }
 
 module.exports.addScheduleByUserId = function(userId, addSchedule, callback){
-  console.log(addSchedule);
-  Items.findOneAndUpdate({user:userId},{$push:{schedule:addSchedule}}, callback).select('schedule');
+  Items.findOneAndUpdate({user:userId},{$push:{schedule:addSchedule}}, {new: true}, callback).select('schedule');
 }
 
 module.exports.removeScheduleByUserId = function(userId, scheduleId, callback){
-  Items.findOneAndUpdate({user:userId}, {$pull: {schedule:{_id:scheduleId}}}, callback).select('schedule');
+  Items.findOneAndUpdate({user:userId}, {$pull: {schedule:{_id:scheduleId}}}, {new: true}, callback).select('schedule');
 }
 
 module.exports.editScheduleByUserId = function(userId, schedule, callback){
   Items.findOneAndUpdate({user:userId, "schedule._id": schedule._id},{
-    $set: {'schedule.$.description': schedule.description, 'schedule.$.startDate': schedule.startDate, 'schedule.$.endDate': schedule.endDate, 'schedule.$.reason': schedule.reason, 'schedule.$.notification': schedule.notification}}, callback).select('schedule');
+    $set: {'schedule.$.description': schedule.description, 'schedule.$.startDate': schedule.startDate, 'schedule.$.endDate': schedule.endDate, 'schedule.$.reason': schedule.reason, 'schedule.$.notification': schedule.notification}}, {new: true}, callback).select('schedule');
 }
 
 module.exports.sendScheduleToLogs = function(userId, addSchedule, callback){
-  Items.findOneAndUpdate({user:userId},{$push:{logs:addSchedule}}, callback).select('logs');
+  Items.findOneAndUpdate({user:userId},{$push:{logs:addSchedule}}, {new: true}, callback).select('logs');
 }
 
 module.exports.getLogsByUserId = function(userId, callback){
