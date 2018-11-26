@@ -15,9 +15,9 @@ cs480App.controller('ScheduleCtrl',
   }
 
   $scope.checkUserId();
-       
+
   $scope.selectSchedule = [];
-  
+
 
   //Return schedule and update schedule page
   $scope.getSchedule = function ( ) {
@@ -27,7 +27,7 @@ cs480App.controller('ScheduleCtrl',
         }, function errorCallback(response){
            console.log("Error in getting Schedule");
         });
-  };  
+  };
 
    $scope.selectedSchedule = function (scheduleId, checkStatus){
      if(!$scope.selectSchedule.includes(scheduleId) && checkStatus == false){
@@ -61,7 +61,20 @@ cs480App.controller('ScheduleCtrl',
 
   //Add a schedule to DB
   $scope.addSchedule = function (){
-    var schedule = {"description" : $scope.description, "startDate" : $scope.startDate, "endDate" : $scope.endDate, "reason" : $scope.reason, "notification" : $scope.notification};
+    $scope.startDate.setDate($scope.$parent.date.getDate());
+    $scope.startDate.setFullYear($scope.$parent.date.getFullYear());
+    $scope.startDate.setMonth($scope.$parent.date.getMonth());
+
+    $scope.endDate.setDate($scope.$parent.date.getDate());
+    $scope.endDate.setFullYear($scope.$parent.date.getFullYear());
+    $scope.endDate.setMonth($scope.$parent.date.getMonth());
+
+    if($scope.$parent.endDate < $scope.$parent.startDate){
+      $scope.$parent.endDate.setDate($scope.$parent.endDate.getDate() + 1);
+    }
+
+    var schedule = {"description" : $scope.description, "startDate" : $scope.startDate,
+    "endDate" : $scope.endDate, "notification" : $scope.notification};
       RestService.addSchedule($scope.user_id, schedule)
         .then(function successCallback(response){
             console.log("Inserted schedule in DB.");
@@ -86,7 +99,7 @@ cs480App.controller('ScheduleCtrl',
   };
 
   $scope.sendScheduleToLogs = function (scheduleId){
-    var log = {"_id": scheduleId, "description" : $scope.description, "startDate" : $scope.startDate, "endDate" : $scope.endDate, "reason" : $scope.reason};
+    var log = {"description" : $scope.description, "startDate" : $scope.startDate, "endDate" : $scope.endDate, "reason" : $scope.reason, "completed" : $scope.completed};
       RestService.sendScheduleToLogs($scope.user_id, log)
         .then(function successCallback(response){
             console.log("Moved schedule to log in DB.");
@@ -105,10 +118,12 @@ cs480App.directive('editModalSchedule', [function() {
     scope: {
       model: '=',
       description: '=',
-      startDate: '=', 
+      date: '=',
+      startDate: '=',
       endDate: '=',
+      notification: "=",
       reason: '=',
-      notification: "="
+      completed: '='
     },
     link: function(scope, element, attributes) {
       scope.$watch('model.visible', function(newValue) {
@@ -120,10 +135,12 @@ cs480App.directive('editModalSchedule', [function() {
         scope.$evalAsync(function() {
             scope.model.visible = true;
             scope.description = scope.model.data.description;
-            scope.reason = scope.model.data.reason;
+            scope.date = new Date(scope.model.data.startDate);
             scope.startDate = new Date(scope.model.data.startDate);
             scope.endDate = new Date(scope.model.data.endDate);
             scope.notification = scope.model.data.notification;
+            scope.reason = '';
+            scope.completed = false;
         });
       });
 
@@ -131,46 +148,11 @@ cs480App.directive('editModalSchedule', [function() {
         scope.$evalAsync(function() {
             scope.model.visible = false;
             element.find('.modal').find('form').trigger('reset');
+            scope.giveResult = false;
         });
       });
     },
     templateUrl:'editModalSchedule.html' ,
-  };
-}]);
-
-
-cs480App.directive('moveToLogModal', [function() {
-  return {
-    restrict: 'E',
-    scope: {
-      model: '=',
-      description: '=',
-      startDate: '=',
-      endDate: '='
-    },
-    link: function(scope, element, attributes) {
-      scope.$watch('model.visible', function(newValue) {
-        var modalElement = element.find('.modal');
-        modalElement.modal(newValue ? 'show' : 'hide');
-      });
-
-      element.on('shown.bs.modal', function() {
-        scope.$evalAsync(function() {
-            scope.model.visible = true;
-            scope.description = scope.model.data.description;
-            scope.startDate = new Date(scope.model.data.startDate);
-            scope.endDate = new Date(scope.model.data.endDate);
-        });
-      });
-
-      element.on('hidden.bs.modal', function() {
-        scope.$evalAsync(function() {
-            scope.model.visible = false;
-            element.find('.modal').find('form').trigger('reset');
-        });
-      });
-    },
-    templateUrl:'moveToLogModal.html' ,
   };
 }]);
 
@@ -180,9 +162,9 @@ cs480App.directive('addModalSchedule', [function() {
     scope: {
       model: '=',
       description: '=',
-      startDate: '=', 
+      date: '=',
+      startDate: '=',
       endDate: '=',
-      reason: '=',
       notification: "="
     },
     link: function(scope, element, attributes) {
@@ -195,7 +177,7 @@ cs480App.directive('addModalSchedule', [function() {
         scope.$evalAsync(function() {
             scope.model.visible = true;
             scope.description = '';
-            scope.reason = '';
+            scope.date = undefined;
             scope.startDate = undefined;
             scope.endDate = undefined;
             scope.notification = false;

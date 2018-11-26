@@ -1,5 +1,5 @@
 <div ng-controller="TTRCntrl">
-  <edit-modal model="editModal" end-date = "$parent.endDate" start-date="$parent.startDate"
+  <edit-modal model="editModal" end-date = "$parent.endDate" start-date="$parent.startDate", date="$parent.date",
   notify-schedule="$parent.notifySchedule" description="$parent.description" due-date="$parent.dueDate"></edit-modal>
   <add-modal model="addModal" description="$parent.description" due-date="$parent.dueDate"></add-modal>
   <div id="ttrDiv">
@@ -13,7 +13,7 @@
           <th class="text-nowrap" scope = "col">Due Date</th>
         </tr>
       </thead>
-        <tr ng-repeat="ttr in ttrs">
+        <tr ng-repeat="ttr in ttrs | orderBy: 'dueDate'">
           <td><input type="checkbox" ng-model="checkStatus" ng-init='checkStatus=false' value="ttrCheck" ng-click="selectedTTR(ttr._id, checkStatus)"></td>
           <td ng-click="editModal.open(ttr)">{{ ttr.description }}</td>
           <td>{{ ttr.dueDate | date:'MM/dd/yyyy'}}</td>
@@ -76,15 +76,17 @@
           <div ng-show="showSchedule" class="form-group">
             <label for="scheduleDescription">Description</label>
             <input type="text" class="form-control" id="scheduleDescription" ng-model="description" ng-value="model.data.description">
+            <label for="scheduleStartDate">Start Date</label>
+            <input type="date" class="form-control" id="scheduleStartDate" ng-model="date">
             <label for="scheduleStartDate">Start Time</label>
-            <input type="datetime-local" class="form-control" id="scheduleStartDate" ng-model="startDate">
-            <label for="scheduleEndDate">End Date</label>
-            <input type="datetime-local" class="form-control" id="scheduleEndDate" ng-model="endDate">
+            <input type="time" class="form-control" id="scheduleEndDate" ng-model="startDate">
+            <label for="scheduleEndDate">End Time</label>
+            <input type="time" class="form-control" id="scheduleEndDate" ng-model="endDate">
             <label for="scheduleNotification">Notify Me</label>
             <input type="checkbox" id="scheduleNotification" ng-model="notifySchedule" ng-value="false" ng-init="notifySchedule=false">
           </div>
         </form>
-        <button ng-show="!showSchedule" type="button" class="btn btn-info" ng-click="showSchedule=true">Add to Schedule</button> <!--ng-click -->
+        <button ng-show="!showSchedule" type="button" class="btn btn-info" ng-click="showSchedule=true">Add to Schedule</button>
         <button ng-show="!showSchedule" type="button" class="btn btn-warning" ng-click="$parent.editTTR(model.data._id)">Edit</button>
         <button ng-show="!showSchedule" type="button" class="btn btn-danger" ng-click="$parent.deleteTTR(model.data._id)">Delete</button>
         <button ng-show="showSchedule" type="button" class="btn btn-warning" ng-click="showSchedule=false">Back</button>

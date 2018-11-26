@@ -59,26 +59,28 @@ router.get('/api/schedule/:user_id', function(req,res,next){
 });
 
 router.post('/api/addSchedule/:user_id', function(req,res,next){
-    let schedule = req.body;
-    Items.addScheduleByUserId(req.params.user_id, schedule, function(err,schedule){
+  let schedule = req.body;
+  Items.addScheduleByUserId(req.params.user_id, schedule, function(err, itemsObject){
     if(err){
       throw err;
     }
-    else{
-      res.json(schedule);
+    else {
+      Notifications.addScheduleNotification(req.params.user_id, itemsObject.schedule[itemsObject.schedule.length-1]);
+      res.json(itemsObject);
     }
-    });
   });
+});
 
-router.post('/api/editSchedule/:user_id', function(req,res,next){
+  router.post('/api/editSchedule/:user_id', function(req,res,next) {
     let schedule = req.body;
-    Items.editScheduleByUserId(req.params.user_id, schedule, function(err,schedule){
-    if(err){
-      throw err;
-    }
-    else{
-      res.json(schedule);
-    }
+    Items.editScheduleByUserId(req.params.user_id, schedule, function(err, itemsObject) {
+      if(err){
+        throw err;
+      }
+      else {
+        Notifications.editScheduleNotification(req.params.user_id, schedule);
+        res.json(itemsObject);
+      }
     });
   });
 
