@@ -6,7 +6,8 @@
 
 var app = require('../app');
 var debug = require('debug')('zeitplan:server');
-var http = require('http');
+var https = require('https');
+var fs = require('fs');
 
 // setup mongodb
 var mongo = require('mongodb');
@@ -24,6 +25,13 @@ mongoose.connect(process.env.DB_URI, {
   /**
   * Get port from environment and store in Express.
   */
+
+  var options = {
+    ca: fs.readFileSync('/domain/zeitplan_me.ca-bundle'),
+    key: fs.readFileSync('/domain/zeitplan_me.key'),
+    cert: fs.readFileSync('/domain/zeitplan_me.crt')
+  }
+
   var port = normalizePort(process.env.PORT || '3000');
   app.set('port', port);
 
@@ -31,7 +39,7 @@ mongoose.connect(process.env.DB_URI, {
   * Create HTTP server.
   */
 
-  var server = http.createServer(app);
+  var server = https.createServer(options, app);
 
   /**
   * Listen on provided port, on all network interfaces.

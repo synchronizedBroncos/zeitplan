@@ -253,7 +253,7 @@ router.post('/api/tasks', function(req,res,next){
 
 router.get('/', ensureAuthenticated, function(req, res, next) {
   console.log(req.user);
-  res.render('homepage', { title: 'Zeitplan', name: req.user.name, expressFlash: req.flash('message'), flashClass: flashClass });
+  res.render('Homepage', { title: 'Zeitplan', name: req.user.name, expressFlash: req.flash('message'), flashClass: flashClass });
 });
 
 /* Abe's first http get method. */
