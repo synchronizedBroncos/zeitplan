@@ -4,8 +4,8 @@
      start-date="$parent.startDate", end-date="$parent.endDate", notification="$parent.notification", completed="$parent.completed", reason='$parent.reason'></edit-modal-schedule>
      <add-modal-schedule model="addModalSchedule",  description="$parent.description", date="$parent.date", start-date="$parent.startDate", end-date="$parent.endDate", notification="$parent.notification"></add-modal-schedule>
 
-    <button type="button" class="button btn btn-primary scheduleButton" ng-click='addModalSchedule.open()'>Add</button>
-    <button type="button" class="btn btn-danger scheduleButton" ng-click='deleteSelectedSchedule()'>Delete</button>
+    <button type="button" class="button btn btn-danger ttrButton" ng-click='deleteSelectedSchedule()'>Delete</button>
+    <button type="button" class="button btn btn-primary ttrButton" ng-click='addModalSchedule.open()'>Add</button>
     <br><br>
     <table id = "scheduleTable" class="table">
       <thead>
@@ -40,27 +40,18 @@
         </button>
       </div>
       <div class="modal-body">
+        <h6 ng-show="$parent.error" ng-style="{color:'red'}">{{$parent.errorMsg}}</h6>
         <form name = "AddSchedule">
-          <div class="form-group">
             <label for="descripSchedule">Description</label>
             <input type="text" class="form-control" id="descripSchedule" ng-model='description' placeholder="Something to add to my schedule...">
-          </div>
-          <div class="form-group">
             <label for="startDateSchedule">Start Date</label>
             <input type="date" class="form-control" id="startDateSchedule" ng-model='date'>
-          </div>
-          <div class="form-group">
             <label for="startTimeSchedule">Start Time</label>
             <input type="time" class="form-control" id="startTimeSchedule" ng-model='startDate'>
-          </div>
-          <div class="form-group">
             <label for="endTimeSchedule">End Time</label>
             <input type="time" class="form-control" id="endTimeSchedule" ng-model='endDate'>
-          </div>
-          <div>
             <label for="notifications">Notify Me</label>
             <input type="checkbox" id="notifications" ng-model="notification">
-          </div>
         </form>
       </div>
       <div class="modal-footer">
