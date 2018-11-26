@@ -61,28 +61,34 @@ cs480App.controller('ScheduleCtrl',
 
   //Add a schedule to DB
   $scope.addSchedule = function (){
-    $scope.startDate.setDate($scope.$parent.date.getDate());
-    $scope.startDate.setFullYear($scope.$parent.date.getFullYear());
-    $scope.startDate.setMonth($scope.$parent.date.getMonth());
+    if(!$scope.$parent.date || !$scope.$parent.startDate){
+      $scope.errorMsg = "Error: Please fill in start date and time fields.";
+      $scope.error=true;
+    }else{
+      $scope.startDate.setDate($scope.$parent.date.getDate());
+      $scope.startDate.setFullYear($scope.$parent.date.getFullYear());
+      $scope.startDate.setMonth($scope.$parent.date.getMonth());
+      if($scope.endDate){
+        $scope.endDate.setDate($scope.$parent.date.getDate());
+        $scope.endDate.setFullYear($scope.$parent.date.getFullYear());
+        $scope.endDate.setMonth($scope.$parent.date.getMonth());
 
-    $scope.endDate.setDate($scope.$parent.date.getDate());
-    $scope.endDate.setFullYear($scope.$parent.date.getFullYear());
-    $scope.endDate.setMonth($scope.$parent.date.getMonth());
+        if($scope.$parent.endDate < $scope.$parent.startDate){
+          $scope.$parent.endDate.setDate($scope.$parent.endDate.getDate() + 1);
+        }
+      }
 
-    if($scope.$parent.endDate < $scope.$parent.startDate){
-      $scope.$parent.endDate.setDate($scope.$parent.endDate.getDate() + 1);
+      var schedule = {"description" : $scope.description, "startDate" : $scope.startDate,
+      "endDate" : $scope.endDate, "notification" : $scope.notification};
+        RestService.addSchedule($scope.user_id, schedule)
+          .then(function successCallback(response){
+              console.log("Inserted schedule in DB.");
+              $scope.getSchedule();
+              $scope.addModalSchedule.close();
+          }, function errorCallback(response){
+              console.log("Error in adding schdule");
+          });
     }
-
-    var schedule = {"description" : $scope.description, "startDate" : $scope.startDate,
-    "endDate" : $scope.endDate, "notification" : $scope.notification};
-      RestService.addSchedule($scope.user_id, schedule)
-        .then(function successCallback(response){
-            console.log("Inserted schedule in DB.");
-            $scope.getSchedule();
-            $scope.addModalSchedule.close();
-        }, function errorCallback(response){
-            console.log("Error in adding schdule");
-        });
   };
 
   //Edit a schedule to DB
@@ -188,6 +194,7 @@ cs480App.directive('addModalSchedule', [function() {
       element.on('hidden.bs.modal', function() {
         scope.$evalAsync(function() {
             scope.model.visible = false;
+            scope.$parent.error = false;
         });
       });
     },

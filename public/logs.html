@@ -1,13 +1,19 @@
 <div id ="logsDiv" ng-controller="LogCtrl">
-	<div class="btn-group btn-group-toggle" data-toggle="buttons" role="group" aria-label="Basic example">
-	<button ng-click = "myFilter = {completed}" type="button" class="btn btn-outline-dark" data-toggle="button" aria-pressed="false" autocomplete="off">All</button>
-	<button ng-click = "myFilter = {completed:true}" type="button" class="btn btn-outline-success" data-toggle="button" aria-pressed="false" autocomplete="off">Complete</button>
-	<button ng-click = "myFilter = {completed:false}" type="button" class="btn btn-outline-danger" data-toggle="button" aria-pressed="false" autocomplete="off">Incomplete</button>
+<div class="btn-group btn-group-toggle" role="group" data-toggle="buttons">
+  <label class="btn btn-outline-dark" ng-click = "myFilter = {completed}">
+    <input type="radio" name="options" id="option1" autocomplete="off" checked> All
+  </label>
+  <label class="btn btn-outline-success" ng-click = "myFilter = {completed:true}" >
+    <input type="radio" name="options" id="option2" autocomplete="off"> Complete
+  </label>
+  <label class="btn btn-outline-danger" ng-click = "myFilter = {completed:false}">
+    <input type="radio" name="options" id="option3" autocomplete="off"> Incomplete
+  </label>
 </div>
 
 <ul id="log_cards" class="pre-scrollable mt-3">
-	<hr id="log_separator">
-	<div id="log_container" class="container content-area sample-show-hide" ng-repeat="log in logs | orderBy: '-' | filter:myFilter">
+	<hr class="log-separator">
+	<div class="container content-area sample-show-hide" ng-repeat="log in logs | orderBy: '-' | filter:myFilter">
 		<div class="row">
 			<div class="col-sm-6">
 				<h5>Description: {{log.description}}</h5>
@@ -15,15 +21,18 @@
 				<br>
 				<small>Reason: {{log.reason}}</small>
 			</div>
-			<div class="col-sm-6">
+			<div class="col-sm-4">
 				<small>Start Date: {{log.startDate | date:'MM-dd-yyyy'}}</small>
 				<br>
 				<small>Start Time: {{log.startDate | date:'hh:mm a'}}</small>
 				<br>
 				<small>End Time: {{log.endDate | date:'hh:mm a'}}</small>
 			</div>
+			<div class="col-sm-2">
+				<button type="button" class="btn btn-warning remove-log-btn"><i class="fa fa-trash" aria-hidden="true"></i></button>
+			</div>
 		</div>
-		<hr id="log_separator">
+		<hr class="log-separator">
 	</div>
 </ul>
 </div>

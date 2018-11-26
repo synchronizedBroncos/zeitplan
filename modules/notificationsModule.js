@@ -32,6 +32,29 @@ Items.getAllSchedules(function(err,schedules) {
   }
 });
 
+function formatDate(tempDate) {
+  const date = new Date(tempDate);
+  const currentHour = date.getHours();
+  const currentMinute = date.getMinutes();
+  let timePeriod = 'AM';
+  let hour;
+  let minutes;
+  if(currentHour > 11) {
+    timePeriod = 'PM';
+  }
+  if(currentHour == 0 || currentHour == 23) {
+    hour = "12";
+  } else {
+    hour = currentHour;
+  }
+  if(currentMinute < 10) {
+    minutes = "0" + currentMinute;
+  } else {
+    minutes = currentMinute;
+  }
+  return hour + ":" + minutes + " " + timePeriod;
+}
+
 // userId is the id of the user, used to get the settings
 // scheduleObject is the object of the schedule that we will notify the user of
 function notificationAction(userId, scheduleObject) {
@@ -41,10 +64,11 @@ function notificationAction(userId, scheduleObject) {
   // endDate: 2019-03-03T00:03:00.000Z,
   // startDate: 2019-05-05T10:30:00.000Z,
   // notification: true }
+
   let reminderDescription = "Reminder: " + scheduleObject.description +
-   "\nStart: " + scheduleObject.startDate;
+   "\nFrom " + formatDate(scheduleObject.startDate);
   if(!(scheduleObject.endDate == null)) {
-    reminderDescription += "\nEnd: " + scheduleObject.endDate;
+    reminderDescription += " to " + formatDate(scheduleObject.endDate);
   }
 
   User.getNotificationInfoById(userId, function(error, userObject) {
@@ -66,10 +90,10 @@ function notificationAction(userId, scheduleObject) {
       if(userObject.settings.notificationTypes.pushNotification) {
         // send push notification with schedule object info
         const notificationObject = {
-          title: scheduleObject.description,
-          body: "From " + scheduleObject.startDate + " to " + scheduleObject.endDate,
-          icon: "https://banner2.kisspng.com/20180629/osc/kisspng-pet-sitting-puppy-dog-walking-dogs-for-good-dementia-5b364aa80fde58.445968431530284712065.jpg",
-          click_action: "http://localhost:3000"
+          title: "Reminder: " + scheduleObject.description,
+          body: !(scheduleObject.endDate == null) ? "From " + formatDate(scheduleObject.startDate) + " to " + formatDate(scheduleObject.endDate) : "From " + formatDate(scheduleObject.startDate),
+          icon: "http://localhost:3000/resources/cropped_logo.png", // TODO: change after we deploy to AWS
+          click_action: "http://localhost:3000" // TODO: change after we have SSL setup with domain
         }
         for(let i = 0; i < userObject.deviceTokens.length; i++) {
           sendPushNotification(userObject.deviceTokens[i], notificationObject);
@@ -132,10 +156,10 @@ module.exports.editScheduleNotification = (userId, scheduleObject) => {
   }
 }
 
-module.exports.removeScheduleNotification = (scheduleObject) => {
+module.exports.removeScheduleNotification = (scheduleId) => {
   // if exists, cancel job and delete notification from hash map
-  if(!(map.get(scheduleObject.id) == null)) {
-    map.get(scheduleObject.id).cancel();
-    map.delete(scheduleObject.id);
+  if(!(map.get(scheduleId) == null)) {
+    map.get(scheduleId).cancel();
+    map.delete(scheduleId);
   }
 }

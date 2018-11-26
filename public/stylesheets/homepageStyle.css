@@ -263,15 +263,9 @@ a.article:hover {
 
 /* Desktop Styling */
 @media only screen and (min-width:768px) {
-		#logsDiv {
-			padding-top: 0.5em;
+		#page-content {
+			padding-top: 5.5em;
 		}
-    #ttrDiv {
-      padding-top: 0.5em;
-    }
-    #ScheduleDiv {
-      padding-top: 0.5em;
-    }
 }
 
 /* ---------------------------------------------------
