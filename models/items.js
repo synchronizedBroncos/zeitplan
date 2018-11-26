@@ -24,10 +24,13 @@ var ItemsSchema = mongoose.Schema({
     description: {
       type: String
     },
-    startDate: {
+    date: {
       type: Date
     },
-    endDate: {
+    startTime: {
+      type: Date
+    },
+    endTime:{
       type: Date
     },
     notification: {
@@ -104,6 +107,7 @@ module.exports.getScheduleByUserId = function(userId, callback){
 }
 
 module.exports.addScheduleByUserId = function(userId, addSchedule, callback){
+  console.log(addSchedule);
   Items.findOneAndUpdate({user:userId},{$push:{schedule:addSchedule}}, callback).select('schedule');
 }
 
