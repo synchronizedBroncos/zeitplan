@@ -24,10 +24,10 @@ var ItemsSchema = mongoose.Schema({
     description: {
       type: String
     },
-    startTime: {
+    startDate: {
       type: Date
     },
-    endTime:{
+    endDate:{
       type: Date
     },
     notification: {

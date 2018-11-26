@@ -61,20 +61,20 @@ cs480App.controller('ScheduleCtrl',
 
   //Add a schedule to DB
   $scope.addSchedule = function (){
-    $scope.startTime.setDate($scope.date.getDate());
-    $scope.startTime.setFullYear($scope.date.getFullYear());
-    $scope.startTime.setMonth($scope.date.getMonth());
+    $scope.startDate.setDate($scope.date.getDate());
+    $scope.startDate.setFullYear($scope.date.getFullYear());
+    $scope.startDate.setMonth($scope.date.getMonth());
 
-    $scope.endTime.setDate($scope.date.getDate());
-    $scope.endTime.setFullYear($scope.date.getFullYear());
-    $scope.endTime.setMonth($scope.date.getMonth());
+    $scope.endDate.setDate($scope.date.getDate());
+    $scope.endDate.setFullYear($scope.date.getFullYear());
+    $scope.endDate.setMonth($scope.date.getMonth());
 
-    if($scope.endTime < $scope.startTime){
-      $scope.endTime.setDate($scope.endTime.getDate() + 1);
+    if($scope.endDate < $scope.startDate){
+      $scope.endDate.setDate($scope.endDate.getDate() + 1);
     }
 
-    var schedule = {"description" : $scope.description, "startTime" : $scope.startTime,
-    "endTime" : $scope.endTime, "notification" : $scope.notification};
+    var schedule = {"description" : $scope.description, "startDate" : $scope.startDate,
+    "endDate" : $scope.endDate, "notification" : $scope.notification};
     console.log(schedule);
       RestService.addSchedule($scope.user_id, schedule)
         .then(function successCallback(response){
@@ -120,8 +120,8 @@ cs480App.directive('editModalSchedule', [function() {
       model: '=',
       description: '=',
       date: '=',
-      startTime: '=',
-      endTime: '=',
+      startDate: '=',
+      endDate: '=',
       notification: "="
     },
     link: function(scope, element, attributes) {
@@ -133,11 +133,12 @@ cs480App.directive('editModalSchedule', [function() {
       element.on('shown.bs.modal', function() {
         scope.$evalAsync(function() {
             scope.model.visible = true;
-            scope.description = scope.model.data.description;
-            scope.reason = scope.model.data.reason;
-            scope.startDate = new Date(scope.model.data.startDate);
-            scope.endDate = new Date(scope.model.data.endDate);
-            scope.notification = scope.model.data.notification;
+            console.log(scope.model);
+            //scope.description = scope.model.data.description;
+            //scope.date = scope.model.data.date;
+            //scope.startDate = new Date(scope.model.data.startDate);
+            //scope.endDate = new Date(scope.model.data.endDate);
+            //scope.notification = scope.model.data.notification;
         });
       });
 
@@ -197,8 +198,8 @@ cs480App.directive('addModalSchedule', [function() {
       model: '=',
       description: '=',
       date: '=',
-      startTime: '=',
-      endTime: '=',
+      startDate: '=',
+      endDate: '=',
       notification: "="
     },
     link: function(scope, element, attributes) {
@@ -211,7 +212,7 @@ cs480App.directive('addModalSchedule', [function() {
         scope.$evalAsync(function() {
             scope.model.visible = true;
             scope.description = '';
-            scope.date = ;
+            scope.date = undefined;
             scope.startDate = undefined;
             scope.endDate = undefined;
             scope.notification = false;
