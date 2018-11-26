@@ -64,7 +64,8 @@ router.post('/api/addSchedule/:user_id', function(req,res,next){
     if(err){
       throw err;
     }
-    else{
+    else {
+      Notifications.addScheduleNotification(req.params.user_id, schedule);
       res.json(schedule);
     }
     });
