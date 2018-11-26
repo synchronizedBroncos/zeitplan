@@ -139,10 +139,10 @@ a[data-toggle="collapse"] {
 
 
 .dropdown > .dropdown-menu {
-  display: none; 
+  display: none;
 }
 .dropdown.show > .dropdown-menu {
-  display: block; 
+  display: block;
 }
 
 ul ul a {
@@ -258,6 +258,19 @@ a.article:hover {
         margin-top:5%;
         max-height: 85vh;
         overflow-y: auto;
+    }
+}
+
+/* Desktop Styling */
+@media only screen and (min-width:768px) {
+		#logsDiv {
+			padding-top: 0.5em;
+		}
+    #ttrDiv {
+      padding-top: 0.5em;
+    }
+    #ScheduleDiv {
+      padding-top: 0.5em;
     }
 }
 

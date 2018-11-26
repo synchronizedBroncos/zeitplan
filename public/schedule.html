@@ -1,7 +1,5 @@
 <div ng-controller="ScheduleCtrl">
   <div id="ScheduleDiv">
-    <h1> SCHEDULE </h1>
-
      <edit-modal-schedule model="editModalSchedule", description="$parent.description", date="$parent.date",
      start-date="$parent.startDate", end-date="$parent.endDate", notification="$parent.notification", completed="$parent.completed", reason='$parent.reason'></edit-modal-schedule>
      <add-modal-schedule model="addModalSchedule",  description="$parent.description", date="$parent.date", start-date="$parent.startDate", end-date="$parent.endDate", notification="$parent.notification"></add-modal-schedule>
