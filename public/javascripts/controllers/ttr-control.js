@@ -61,21 +61,28 @@ cs480App.controller('TTRCntrl',
   };
 
   $scope.addTTRToSchedule = function (){
-    var schedule = {"description" : $scope.description, "date" : $scope.date, "endDate" : $scope.endDate, "startDate" : $scope.startDate, "notification": $scope.notifySchedule};
-    $scope.startDate.setDate($scope.$parent.date.getDate());
-    $scope.startDate.setFullYear($scope.$parent.date.getFullYear());
-    $scope.startDate.setMonth($scope.$parent.date.getMonth());
-
-    $scope.endDate.setDate($scope.$parent.date.getDate());
-    $scope.endDate.setFullYear($scope.$parent.date.getFullYear());
-    $scope.endDate.setMonth($scope.$parent.date.getMonth());
-    RestService.addSchedule($scope.user_id, schedule)
-      .then(function successCallback(response){
-          console.log("Added TTR to Schedule.");
-          $scope.editModal.close();
-      }, function errorCallback(response){
-          $log.log("Error add TTR to Schedule.");
-      });
+    if(!$scope.$parent.startDate || !$scope.$parent.date){
+      $scope.errorMsg = "Error: Please fill in start date and time fields.";
+      $scope.error=true;
+    }else{
+      $scope.startDate.setDate($scope.$parent.date.getDate());
+      $scope.startDate.setFullYear($scope.$parent.date.getFullYear());
+      $scope.startDate.setMonth($scope.$parent.date.getMonth());
+      if($scope.endDate){
+        $scope.endDate.setDate($scope.$parent.date.getDate());
+        $scope.endDate.setFullYear($scope.$parent.date.getFullYear());
+        $scope.endDate.setMonth($scope.$parent.date.getMonth());
+      }
+      var schedule = {"description" : $scope.description, "date" : $scope.date,
+      "endDate" : $scope.endDate, "startDate" : $scope.startDate, "notification": $scope.notifySchedule};
+      RestService.addSchedule($scope.user_id, schedule)
+        .then(function successCallback(response){
+            console.log("Added TTR to Schedule.");
+            $scope.editModal.close();
+        }, function errorCallback(response){
+            $log.log("Error add TTR to Schedule.");
+        });
+    }
   };
 
   //Add a ttr to DB
@@ -143,6 +150,7 @@ cs480App.directive('editModal', [function() {
             scope.model.visible = false;
             element.find('.modal').find('form').trigger('reset');
             scope.showSchedule = false;
+            scope.$parent.error=false;
         });
       });
 

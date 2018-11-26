@@ -74,6 +74,7 @@
             <input type="date" class="form-control" id="editDate" ng-model="dueDate" ng-value="model.data.dueDate | date:'yyyy-MM-dd'">
           </div>
           <div ng-show="showSchedule" class="form-group">
+            <h6 ng-show="$parent.error" ng-style="{color:'red'}">{{$parent.errorMsg}}</h6>
             <label for="scheduleDescription">Description</label>
             <input type="text" class="form-control" id="scheduleDescription" ng-model="description" ng-value="model.data.description">
             <label for="scheduleStartDate">Start Date</label>
@@ -89,7 +90,7 @@
         <button ng-show="!showSchedule" type="button" class="btn btn-info" ng-click="showSchedule=true">Add to Schedule</button>
         <button ng-show="!showSchedule" type="button" class="btn btn-warning" ng-click="$parent.editTTR(model.data._id)">Edit</button>
         <button ng-show="!showSchedule" type="button" class="btn btn-danger" ng-click="$parent.deleteTTR(model.data._id)">Delete</button>
-        <button ng-show="showSchedule" type="button" class="btn btn-warning" ng-click="showSchedule=false">Back</button>
+        <button ng-show="showSchedule" type="button" class="btn btn-warning" ng-click="showSchedule=false;$parent.error=false;">Back</button>
         <button ng-show="showSchedule" type="button" class="btn btn-info" ng-click="$parent.addTTRToSchedule()">Add</button>
       </div>
     </div>
