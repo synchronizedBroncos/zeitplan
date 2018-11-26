@@ -23,7 +23,7 @@
       <tr ng-repeat="schedule in schedules">
           <td><input type="checkbox" value="scheduleCheck" ng-model="checkStatus" ng-init='checkStatus=false' ng-click="selectedSchedule(schedule._id, checkStatus)"></td>
           <td ng-click="editModalSchedule.open(schedule)">{{ schedule.description }}</td>
-          <td>{{ schedule.date | date:'MM/dd/yyyy' }}</td>
+          <td>{{ schedule.startTime | date:'MM/dd/yyyy' }}</td>
           <td>{{ schedule.startTime | date:'hh:mm a' }}</td>
           <td>{{ schedule.endTime | date:'hh:mm a'}}</td>
           <td ng-click="moveToLogModal.open(schedule)">

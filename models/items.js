@@ -24,9 +24,6 @@ var ItemsSchema = mongoose.Schema({
     description: {
       type: String
     },
-    date: {
-      type: Date
-    },
     startTime: {
       type: Date
     },

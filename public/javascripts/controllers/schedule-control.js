@@ -73,7 +73,7 @@ cs480App.controller('ScheduleCtrl',
       $scope.endTime.setDate($scope.endTime.getDate() + 1);
     }
 
-    var schedule = {"description" : $scope.description, "date" : $scope.date, "startTime" : $scope.startTime,
+    var schedule = {"description" : $scope.description, "startTime" : $scope.startTime,
     "endTime" : $scope.endTime, "notification" : $scope.notification};
     console.log(schedule);
       RestService.addSchedule($scope.user_id, schedule)
@@ -119,8 +119,9 @@ cs480App.directive('editModalSchedule', [function() {
     scope: {
       model: '=',
       description: '=',
-      startDate: '=',
-      endDate: '=',
+      date: '=',
+      startTime: '=',
+      endTime: '=',
       notification: "="
     },
     link: function(scope, element, attributes) {
@@ -210,7 +211,7 @@ cs480App.directive('addModalSchedule', [function() {
         scope.$evalAsync(function() {
             scope.model.visible = true;
             scope.description = '';
-            scope.reason = '';
+            scope.date = ;
             scope.startDate = undefined;
             scope.endDate = undefined;
             scope.notification = false;
