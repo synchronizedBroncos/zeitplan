@@ -74,7 +74,7 @@ function stop(){
 function showTimer(trigger){
   var pomodoroTimer = document.getElementById("pomodoroTimer");
   if (trigger) {
-      pomodoroTimer.style.display = "inline-block";
+      pomodoroTimer.style.display = "block";
   } else {
       pomodoroTimer.style.display = "none";
   }
