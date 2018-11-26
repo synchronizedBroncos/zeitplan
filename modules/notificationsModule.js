@@ -132,10 +132,10 @@ module.exports.editScheduleNotification = (userId, scheduleObject) => {
   }
 }
 
-module.exports.removeScheduleNotification = (scheduleObject) => {
+module.exports.removeScheduleNotification = (scheduleId) => {
   // if exists, cancel job and delete notification from hash map
-  if(!(map.get(scheduleObject.id) == null)) {
-    map.get(scheduleObject.id).cancel();
-    map.delete(scheduleObject.id);
+  if(!(map.get(scheduleId) == null)) {
+    map.get(scheduleId).cancel();
+    map.delete(scheduleId);
   }
 }
