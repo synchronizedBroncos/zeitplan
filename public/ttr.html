@@ -84,7 +84,7 @@
             <input type="checkbox" id="scheduleNotification" ng-model="notifySchedule" ng-value="false" ng-init="notifySchedule=false">
           </div>
         </form>
-        <button ng-show="!showSchedule" type="button" class="btn btn-info" ng-click="showSchedule=true">Add to Schedule</button> <!--ng-click -->
+        <button ng-show="!showSchedule" type="button" class="btn btn-info" ng-click="showSchedule=true">Add to Schedule</button>
         <button ng-show="!showSchedule" type="button" class="btn btn-warning" ng-click="$parent.editTTR(model.data._id)">Edit</button>
         <button ng-show="!showSchedule" type="button" class="btn btn-danger" ng-click="$parent.deleteTTR(model.data._id)">Delete</button>
         <button ng-show="showSchedule" type="button" class="btn btn-warning" ng-click="showSchedule=false">Back</button>

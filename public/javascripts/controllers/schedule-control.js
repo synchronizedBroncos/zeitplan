@@ -61,21 +61,20 @@ cs480App.controller('ScheduleCtrl',
 
   //Add a schedule to DB
   $scope.addSchedule = function (){
-    $scope.startDate.setDate($scope.date.getDate());
-    $scope.startDate.setFullYear($scope.date.getFullYear());
-    $scope.startDate.setMonth($scope.date.getMonth());
+    $scope.startDate.setDate($scope.$parent.date.getDate());
+    $scope.startDate.setFullYear($scope.$parent.date.getFullYear());
+    $scope.startDate.setMonth($scope.$parent.date.getMonth());
 
-    $scope.endDate.setDate($scope.date.getDate());
-    $scope.endDate.setFullYear($scope.date.getFullYear());
-    $scope.endDate.setMonth($scope.date.getMonth());
+    $scope.endDate.setDate($scope.$parent.date.getDate());
+    $scope.endDate.setFullYear($scope.$parent.date.getFullYear());
+    $scope.endDate.setMonth($scope.$parent.date.getMonth());
 
-    if($scope.endDate < $scope.startDate){
-      $scope.endDate.setDate($scope.endDate.getDate() + 1);
+    if($scope.$parent.endDate < $scope.$parent.startDate){
+      $scope.$parent.endDate.setDate($scope.$parent.endDate.getDate() + 1);
     }
 
     var schedule = {"description" : $scope.description, "startDate" : $scope.startDate,
     "endDate" : $scope.endDate, "notification" : $scope.notification};
-    console.log(schedule);
       RestService.addSchedule($scope.user_id, schedule)
         .then(function successCallback(response){
             console.log("Inserted schedule in DB.");
@@ -100,7 +99,7 @@ cs480App.controller('ScheduleCtrl',
   };
 
   $scope.sendScheduleToLogs = function (scheduleId){
-    var log = {"_id": scheduleId, "description" : $scope.description, "startDate" : $scope.startDate, "endDate" : $scope.endDate, "reason" : $scope.reason};
+    var log = {"description" : $scope.description, "startDate" : $scope.startDate, "endDate" : $scope.endDate, "reason" : $scope.reason, "completed" : $scope.completed};
       RestService.sendScheduleToLogs($scope.user_id, log)
         .then(function successCallback(response){
             console.log("Moved schedule to log in DB.");
@@ -122,48 +121,9 @@ cs480App.directive('editModalSchedule', [function() {
       date: '=',
       startDate: '=',
       endDate: '=',
-      notification: "="
-    },
-    link: function(scope, element, attributes) {
-      scope.$watch('model.visible', function(newValue) {
-        var modalElement = element.find('.modal');
-        modalElement.modal(newValue ? 'show' : 'hide');
-      });
-
-      element.on('shown.bs.modal', function() {
-        scope.$evalAsync(function() {
-            scope.model.visible = true;
-            console.log(scope.model);
-            //scope.description = scope.model.data.description;
-            //scope.date = scope.model.data.date;
-            //scope.startDate = new Date(scope.model.data.startDate);
-            //scope.endDate = new Date(scope.model.data.endDate);
-            //scope.notification = scope.model.data.notification;
-        });
-      });
-
-      element.on('hidden.bs.modal', function() {
-        scope.$evalAsync(function() {
-            scope.model.visible = false;
-            element.find('.modal').find('form').trigger('reset');
-        });
-      });
-    },
-    templateUrl:'editModalSchedule.html' ,
-  };
-}]);
-
-
-cs480App.directive('moveToLogModal', [function() {
-  return {
-    restrict: 'E',
-    scope: {
-      model: '=',
-      description: '=',
-      startDate: '=',
-      endDate: '=',
-      notification: '='
-
+      notification: "=",
+      reason: '=',
+      completed: '='
     },
     link: function(scope, element, attributes) {
       scope.$watch('model.visible', function(newValue) {
@@ -175,8 +135,12 @@ cs480App.directive('moveToLogModal', [function() {
         scope.$evalAsync(function() {
             scope.model.visible = true;
             scope.description = scope.model.data.description;
+            scope.date = new Date(scope.model.data.startDate);
             scope.startDate = new Date(scope.model.data.startDate);
             scope.endDate = new Date(scope.model.data.endDate);
+            scope.notification = scope.model.data.notification;
+            scope.reason = '';
+            scope.completed = false;
         });
       });
 
@@ -184,10 +148,11 @@ cs480App.directive('moveToLogModal', [function() {
         scope.$evalAsync(function() {
             scope.model.visible = false;
             element.find('.modal').find('form').trigger('reset');
+            scope.giveResult = false;
         });
       });
     },
-    templateUrl:'moveToLogModal.html' ,
+    templateUrl:'editModalSchedule.html' ,
   };
 }]);
 
