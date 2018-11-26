@@ -13,6 +13,9 @@ const Task = require('../models/tasks');
 const Items = require('../models/items');
 const Users = require('../models/user');
 
+// require modules
+const Notifications = require('../modules/notificationsModule');
+
 //Nodemailer
 const nodemailer = require('nodemailer');
 
@@ -55,21 +58,47 @@ router.get('/api/schedule/:user_id', function(req,res,next){
   });
 });
 
-router.post('/api/editSchedule/:user_id', function(req,res,next){
-    let schedule = req.body;
-    Items.editScheduleByUserId(req.params.user_id, schedule, function(err,ttr){
+router.post('/api/addSchedule/:user_id', function(req,res,next){
+  let schedule = req.body;
+  Items.addScheduleByUserId(req.params.user_id, schedule, function(err, itemsObject){
     if(err){
       throw err;
     }
-    else{
-      res.json(schedule);
+    else {
+      Notifications.addScheduleNotification(req.params.user_id, itemsObject.schedule[itemsObject.schedule.length-1]);
+      res.json(itemsObject);
     }
+  });
+});
+
+  router.post('/api/editSchedule/:user_id', function(req,res,next) {
+    let schedule = req.body;
+    Items.editScheduleByUserId(req.params.user_id, schedule, function(err, itemsObject) {
+      if(err){
+        throw err;
+      }
+      else {
+        Notifications.editScheduleNotification(req.params.user_id, schedule);
+        res.json(itemsObject);
+      }
     });
   });
 
-router.post('/api/addSchedule/:user_id', function(req,res,next){
+router.delete('/api/removeSchedule/:user_id/:schedule_id', function(req,res){
     let schedule = req.body;
-    Items.addScheduleByUserId(req.params.user_id, schedule, function(err,schedule){
+    Items.removeScheduleByUserId(req.params.user_id, req.params.schedule_id, function(err,schedule){
+      if(err){
+        throw err;
+      }
+      else{
+        res.json({message : "Sucessfully Deleted schedule!"});
+      }
+    });
+  });
+
+router.post('/api/sendScheduleToLogs/:user_id', function(req,res,next){
+    let schedule = req.body;
+    Items.sendScheduleToLogs(req.params.user_id, schedule, function(err,schedule){
     if(err){
       throw err;
     }

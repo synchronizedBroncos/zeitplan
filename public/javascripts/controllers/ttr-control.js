@@ -4,14 +4,17 @@ cs480App.controller('TTRCntrl',
    $scope.editModal = new ShowDataToModal();
    $scope.addModal = new ShowDataToModal();
 
-   $scope.user_id = "unresolved";
-   RestService.getCurrentUserId()
-       .then(function successCallback(response){
-           $scope.user_id = response.data;
-           $scope.getTTR();
-       }, function errorCallback(response){
-          console.log("Error in getting current user id");
-       });
+   $scope.checkUserId = function checkUserId() {
+     $scope.$watch('$parent.user_id', function(newVal, oldVal){
+       $scope.user_id = newVal;
+       if($scope.user_id !== "unresolved") {
+         $scope.getTTR();
+       }
+     });
+   }
+
+   $scope.checkUserId();
+
    $scope.selectTTR = [];
 
    $scope.selectedTTR = function (ttrId, checkStatus){
@@ -57,6 +60,24 @@ cs480App.controller('TTRCntrl',
         });
   };
 
+  $scope.addTTRToSchedule = function (){
+    var schedule = {"description" : $scope.description, "date" : $scope.date, "endDate" : $scope.endDate, "startDate" : $scope.startDate, "notification": $scope.notifySchedule};
+    $scope.startDate.setDate($scope.$parent.date.getDate());
+    $scope.startDate.setFullYear($scope.$parent.date.getFullYear());
+    $scope.startDate.setMonth($scope.$parent.date.getMonth());
+
+    $scope.endDate.setDate($scope.$parent.date.getDate());
+    $scope.endDate.setFullYear($scope.$parent.date.getFullYear());
+    $scope.endDate.setMonth($scope.$parent.date.getMonth());
+    RestService.addSchedule($scope.user_id, schedule)
+      .then(function successCallback(response){
+          console.log("Added TTR to Schedule.");
+          $scope.editModal.close();
+      }, function errorCallback(response){
+          $log.log("Error add TTR to Schedule.");
+      });
+  };
+
   //Add a ttr to DB
   $scope.addTTR = function (){
     var ttr = {"description" : $scope.description, "dueDate" : $scope.dueDate};
@@ -89,7 +110,11 @@ cs480App.directive('editModal', [function() {
     scope: {
       model: '=',
       description: '=',
-      dueDate: '='
+      dueDate: '=',
+      endDate: '=',
+      startDate: '=',
+      notifySchedule: '=',
+      date: '='
     },
     link: function(scope, element, attributes) {
       scope.$watch('model.visible', function(newValue) {
@@ -106,6 +131,10 @@ cs480App.directive('editModal', [function() {
             }else{
                 scope.dueDate = null;
             }
+            scope.endDate = undefined;
+            scope.startDate = undefined;
+            scope.notifySchedule = false;
+            scope.date = undefined;
         });
       });
 
@@ -113,6 +142,7 @@ cs480App.directive('editModal', [function() {
         scope.$evalAsync(function() {
             scope.model.visible = false;
             element.find('.modal').find('form').trigger('reset');
+            scope.showSchedule = false;
         });
       });
 

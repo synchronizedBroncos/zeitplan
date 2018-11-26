@@ -1,16 +1,14 @@
-var bar1 = new ldBar("#myItem1");
-var rangeValLabel = document.getElementById("rangeValLabel");
-var typeSelect = document.getElementById("typeForm");
-var slider = document.getElementById('slider');
-var secondsLabel = document.getElementById('currentTime');
+var bar1;
+var rangeValLabel;
+var typeSelect;
+var slider;
+var secondsLabel;
 var initialTime, currTime, percentage;
 var timer;
 
 var endTime;
 
 var hours, minutes, seconds;
-
-rangeValLabel.innerHTML = slider.value;
 
 function onClick(){
     clearInterval(timer);
@@ -76,7 +74,7 @@ function stop(){
 function showTimer(trigger){
   var pomodoroTimer = document.getElementById("pomodoroTimer");
   if (trigger) {
-      pomodoroTimer.style.display = "block";
+      pomodoroTimer.style.display = "inline-block";
   } else {
       pomodoroTimer.style.display = "none";
   }

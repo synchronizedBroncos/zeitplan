@@ -33,6 +33,18 @@ cs480App.factory('RestService', function($http) {
     });
   }
 
+  service.addDeviceToken = function(userId, deviceToken) {
+    return $http({
+      url: urlBase + '/users/addDeviceToken/' + userId,
+      method: "POST",
+      data: {deviceToken: deviceToken},
+    }).then(function successCallback(response) {
+      return response;
+    }, function errorCallback(response) {
+      return response;
+    });
+  }
+
 
   service.getSchedule = function(user_id){
     return $http.get(urlBase + '/api/schedule/' + user_id);
@@ -41,6 +53,41 @@ cs480App.factory('RestService', function($http) {
   service.addSchedule = function(user_id, data){
     return $http({
         url: urlBase + 'api/addSchedule/' + user_id,
+        method: "POST",
+        data: data,
+      }).then(function successCallback(response) {
+        return response;
+    }, function errorCallback(response) {
+        return response;
+    });
+  }
+
+  service.editSchedule = function(user_id, data){
+    return $http({
+        url: urlBase + 'api/editSchedule/' + user_id,
+        method: "POST",
+        data: data,
+      }).then(function successCallback(response) {
+        return response;
+    }, function errorCallback(response) {
+        return response;
+    });
+  }
+
+  service.deleteSchedule = function(user_id, schedule_id){
+    return $http({
+        url: urlBase + 'api/removeSchedule/' + user_id +"/" + schedule_id,
+        method: "DELETE",
+      }).then(function successCallback(response) {
+        return response;
+    }, function errorCallback(response) {
+        return response;
+    });
+  };
+
+  service.sendScheduleToLogs = function(user_id, data){
+    return $http({
+        url: urlBase + 'api/sendScheduleToLogs/' + user_id,
         method: "POST",
         data: data,
       }).then(function successCallback(response) {
@@ -60,19 +107,6 @@ cs480App.factory('RestService', function($http) {
 
   service.getLogs = function(user_id){
     return $http.get(urlBase + '/api/logs/' + user_id);
-  }
-
-  service.editSchedule = function(user_id, data){
-    console.log("edit");
-    return $http({
-        url: urlBase + 'api/editSchedule/' + user_id,
-        method: "POST",
-        data: data,
-      }).then(function successCallback(response) {
-        return response;
-    }, function errorCallback(response) {
-        return response;
-    });
   }
 
   service.editTTR = function(user_id, data){
