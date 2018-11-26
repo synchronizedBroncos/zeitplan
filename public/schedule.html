@@ -1,7 +1,5 @@
 <div ng-controller="ScheduleCtrl">
   <div id="ScheduleDiv">
-    <h1> SCHEDULE </h1>
-
      <edit-modal-schedule model="editModalSchedule", description="$parent.description", start-date="$parent.startDate", end-date="$parent.endDate", reason="$parent.reason", notification="$parent.notification"></edit-modal-schedule>
      <move-to-log-modal model="moveToLogModal",  description="$parent.description" ,start-date="$parent.startDate", end-date="$parent.endDate", notification="$parent.notification"></move-to-log-modal>
      <add-modal-schedule model="addModalSchedule",  description="$parent.description", start-date="$parent.startDate", end-date="$parent.endDate", reason="$parent.reason", notification="$parent.notification"></add-modal-schedule>
@@ -21,7 +19,7 @@
       </thead>
       <tr ng-repeat="schedule in schedules">
           <td><input type="checkbox" value="scheduleCheck" ng-model="checkStatus" ng-init='checkStatus=false' ng-click="selectedSchedule(schedule._id, checkStatus)"></td>
-          <td ng-click="editModalSchedule.open(schedule)">{{ schedule.description }}</td> 
+          <td ng-click="editModalSchedule.open(schedule)">{{ schedule.description }}</td>
           <td>{{ schedule.startDate | date:'MM/dd/yyyy' }}</td>
           <td>{{ schedule.endDate | date:'MM/dd/yyyy' }}</td>
           <td ng-click="moveToLogModal.open(schedule)">
