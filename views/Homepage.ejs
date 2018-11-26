@@ -37,8 +37,7 @@
 <body ng-controller="HomeCtrl">
   <setting-modal model="settingModal" user_id="user_id" text-status="textStatus" email-status="emailStatus" push-status="pushStatus"></setting-modal>
   <nav id="desktopNav" class="navbar navbar-expand-md navbar-light bg-light fixed-top navbar-inverse bg-primary">
-    <span><button type="button" id="sidebarCollapse" class="btn btn-info" ng-click="toggleSidebar()"> <i class="fas fa-align-left"></i></button></span>
-    <a class="navbar-brand" href="#">ZEITPLAN</a>
+    <span><img src="/resources/logo2.png" id="logo" class="text-center"></img></span>
     <ul class="navbar-nav ml-auto navbar-expand-lg">
       <li class="nav-item">
         <a class="nav-link" href="#" ng-click="settingModal.open();getSettings()">Settings</a>
