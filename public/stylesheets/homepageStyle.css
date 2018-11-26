@@ -242,12 +242,13 @@ a.article:hover {
     #bottomNavbar{
       display:inline-block;
       position:fixed;
+      padding:0;
     }
     #bottomNavbar a {
         float: left;
         display: inline-block;
         color: white;
-        padding: 2%;
+        padding: 5%;
         width:25%;
     }
     #sidebar {
@@ -260,6 +261,11 @@ a.article:hover {
         margin-top:5%;
         max-height: 85vh;
         overflow-y: auto;
+    }
+    #bottomNavbar ul li.active>a,
+    a[aria-expanded="true"] {
+        color: #fff;
+        background: #6d7fcc;
     }
 }
 

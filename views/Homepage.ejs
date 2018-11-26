@@ -101,11 +101,22 @@
       </nav>
 
       <!-- Bottom SideBar-->
-      <div id="bottomNavbar" class="navbar navbar-expand-lg fixed-bottom">
-        <a ng-click='activeTab="ttr"' onClick="showTimer(false);">TTR</a>
+      <div id="bottomNavbar" ng-class="sidebarActive" class="navbar navbar-expand-lg fixed-bottom">
+          <ul class="Sidebar_Features list-unstyled">
+        <li ng-class="{active: activeTab =='ttr'}">
+          <a ng-click='activeTab="ttr"' onClick="showTimer(false);">TTR</a>
+        </li>
+
+        <li ng-class="{active: activeTab =='schedule'}">
         <a ng-click='activeTab="schedule"' onClick="showTimer(false);">SCHED</a>
+        </li>
+        <li ng-class="{active: activeTab =='logs'}">
         <a ng-click='activeTab="logs"' onClick="showTimer(false);">LOGS</a>
+        </li>
+        <li ng-class="{active: activeTab =='pomodoro'}">
         <a ng-click='activeTab="pomodoro";' onClick="showTimer(true);">POMO</a>
+        </li>
+      </ul>
       </div>
 
 
