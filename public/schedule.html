@@ -1,13 +1,11 @@
 <div ng-controller="ScheduleCtrl">
   <div id="ScheduleDiv">
-    <h1> SCHEDULE </h1>
-
-     <edit-modal-schedule model="editModalSchedule", description="$parent.description", start-date="$parent.startDate", end-date="$parent.endDate", reason="$parent.reason", notification="$parent.notification"></edit-modal-schedule>
-     <move-to-log-modal model="moveToLogModal",  description="$parent.description" ,start-date="$parent.startDate", end-date="$parent.endDate", notification="$parent.notification"></move-to-log-modal>
-     <add-modal-schedule model="addModalSchedule",  description="$parent.description", start-date="$parent.startDate", end-date="$parent.endDate", reason="$parent.reason", notification="$parent.notification"></add-modal-schedule>
+     <edit-modal-schedule model="editModalSchedule", description="$parent.description", date="$parent.date",
+     start-date="$parent.startDate", end-date="$parent.endDate", notification="$parent.notification", completed="$parent.completed", reason='$parent.reason'></edit-modal-schedule>
+     <add-modal-schedule model="addModalSchedule",  description="$parent.description", date="$parent.date", start-date="$parent.startDate", end-date="$parent.endDate", notification="$parent.notification"></add-modal-schedule>
 
     <button type="button" class="button btn btn-primary scheduleButton" ng-click='addModalSchedule.open()'>Add</button>
-    <button type="button" class="btn btn-danger scheduleButton" ng-click='deleteSelectedSchedule()'>Delete</button> <!--ng-click -->
+    <button type="button" class="btn btn-danger scheduleButton" ng-click='deleteSelectedSchedule()'>Delete</button>
     <br><br>
     <table id = "scheduleTable" class="table">
       <thead>
@@ -15,18 +13,16 @@
           <th></th>
           <th scope="col">Description</th>
           <th scope="col">Start Date</th>
-          <th scope="col">End Date</th>
-          <th scope="col">Mark as Complete</th>
+          <th scope="col">Start Time</th>
+          <th scope="col">End Time</th>
         </tr>
       </thead>
-      <tr ng-repeat="schedule in schedules">
+      <tr ng-repeat="schedule in schedules | orderBy: 'startDate'">
           <td><input type="checkbox" value="scheduleCheck" ng-model="checkStatus" ng-init='checkStatus=false' ng-click="selectedSchedule(schedule._id, checkStatus)"></td>
-          <td ng-click="editModalSchedule.open(schedule)">{{ schedule.description }}</td> 
-          <td>{{ schedule.startDate | date:'MM/dd/yyyy' }}</td>
-          <td>{{ schedule.endDate | date:'MM/dd/yyyy' }}</td>
-          <td ng-click="moveToLogModal.open(schedule)">
-            <button ng-click="moveToLogModal.open(schedule)"> Click </button>
-          </td>
+          <td ng-click="editModalSchedule.open(schedule)">{{ schedule.description }}</td>
+          <td ng-click="editModalSchedule.open(schedule)">{{ schedule.startDate | date:'MM/dd/yyyy' }}</td>
+          <td ng-click="editModalSchedule.open(schedule)">{{ schedule.startDate | date:'hh:mm a' }}</td>
+          <td ng-click="editModalSchedule.open(schedule)">{{ schedule.endDate | date:'hh:mm a'}}</td>
       </tr>
     </table>
   </div>
@@ -51,11 +47,15 @@
           </div>
           <div class="form-group">
             <label for="startDateSchedule">Start Date</label>
-            <input type="date" class="form-control" id="startDateSchedule" ng-model='startDate'>
+            <input type="date" class="form-control" id="startDateSchedule" ng-model='date'>
           </div>
           <div class="form-group">
-            <label for="endDateSchedule">End Date</label>
-            <input type="date" class="form-control" id="endDateSchedule" ng-model='endDate'>
+            <label for="startTimeSchedule">Start Time</label>
+            <input type="time" class="form-control" id="startTimeSchedule" ng-model='startDate'>
+          </div>
+          <div class="form-group">
+            <label for="endTimeSchedule">End Time</label>
+            <input type="time" class="form-control" id="endTimeSchedule" ng-model='endDate'>
           </div>
           <div>
             <label for="notifications">Notify Me</label>
@@ -72,73 +72,41 @@
   </div>
 </script>
 
-<!-- Move To Logs Modal -->
-<script type="text/ng-template" id="moveToLogModal.html">
-  <div>
-  <div class="modal" tabindex="-1" id="moveLogDiv" role="dialog" aria-labelledby="moveToLog" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="moveToLogLabel">Move To Logs?</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form name = "AddLog">
-          <div class="form-group">
-            <label for="completed">Completed?</label>
-            <input type="checkbox" class="form-control" id="completedInput" ng-model="completed">
-          </div>
-          <div class="form-group">
-            <label for="reason">Reason</label>
-            <input type="text" class="form-control" id="reasonInput" ng-model="reason" placeholder="I (completed/did not complete) this because..." >
-          </div>
-        </form>
-        <button type="button" class="btn btn-danger" ng-click="$parent.sendScheduleToLogs(model.data._id)">Move</button>
-      </div>
-    </div>
-  </div>
-  </div>
-  </div>
-  </script>
-
   <!-- Edit Modal-->
 <script type="text/ng-template" id="editModalSchedule.html">
   <div class="modal" tabindex="-1" id="editModalDiv" role="dialog" aria-labelledby="editSchedule" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="editSchedule">Edit Schedule item</h5>
+        <h5 class="modal-title" id="editSchedule">Edit Schedule</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-          <div class="form-group">
+          <div ng-show="!giveResult" class="form-group">
               <label for="newDecrip">Description</label>
-              <input type="text" class="form-control" id="newDecrip" ng-value='model.schedule.description' ng-model="description">
+              <input type="text" class="form-control" id="newDecrip" ng-value='model.description' ng-model="description">
+              <label for="editStartDate">Start Date</label>
+              <input type="date" class="form-control" id="editStartDate" ng-value="model.startDate | date:'yyyy-MM-dd'" ng-model="startDate">
+              <label for="editStartTime">Start Time</label>
+              <input type="time" class="form-control" id="editStartTime" ng-model="startDate" ng-value="model.startDate | date:'hh-mm a'">
+              <label for="editEndTime">End Time</label>
+              <input type="time" class="form-control" id="editEndTime" ng-model="endDate" ng-value="model.endDate | date:'hh-mm a'">
+              <label for="notifications">Notify Me</label>
+              <input type="checkbox" id="notifications" ng-model="notification" ng-value="model.notification">
           </div>
-          <div class="form-group">
-              <label for="reason">Reason</label>
-              <input type="text" class="form-control" id="reason" ng-value='model.schedule.reason' ng-model="reason">
+          <div ng-show="giveResult" class="form-group">
+            <label for="reason">Reason</label>
+            <input type="text" class="form-control" id="reason" ng-model="reason">
+            <label for="completed">Completed</label>
+            <input type="checkbox" id="completed" ng-init="completed=false" ng-value="model.completed" ng-model="completed">
           </div>
-          <div class="form-group">
-            <label for="newStartDate">Start Date</label>
-            <input type="date" class="form-control" id="newStartDate" ng-model="startDate" ng-value="model.schedule.startDate | date:'yyyy-MM-dd'">
-          </div>
-          <div class="form-group">
-            <label for="newEndDate">End Date</label>
-            <input type="date" class="form-control" id="newEndDate" ng-model="endDate" ng-value="model.schedule.endDate | date:'yyyy-MM-dd'">
-          </div>
-          <div>
-            <label for="notifications">Notify Me</label>
-            <input type="checkbox" id="notifications" ng-model="notification" ng-value="false" ng-init='notification=false'>
-          </div>
-          </form>
-        <button type="button" class="btn btn-success" ng-click="$parent.editSchedule(model.data._id)">Save</button>
-        <button type="button" class="btn btn-danger" ng-click="$parent.deleteSchedule(model.data._id)">Delete</button>
-        <br>
+        <button ng-show="!giveResult" type="button" class="btn btn-info" ng-click="giveResult=true" >Give Result</button>
+        <button ng-show="!giveResult" type="button" class="btn btn-success" ng-click="$parent.editSchedule(model.data._id)">Save</button>
+        <button ng-show="!giveResult" type="button" class="btn btn-danger" ng-click="$parent.deleteSchedule(model.data._id)">Delete</button>
+        <button ng-show="giveResult" type="button" class="btn btn-warning" ng-click="giveResult=false">Back</button>
+        <button ng-show="giveResult" type="button" class="btn btn-info" ng-click="$parent.sendScheduleToLogs(model.data._id)">Move</button>
       </div>
     </div>
   </div>

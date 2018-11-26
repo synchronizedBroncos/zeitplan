@@ -21,6 +21,5 @@ cs480App.controller('LogCtrl',
          });
    };
 
-
    $scope.getLogs();
 }]);

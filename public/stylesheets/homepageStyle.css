@@ -141,7 +141,7 @@ a[data-toggle="collapse"] {
 
 
 .dropdown > .dropdown-menu {
-  display: none; 
+  display: none;
 }
 .dropdown.show > .dropdown-menu {
   display: block;
@@ -266,6 +266,19 @@ a.article:hover {
     a[aria-expanded="true"] {
         color: #fff;
         background: #6d7fcc;
+    }
+}
+
+/* Desktop Styling */
+@media only screen and (min-width:768px) {
+		#logsDiv {
+			padding-top: 0.5em;
+		}
+    #ttrDiv {
+      padding-top: 0.5em;
+    }
+    #ScheduleDiv {
+      padding-top: 0.5em;
     }
 }
 
