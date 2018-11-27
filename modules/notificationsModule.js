@@ -45,7 +45,11 @@ function formatDate(tempDate) {
   if(currentHour == 0 || currentHour == 23) {
     hour = "12";
   } else {
-    hour = currentHour;
+    if(currentHour > 11) {
+      hour = currentHour - 12;
+    } else {
+      hour = currentHour;
+    }
   }
   if(currentMinute < 10) {
     minutes = "0" + currentMinute;
