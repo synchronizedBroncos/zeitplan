@@ -1,3 +1,5 @@
+// check if safari
+const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 var cs480App = angular.module('cs480App');
 
 cs480App.controller('HomeCtrl',
@@ -15,34 +17,36 @@ cs480App.controller('HomeCtrl',
    };
    firebase.initializeApp(config);
 
-   const messaging = firebase.messaging(); // initialize messaging
+   // if not safari, set up firebase push notifications
+   if(!isSafari) {
+     const messaging = firebase.messaging(); // initialize messaging
 
-   // function needed to request permission for device token
-   $scope.requestPermissionPushNotifications = function() {
-     // request permission for push notifications
-     messaging.requestPermission()
-     .then(function() {
-       console.log('Have permission firebase');
-       return messaging.getToken();
-     })
-     .then(function(token) {
-       RestService.addDeviceToken($scope.user_id, token)
-       .then(function successCallback(response){
-         console.log("Device token is in DB.");
-       }, function errorCallback(response){
-         console.log("Error in Pushing Device Token");
+     // function needed to request permission for device token
+     $scope.requestPermissionPushNotifications = function() {
+       // request permission for push notifications
+       messaging.requestPermission()
+       .then(function() {
+         console.log('Have permission firebase');
+         return messaging.getToken();
+       })
+       .then(function(token) {
+         RestService.addDeviceToken($scope.user_id, token)
+         .then(function successCallback(response){
+           console.log("Device token is in DB.");
+         }, function errorCallback(response){
+           console.log("Error in Pushing Device Token");
+         });
+       })
+       .catch(function(err) {
+         console.log("Push notifications permission denied");
        });
-     })
-     .catch(function(err) {
-       console.log("Push notifications permission denied");
+     }
+
+     messaging.onMessage(function(payload) {
+       console.log('onMessage: ', payload);
+       const notification = new Notification(payload.notification.title, { body: payload.notification.body, icon: payload.notification.icon });
      });
    }
-
-   // receive push notifications
-   messaging.onMessage(function(payload) {
-     console.log('onMessage: ', payload);
-     const notification = new Notification(payload.notification.title, { body: payload.notification.body, icon: payload.notification.icon });
-   });
 
    $scope.user_id = "unresolved";
    RestService.getCurrentUserId()
@@ -113,7 +117,11 @@ cs480App.directive('settingModal', [function() {
 
       scope.$watch('pushStatus', function(newValue) {
         if(newValue === true) {
-          scope.$parent.requestPermissionPushNotifications();
+          if(!isSafari) {
+            scope.$parent.requestPermissionPushNotifications();
+          } else {
+            console.log("Push notifications currently not working on Safari or iOS");
+          }
         }
       });
 
