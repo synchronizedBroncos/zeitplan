@@ -34,16 +34,25 @@ Items.getAllSchedules(function(err,schedules) {
 
 function formatDate(tempDate) {
   const date = new Date(tempDate);
-  let dateString = '';
+  const currentHour = date.getHours();
+  const currentMinute = date.getMinutes();
   let timePeriod = 'AM';
-  if(date.getHours() > 11){
-    dateString += date.getHours() - 12;
+  let hour;
+  let minutes;
+  if(currentHour > 11) {
     timePeriod = 'PM';
-  } else {
-    dateString += date.getHours();
   }
-  dateString += ":" + date.getMinutes() + " " + timePeriod;
-  return dateString;
+  if(currentHour == 0 || currentHour == 23) {
+    hour = "12";
+  } else {
+    hour = currentHour;
+  }
+  if(currentMinute < 10) {
+    minutes = "0" + currentMinute;
+  } else {
+    minutes = currentMinute;
+  }
+  return hour + ":" + minutes + " " + timePeriod;
 }
 
 // userId is the id of the user, used to get the settings
