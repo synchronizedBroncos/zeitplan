@@ -27,9 +27,9 @@ mongoose.connect(process.env.DB_URI, {
   */
 
   var options = {
-    ca: fs.readFileSync('/domain/zeitplan_me.ca-bundle'),
-    key: fs.readFileSync('/domain/zeitplan_me.key'),
-    cert: fs.readFileSync('/domain/zeitplan_me.crt')
+    ca: fs.readFileSync('domain/www_zeitplan_me.ca-bundle'),
+    key: fs.readFileSync('domain/private-key.pem'),
+    cert: fs.readFileSync('domain/www_zeitplan_me.crt')
   }
 
   var port = normalizePort(process.env.PORT || '3000');
