@@ -56,6 +56,12 @@ function formatDate(tempDate) {
   } else {
     minutes = currentMinute;
   }
+  if(hour - 8 == 0){
+    hour = "12";
+  }else if(hour - 8 < 0){
+    hour = 12 + (hour - 8);
+    timePeriod = timePeriod == 'PM' ? 'AM' : 'PM';
+  }
   return hour + ":" + minutes + " " + timePeriod;
 }
 
