@@ -8,17 +8,21 @@
 
   <title>Homepage</title>
 
-  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+    crossorigin="anonymous">
   <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
   <script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"></script>
   <link rel="stylesheet" href="/stylesheets/homepageStyle.css">
-  <link rel="stylesheet" type="text/css" href="/stylesheets/loading-bar.css"/>
-  <link rel="stylesheet" type="text/css" href="/stylesheets/clockstyle.css"/>
-  <link rel="stylesheet" href="/stylesheets/logsStyle.css"/>
-  <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
-  <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.5/angular.min.js" integrity="sha256-QRJz3b0/ZZC4ilKmBRRjY0MgnVhQ+RR1tpWLYaRRjSo=" crossorigin="anonymous"></script>
+  <link rel="stylesheet" type="text/css" href="/stylesheets/loading-bar.css" />
+  <link rel="stylesheet" type="text/css" href="/stylesheets/clockstyle.css" />
+  <link rel="stylesheet" href="/stylesheets/logsStyle.css" />
+  <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ"
+    crossorigin="anonymous"></script>
+  <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.5/angular.min.js" integrity="sha256-QRJz3b0/ZZC4ilKmBRRjY0MgnVhQ+RR1tpWLYaRRjSo="
+    crossorigin="anonymous"></script>
   <script src="/javascripts/services/restService.js"></script>
   <script src="https://www.gstatic.com/firebasejs/5.5.9/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/5.5.9/firebase-messaging.js"></script>
@@ -27,14 +31,12 @@
   <script src="/javascripts/controllers/ttr-control.js"></script>
   <script src="/javascripts/controllers/log-control.js"></script>
   <script src="/javascripts/libraries/loading-bar.js"></script>
-  <script src="/javascripts/features/clock.js"></script>
 </head>
 
 <body ng-controller="HomeCtrl">
   <setting-modal model="settingModal" user_id="user_id" text-status="textStatus" email-status="emailStatus" push-status="pushStatus"></setting-modal>
   <nav id="desktopNav" class="navbar navbar-expand-md navbar-light bg-light fixed-top navbar-inverse bg-primary">
-    <span><button type="button" id="sidebarCollapse" class="btn btn-info" ng-click="toggleSidebar()"> <i class="fas fa-align-left"></i></button></span>
-    <a class="navbar-brand" href="#">ZEITPLAN</a>
+    <span><img src="/resources/logo2.png" id="logo" class="text-center"></img></span>
     <ul class="navbar-nav ml-auto navbar-expand-lg">
       <li class="nav-item">
         <a class="nav-link" href="#" ng-click="settingModal.open();getSettings()">Settings</a>
@@ -66,88 +68,93 @@
 
   <div class="container-fluid">
     <div class="row">
-    <!-- Sidebar -->
-    <nav id="sidebar" class = "col-md-2 d-md-block sidebar" ng-class="sidebarActive">
-      <ul class="Sidebar_Features list-unstyled">
+      <!-- Sidebar -->
+      <nav id="sidebar" class="col-md-2 d-md-block sidebar" ng-class="sidebarActive">
+        <ul class="Sidebar_Features list-unstyled">
+          <li ng-class="{active: activeTab =='ttr'}">
+            <a ng-click='activeTab="ttr"' onClick="showTimer(false);">TTR</a>
+          </li>
+
+          <li ng-class="{active: activeTab == 'schedule'}">
+            <a ng-click='activeTab="schedule"' onClick="showTimer(false);">SCHEDULE</a>
+          </li>
+
+          <li ng-class="{active: activeTab == 'logs'}">
+            <a ng-click='activeTab="logs"' onClick="showTimer(false);">LOGS</a>
+          </li>
+
+          <li ng-class="{active: activeTab == 'pomodoro'}">
+            <a ng-click='activeTab="pomodoro";' onClick="showTimer(true);">POMODORO</a>
+          </li>
+        </ul>
+        <hr>
+      </nav>
+
+      <!-- Bottom SideBar-->
+      <div id="bottomNavbar" ng-class="sidebarActive" class="navbar navbar-expand-lg fixed-bottom">
+          <ul class="Sidebar_Features list-unstyled">
         <li ng-class="{active: activeTab =='ttr'}">
           <a ng-click='activeTab="ttr"' onClick="showTimer(false);">TTR</a>
         </li>
 
-        <li ng-class="{active: activeTab == 'schedule'}">
-          <a ng-click='activeTab="schedule"' onClick="showTimer(false);">SCHEDULE</a>
+        <li ng-class="{active: activeTab =='schedule'}">
+        <a ng-click='activeTab="schedule"' onClick="showTimer(false);">SCHED</a>
         </li>
-
-        <li ng-class="{active: activeTab == 'logs'}">
-          <a ng-click='activeTab="logs"' onClick="showTimer(false);">LOGS</a>
+        <li ng-class="{active: activeTab =='logs'}">
+        <a ng-click='activeTab="logs"' onClick="showTimer(false);">LOGS</a>
         </li>
-
-        <li ng-class="{active: activeTab == 'pomodoro'}">
-          <a ng-click='activeTab="pomodoro";' onClick="showTimer(true);">POMODORO</a>
+        <li ng-class="{active: activeTab =='pomodoro'}">
+        <a ng-click='activeTab="pomodoro";' onClick="showTimer(true);">POMO</a>
         </li>
       </ul>
-      <hr>
-    </nav>
-
-    <!-- Bottom SideBar-->
-    <div id="bottomNavbar" class="navbar navbar-expand-lg fixed-bottom">
-      <a ng-click='activeTab="ttr"' onClick="showTimer(false);">TTR</a>
-      <a ng-click='activeTab="schedule"' onClick="showTimer(false);">SCHED</a>
-      <a ng-click='activeTab="logs"' onClick="showTimer(false);">LOGS</a>
-      <a ng-click='activeTab="pomodoro";' onClick="showTimer(true);">POMO</a>
-    </div>
-
-
-    <!-- Page Content  -->
-    <main role="main" class = "col-md-9 ml-sm-auto col-lg-10 px-4 text-center" id = "page-content">
-      <div ng-switch='activeTab'>
-        <div ng-switch-when="ttr">
-          <ng-include src="'ttr.html'"></ng-include>
-        </div>
-        <div ng-switch-when="schedule">
-          <ng-include src="'schedule.html'"></ng-include>
-        </div>
-        <div ng-switch-when="logs">
-          <ng-include src="'logs.html'"></ng-include>
-        </div>
-        <div ng-switch-when="pomodoro">
-            <ng-include src="'pomodoro.html'"></ng-include>
-        </div>
-        <div ng-switch-when="about">
-            <ng-include src="'about.html'"></ng-include>
-        </div>
       </div>
-      <div id="pomodoroTimer" style="display:none;width:100%">
-        <div id = "myItem1" class="ldBar"
-        style="width:100%;height:100%;display:block;margin:none;padding:none;",
-        data-stroke="data:ldbar/res,gradient(0,1,#9df,#9fd,#df9,#fd9)",
-        data-path="M10 20Q20 15 30 20Q40 25 50 20Q60 15 70 20Q80 25 90 20"
-        ></div>
-        <div id="info">
-        <label id="currentTime">0</label>
-          <form id="typeForm">
-              <input type="radio" name="type" value="Minutes" checked> Minutes<br>
-              <input type="radio" name="type" value="Seconds" > Seconds<br>
-          </form>
 
-          <div class="slidecontainer">
-              <label id="rangeValLabel"></label>
-              <input id = "slider" type="range" oninput="document.getElementById('rangeValLabel').innerHTML = this.value;" min="1" max="120" value="50" class="slider" id="myRange">
+
+      <!-- Page Content  -->
+      <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4 text-center" id="page-content">
+        <div ng-switch='activeTab'>
+          <div ng-switch-when="ttr">
+            <ng-include src="'ttr.html'"></ng-include>
           </div>
+          <div ng-switch-when="schedule">
+            <ng-include src="'schedule.html'"></ng-include>
+          </div>
+          <div ng-switch-when="logs">
+            <ng-include src="'logs.html'"></ng-include>
+          </div>
+          <div ng-switch-when="pomodoro">
+            <ng-include src="'pomodoro.html'"></ng-include>
+          </div>
+          <div ng-switch-when="about">
+            <ng-include src="'about.html'"></ng-include>
+          </div>
+        </div>
+        <div id="pomodoroTimer" style="display:none;width:100%;height:75%;">
+          <div id="info">
+            <div id="myItem1" class="ldBar" data-preset="energy" style="width:50%;height:50%;margin-left:auto;margin-right:auto;display:block;padding:none;"></div>
+            <div id="clockInfo">
+              <label id="currentTime">0</label>
+              <form id="typeForm">
+                <input type="radio" name="type" value="Minutes" checked> Minutes<br>
+                <input type="radio" name="type" value="Seconds"> Seconds<br>
+              </form>
 
-          <button class = "btn btn-primary" type="button" onclick="onClick()">Start Timer</button>
-          <button class = "btn btn-danger" type="button" onclick="stop()">Stop Timer</button>
-          <script>
-            bar1 = new ldBar("#myItem1");
-            rangeValLabel = document.getElementById("rangeValLabel");
-            typeSelect = document.getElementById("typeForm");
-            slider = document.getElementById('slider');
-            secondsLabel = document.getElementById('currentTime');
-            rangeValLabel.innerHTML = slider.value;
-          </script>
+              <div class="slidecontainer">
+                <label id="rangeValLabel"></label>
+                <input id="slider" type="range" oninput="document.getElementById('rangeValLabel').innerHTML = this.value;"
+                  min="1" max="120" value="50" class="slider" id="myRange">
+              </div>
+
+              <button class="btn btn-primary" type="button" onclick="onClick()">Start Timer</button>
+              <button class="btn btn-danger" type="button" onclick="stop()">Stop Timer</button>
+              <script>
+                  bar1 = new ldBar("#myItem1");
+              </script>
+            </div>
+          </div>
         </div>
-        </div>
-      </div>
     </div>
+  </div>
 </body>
 
 </body>
@@ -188,4 +195,5 @@
   </div>
   </div>
   </script>
+
 </html>

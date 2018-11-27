@@ -45,7 +45,11 @@ function formatDate(tempDate) {
   if(currentHour == 0 || currentHour == 23) {
     hour = "12";
   } else {
-    hour = currentHour;
+    if(currentHour > 11) {
+      hour = currentHour - 12;
+    } else {
+      hour = currentHour;
+    }
   }
   if(currentMinute < 10) {
     minutes = "0" + currentMinute;
@@ -92,8 +96,8 @@ function notificationAction(userId, scheduleObject) {
         const notificationObject = {
           title: "Reminder: " + scheduleObject.description,
           body: !(scheduleObject.endDate == null) ? "From " + formatDate(scheduleObject.startDate) + " to " + formatDate(scheduleObject.endDate) : "From " + formatDate(scheduleObject.startDate),
-          icon: "http://localhost:3000/resources/cropped_logo.png", // TODO: change after we deploy to AWS
-          click_action: "http://localhost:3000" // TODO: change after we have SSL setup with domain
+          icon: "https://www.zeitplan.me/resources/cropped_logo.png",
+          click_action: "https://www.zeitplan.me/"
         }
         for(let i = 0; i < userObject.deviceTokens.length; i++) {
           sendPushNotification(userObject.deviceTokens[i], notificationObject);
