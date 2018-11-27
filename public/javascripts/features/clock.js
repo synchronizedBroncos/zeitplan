@@ -1,4 +1,4 @@
-var bar1 = ldBar("#myItem1");
+var bar1;
 var rangeValLabel;
 var typeSelect;
 var slider;
@@ -17,6 +17,9 @@ secondsLabel = document.getElementById('currentTime');
 rangeValLabel.innerHTML = slider.value;
 
 function onClick(){
+    if(!bar1){
+        bar1= ldBar("#myItem1");
+    }
     clearInterval(timer);
     var selected;
 
