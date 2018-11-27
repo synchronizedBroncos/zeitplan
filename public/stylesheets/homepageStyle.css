@@ -259,7 +259,7 @@ a.article:hover {
     }
     #page-content{
         margin-top:5%;
-        max-height: 85vh;
+        max-height: 80vh;
         overflow-y: auto;
     }
     #bottomNavbar ul li.active>a,
