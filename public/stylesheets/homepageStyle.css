@@ -267,6 +267,9 @@ a.article:hover {
         color: #fff;
         background: #6d7fcc;
     }
+    #scheduleTable{
+      font-size:13px;
+    }
 }
 
 /* Desktop Styling */
@@ -279,17 +282,12 @@ a.article:hover {
 /* ---------------------------------------------------
     TTR
 ----------------------------------------------------- */
-#ttrTable td:first-child{
-  width:10%;
-}
-
-#ttrTable td:nth-child(2){
-  width:70%;
-}
-
-#ttrTable td:nth-child(3){
-  width:20%;
-}
 .ttrButton{
   float:right;
+}
+
+.tabTable{
+  word-wrap: break-word;
+  table-layout:fixed;
+  width:100%;
 }

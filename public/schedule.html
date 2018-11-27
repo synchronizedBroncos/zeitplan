@@ -1,31 +1,29 @@
 <div ng-controller="ScheduleCtrl">
-  <div id="ScheduleDiv">
      <edit-modal-schedule model="editModalSchedule", description="$parent.description", date="$parent.date",
      start-date="$parent.startDate", end-date="$parent.endDate", notification="$parent.notification", completed="$parent.completed", reason='$parent.reason'></edit-modal-schedule>
      <add-modal-schedule model="addModalSchedule",  description="$parent.description", date="$parent.date", start-date="$parent.startDate", end-date="$parent.endDate", notification="$parent.notification"></add-modal-schedule>
-
-    <button type="button" class="button btn btn-danger ttrButton" ng-click='deleteSelectedSchedule()'>Delete</button>
-    <button type="button" class="button btn btn-primary ttrButton" ng-click='addModalSchedule.open()'>Add</button>
-    <br><br>
-    <table id = "scheduleTable" class="table">
-      <thead>
-        <tr>
-          <th></th>
-          <th scope="col">Description</th>
-          <th scope="col">Start Date</th>
-          <th scope="col">Start Time</th>
-          <th scope="col">End Time</th>
-        </tr>
-      </thead>
-      <tr ng-repeat="schedule in schedules | orderBy: 'startDate'">
+    <div id="ScheduleDiv">
+      <button type="button" class="button btn btn-danger ttrButton" ng-click='deleteSelectedSchedule()'>Delete</button>
+      <button type="button" class="button btn btn-primary ttrButton" ng-click='addModalSchedule.open()'>Add</button>
+      <table id = "scheduleTable" class="table table-striped tabTable">
+        <thead>
+          <tr>
+            <th style="width:6%"></th>
+            <th style="width:37%" scope="col">Description</th>
+            <th style="width:23%" scope="col">Start Date</th>
+            <th style="width:17%" scope="col">Start Time</th>
+            <th style="width:17%" scope="col">End Time</th>
+          </tr>
+        </thead>
+        <tr ng-repeat="schedule in schedules | orderBy: 'startDate'">
           <td><input type="checkbox" value="scheduleCheck" ng-model="checkStatus" ng-init='checkStatus=false' ng-click="selectedSchedule(schedule._id, checkStatus)"></td>
           <td ng-click="editModalSchedule.open(schedule)">{{ schedule.description }}</td>
-          <td ng-click="editModalSchedule.open(schedule)">{{ schedule.startDate | date:'MM/dd/yyyy' }}</td>
+          <td ng-click="editModalSchedule.open(schedule)">{{ schedule.startDate | date:'MM/dd/yy' }}</td>
           <td ng-click="editModalSchedule.open(schedule)">{{ schedule.startDate | date:'hh:mm a' }}</td>
           <td ng-click="editModalSchedule.open(schedule)">{{ schedule.endDate | date:'hh:mm a'}}</td>
-      </tr>
-    </table>
-  </div>
+        </tr>
+      </table>
+    </div>
 </div>
 
   <!-- Add Modal -->
