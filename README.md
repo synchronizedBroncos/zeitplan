@@ -21,5 +21,6 @@ Then you can start the project on your localhost using the command npm start
 Some functionalilty is not going to work without having all the values in your .env file at the root.
 
 Check out our team page: http://cs480-projects.github.io/teams-fall2018/synchronizedBroncos/index.html
+
 Check out our website: https://www.zeitplan.me/
 
