@@ -13,7 +13,7 @@
     <p>Welcome to <%= title %></p>
 
     <% if ( expressFlash.length > 0 ) { %>
-    <center><h2 class="flashMessage <%= flashClass %>">Message: <%= expressFlash %> </h2></center>
+    <center><h2 class="flashMessage <%= flashClass %>"><%= expressFlash %> </h2></center>
     <% } %>
 
     <p>Zeitplan is a user-friendly web application designed to be the reminder partner you've always needed.</p>

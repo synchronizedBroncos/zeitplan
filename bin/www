@@ -4,10 +4,13 @@
 * Module dependencies.
 */
 
+// TODO: make https when we get cert renewed
+
 var app = require('../app');
 var debug = require('debug')('zeitplan:server');
-var https = require('https');
-var fs = require('fs');
+// var https = require('https');
+var http = require('http');
+// var fs = require('fs');
 
 // setup mongodb
 var mongo = require('mongodb');
@@ -21,16 +24,16 @@ mongoose.connect(process.env.DB_URI, {
 })
 .then(() => {
   console.log('Connected to db successfully');
-  // connection to db is successful, continue to start server
+
   /**
   * Get port from environment and store in Express.
   */
 
-  var options = {
+  /* var options = {
     ca: fs.readFileSync('domain/www_zeitplan_me.ca-bundle'),
     key: fs.readFileSync('domain/private-key.pem'),
     cert: fs.readFileSync('domain/www_zeitplan_me.crt')
-  }
+  } */
 
   var port = normalizePort(process.env.PORT || '3000');
   app.set('port', port);
@@ -39,7 +42,8 @@ mongoose.connect(process.env.DB_URI, {
   * Create HTTP server.
   */
 
-  var server = https.createServer(options, app);
+  // var server = https.createServer(options, app);
+  var server = http.createServer(app);
 
   /**
   * Listen on provided port, on all network interfaces.
