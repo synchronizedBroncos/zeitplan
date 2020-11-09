@@ -125,6 +125,10 @@ module.exports.getLogsByUserId = function(userId, callback){
   Items.findOne(query, callback).select('logs');
 }
 
+module.exports.removeLogByUserId = function(userId, logId, callback){
+  Items.findOneAndUpdate({user:userId}, {$pull: {logs:{_id:logId}}}, {new: true}, callback).select('logs');
+}
+
 module.exports.createItem = function(newItem, callback){
   newItem.save(callback);
 }

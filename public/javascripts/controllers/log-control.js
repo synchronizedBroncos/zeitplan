@@ -21,5 +21,15 @@ cs480App.controller('LogCtrl',
          });
    };
 
+   $scope.deleteLog = function (logId){
+    RestService.deleteLog($scope.user_id, logId)
+      .then(function successCallback(response){
+          console.log("Removed Log from DB.");
+          $scope.getLogs();
+      }, function errorCallback(response){
+          $log.log("Error removing Log from DB.");
+      });
+   };
+
    $scope.getLogs();
 }]);

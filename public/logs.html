@@ -29,7 +29,7 @@
 				<small>End Time: {{log.endDate | date:'hh:mm a'}}</small>
 			</div>
 			<div class="col-sm-2">
-				<button type="button" class="btn btn-warning remove-log-btn"><i class="fa fa-trash" aria-hidden="true"></i></button>
+				<button type="button" class="btn btn-warning remove-log-btn" ng-click='deleteLog(log._id)'><i class="fa fa-trash" aria-hidden="true"></i></button>
 			</div>
 		</div>
 		<hr class="log-separator">

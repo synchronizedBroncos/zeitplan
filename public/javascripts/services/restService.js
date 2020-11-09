@@ -85,6 +85,17 @@ cs480App.factory('RestService', function($http) {
     });
   };
 
+  service.deleteLog = function(user_id, log_id){
+    return $http({
+        url: urlBase + 'api/removeLog/' + user_id +"/" + log_id,
+        method: "DELETE",
+      }).then(function successCallback(response) {
+        return response;
+    }, function errorCallback(response) {
+        return response;
+    });
+  };
+
   service.sendScheduleToLogs = function(user_id, data){
     return $http({
         url: urlBase + 'api/sendScheduleToLogs/' + user_id,

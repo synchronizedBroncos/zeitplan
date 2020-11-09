@@ -96,6 +96,17 @@ router.post('/api/addSchedule/:user_id', function(req,res,next){
     });
   });
 
+  router.delete('/api/removeLog/:user_id/:log_id', function(req,res){
+    Items.removeLogByUserId(req.params.user_id, req.params.log_id, function(err, itemsObject){
+      if(err){
+        throw err;
+      }
+      else {
+        res.json({message : "Sucessfully Deleted log!"});
+      }
+    });
+  });
+
 router.post('/api/sendScheduleToLogs/:user_id', function(req,res,next){
     let schedule = req.body;
     Items.sendScheduleToLogs(req.params.user_id, schedule, function(err,schedule){
