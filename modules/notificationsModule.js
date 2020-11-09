@@ -32,37 +32,21 @@ Items.getAllSchedules(function(err,schedules) {
   }
 });
 
+// format date into PT timezone, can potentially get timezone from user setting in future
 function formatDate(tempDate) {
-  const date = new Date(tempDate);
-  const currentHour = date.getHours();
-  const currentMinute = date.getMinutes();
-  let timePeriod = 'AM';
-  let hour;
-  let minutes;
-  if(currentHour > 11) {
-    timePeriod = 'PM';
-  }
-  if(currentHour == 0 || currentHour == 23) {
-    hour = "12";
-  } else {
-    if(currentHour > 11) {
-      hour = currentHour - 12;
-    } else {
-      hour = currentHour;
-    }
-  }
-  if(currentMinute < 10) {
-    minutes = "0" + currentMinute;
-  } else {
-    minutes = currentMinute;
-  }
-  if(hour - 8 == 0){
-    hour = "12";
-  }else if(hour - 8 < 0){
-    hour = 12 + (hour - 8);
-    timePeriod = timePeriod == 'PM' ? 'AM' : 'PM';
-  }
-  return hour + ":" + minutes + " " + timePeriod;
+  let date = new Date(tempDate);
+  const ptTime = date.toLocaleString("en-US", {timeZone: "America/Los_Angeles"});
+  date = new Date(ptTime);
+
+  let hours = date.getHours();
+  let minutes = date.getMinutes();
+  const ampm = hours >= 12 ? 'PM' : 'AM';
+
+  hours = hours % 12;
+  hours = hours ? hours : 12; // the hour '0' should be '12'
+  minutes = minutes < 10 ? '0' + minutes : minutes;
+
+  return hours + ":" + minutes + " " + ampm + " PT";
 }
 
 // userId is the id of the user, used to get the settings
@@ -102,8 +86,8 @@ function notificationAction(userId, scheduleObject) {
         const notificationObject = {
           title: "Reminder: " + scheduleObject.description,
           body: !(scheduleObject.endDate == null) ? "From " + formatDate(scheduleObject.startDate) + " to " + formatDate(scheduleObject.endDate) : "From " + formatDate(scheduleObject.startDate),
-          icon: "https://www.zeitplan.me/resources/cropped_logo.png",
-          click_action: "https://www.zeitplan.me/"
+          icon: "https://www.app.zeitplan.me/resources/cropped_logo.png",
+          click_action: "https://www.app.zeitplan.me/"
         }
         for(let i = 0; i < userObject.deviceTokens.length; i++) {
           sendPushNotification(userObject.deviceTokens[i], notificationObject);
