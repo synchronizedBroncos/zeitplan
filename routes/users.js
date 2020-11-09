@@ -52,6 +52,25 @@ router.post('/addDeviceToken/:userId', function(req,res,next){
   });
 });
 
+router.delete('/clearDeviceTokens/:userId', function(req,res,next){
+  User.clearDeviceTokensByUserId(req.params.userId, function(err,deviceTokens){
+    if(err){
+      console.error(err);
+      throw err;
+    }
+    else{
+      User.setPushNotificationsOffByUserId(req.params.userId, function(err, settings) {
+        if(err) {
+          console.log(err);
+          throw err;
+        } else {
+          res.json(deviceTokens);
+        }
+      });
+    }
+  });
+});
+
 router.post('/login',
 passport.authenticate('local', {failureRedirect: '/users/login', badRequestMessage : 'Invalid username or password.', failureFlash: true}),
 function(req, res) {

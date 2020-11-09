@@ -64,6 +64,11 @@ a:focus {
     margin: 40px 0;
 }
 
+#clearDeviceTokens {
+    font-size: 12px;
+    cursor: pointer;
+}
+
 /* ---------------------------------------------------
     SIDEBAR STYLE
 ----------------------------------------------------- */

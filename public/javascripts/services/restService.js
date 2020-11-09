@@ -45,6 +45,16 @@ cs480App.factory('RestService', function($http) {
     });
   }
 
+  service.clearDeviceTokens = function(userId) {
+    return $http({
+      url: urlBase + '/users/clearDeviceTokens/' + userId,
+      method: "DELETE",
+    }).then(function successCallback(response) {
+      return response;
+    }, function errorCallback(response) {
+      return response;
+    });
+  }
 
   service.getSchedule = function(user_id){
     return $http.get(urlBase + '/api/schedule/' + user_id);

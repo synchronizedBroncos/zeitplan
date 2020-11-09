@@ -77,6 +77,15 @@ cs480App.controller('HomeCtrl',
             console.log("Error in getting Settings");
          });
    };
+
+   $scope.clearDeviceTokens = function () {
+    RestService.clearDeviceTokens($scope.user_id)
+        .then(function successCallback(response){
+          console.log("Successfully cleared device tokens for user");
+        }, function errorCallback(response){
+           console.log("Error in clearing device tokens");
+        });
+  };
    // initialize website to show ttr as first active tab
    $scope.activeTab = "ttr";
 }]);
