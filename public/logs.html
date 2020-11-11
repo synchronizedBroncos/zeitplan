@@ -19,7 +19,7 @@
 				<h5>Description: {{log.description}}</h5>
 				<small>Completed: {{log.completed ? "True" : "False"}} </small>
 				<br>
-				<small>Reason: {{log.reason}}</small>
+				<small>Reason: {{log.reason ? log.reason : "N/A"}}</small>
 			</div>
 			<div class="col-sm-4">
 				<small>Start Date: {{log.startDate | date:'MM-dd-yyyy'}}</small>
