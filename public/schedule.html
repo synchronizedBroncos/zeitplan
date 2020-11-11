@@ -15,6 +15,13 @@
             <th style="width:19%" scope="col">End</th>
           </tr>
         </thead>
+        <tr class="bg-light" ng-if="schedules && !schedules.length">
+          <td></td>
+          <td>Add to Schedule from a TTR or from the Add button above</td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
         <tr ng-repeat="schedule in schedules | orderBy: 'startDate'">
           <td><input type="checkbox" value="scheduleCheck" ng-model="checkStatus" ng-init='checkStatus=false' ng-click="selectedSchedule(schedule._id, checkStatus)"></td>
           <td ng-click="editModalSchedule.open(schedule)">{{ schedule.description }}</td>

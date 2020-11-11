@@ -13,6 +13,11 @@
           <th style="width:30%" scope = "col">Due</th>
         </tr>
       </thead>
+        <tr class="bg-light" ng-if="ttrs && !ttrs.length">
+          <td></td>
+          <td>Press Add above to add TTRs</td>
+          <td></td>
+        </tr>
         <tr ng-repeat="ttr in ttrs | orderBy: 'dueDate'">
           <td><input type="checkbox" ng-model="checkStatus" ng-init='checkStatus=false' value="ttrCheck" ng-click="selectedTTR(ttr._id, checkStatus)"></td>
           <td ng-click="editModal.open(ttr)">{{ ttr.description }}</td>

@@ -13,6 +13,7 @@
 
 <ul id="log_cards" class="mt-3">
 	<hr class="log-separator">
+	<p class="text-dark" ng-if="logs && !logs.length">Give Result to your Schedule items to see Logs</p>
 	<div class="container content-area sample-show-hide" ng-repeat="log in logs | orderBy: '-' | filter:myFilter">
 		<div class="row">
 			<div class="col-sm-6">
