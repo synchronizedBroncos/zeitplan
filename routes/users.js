@@ -132,40 +132,53 @@ router.post('/register', function(req, res, next) {
       errors: errors
     });
   } else {
-    console.log('No errors');
-    var newUser = new User({
-      name: name,
-      email: email,
-      phoneNumber: phoneNumber,
-      username: username,
-      password: password,
-      deviceTokens: [],
-      settings: {
-        notificationTypes: {
-          textMessage: false,
-          email: false,
-          pushNotification: false
-        }
+    User.userExists(username, email, phoneNumber, function(err, isUserFound){
+      if(err) throw err;
+
+      if (isUserFound) {
+        console.log('User info already exists');
+        res.render('register', {
+          title: 'Register',
+          expressFlash: 'Username, Email, or Phone Number already exists',
+          errors: ['Username, Email, or Phone Number already exists']
+        });
+      } else {
+        console.log('No errors');
+        var newUser = new User({
+          name: name,
+          email: email,
+          phoneNumber: phoneNumber,
+          username: username,
+          password: password,
+          deviceTokens: [],
+          settings: {
+            notificationTypes: {
+              textMessage: false,
+              email: false,
+              pushNotification: false
+            }
+          }
+        });
+        User.createUser(newUser, function(err, user){
+          if(err) throw err;
+          console.log(user);
+          var newItem = new Item({
+            user: user.id,
+            username: user.username,
+            ttr: [],
+            schedule: [],
+            logs: []
+          });
+          Item.createItem(newItem, function(err, item){
+            if(err) throw err;
+            console.log(item);
+          });
+        });
+        req.flash('message', 'You are now registered and can login');
+        res.location('/users/login');
+        res.redirect('/users/login');
       }
     });
-    User.createUser(newUser, function(err, user){
-      if(err) throw err;
-      console.log(user);
-      var newItem = new Item({
-        user: user.id,
-        username: user.username,
-        ttr: [],
-        schedule: [],
-        logs: []
-      });
-      Item.createItem(newItem, function(err, item){
-        if(err) throw err;
-        console.log(item);
-      });
-    });
-    req.flash('message', 'You are now registered and can login');
-    res.location('/users/login');
-    res.redirect('/users/login');
   }
 });
 

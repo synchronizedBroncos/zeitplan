@@ -78,6 +78,26 @@ module.exports.setPushNotificationsOffByUserId = function(user_id, callback) {
   User.findOneAndUpdate({_id:user_id},{$set: {'settings.notificationTypes.pushNotification' : false}}, callback).select('settings');
 }
 
+module.exports.userExists = function(username, email, phoneNumber, callback) {
+  let isUserFound = false;
+  User.count({username: username}, function (err, count){ 
+    if(count>0){
+      isUserFound = true;
+    }
+    User.count({email: email}, function (err, count){ 
+      if(count>0){
+        isUserFound = true;
+      }
+      User.count({phoneNumber: phoneNumber}, function (err, count){ 
+        if(count>0){
+          isUserFound = true;
+        }
+        callback(null, isUserFound);
+      }); 
+    }); 
+  });
+}
+
 module.exports.comparePassword = function(candidatePassword, hash, callback){
   bcrypt.compare(candidatePassword, hash, function(err, isMatch) {
     callback(null, isMatch);
