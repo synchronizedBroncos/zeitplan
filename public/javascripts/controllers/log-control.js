@@ -10,6 +10,7 @@ cs480App.controller('LogCtrl',
      });
    }
 
+   // calls getLogs if user_id exists
    $scope.checkUserId();
    // initialize ng class for sidebar as active
    $scope.getLogs = function ( ) {
@@ -17,7 +18,7 @@ cs480App.controller('LogCtrl',
          .then(function successCallback(response){
              $scope.logs = response.data.logs;
          }, function errorCallback(response){
-            console.log("Error in getting Logs");
+            alert("Error in getting Logs");
          });
    };
 
@@ -27,9 +28,8 @@ cs480App.controller('LogCtrl',
           console.log("Removed Log from DB.");
           $scope.getLogs();
       }, function errorCallback(response){
-          $log.log("Error removing Log from DB.");
+          alert("Error removing Log from DB.");
       });
    };
 
-   $scope.getLogs();
 }]);

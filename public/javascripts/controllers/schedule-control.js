@@ -25,7 +25,7 @@ cs480App.controller('ScheduleCtrl',
         .then(function successCallback(response){
             $scope.schedules = response.data.schedule;
         }, function errorCallback(response){
-           console.log("Error in getting Schedule");
+           alert("Error in getting Schedule");
         });
   };
 
@@ -86,7 +86,7 @@ cs480App.controller('ScheduleCtrl',
               $scope.getSchedule();
               $scope.addModalSchedule.close();
           }, function errorCallback(response){
-              console.log("Error in adding schdule");
+              alert("Error in adding schdule");
           });
     }
   };
@@ -100,7 +100,7 @@ cs480App.controller('ScheduleCtrl',
             $scope.getSchedule();
             $scope.editModalSchedule.close();
         }, function errorCallback(response){
-            console.log("Error in updating schedule");
+            alert("Error in updating schedule");
         });
   };
 
@@ -113,7 +113,7 @@ cs480App.controller('ScheduleCtrl',
             $scope.getSchedule();
             $scope.moveToLogModal.close();
         }, function errorCallback(response){
-            console.log("Error in updating schedule");
+            alert("Error in updating schedule");
         });
   };
 }]);

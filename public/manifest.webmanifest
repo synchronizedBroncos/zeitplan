@@ -1,0 +1,15 @@
+{
+  "short_name": "Zeitplan",
+  "name": "Zeitplan",
+  "icons": [
+  {
+  "src":"/resources/cropped_logo_192x192.png",
+  "sizes": "192x192",
+  "type": "image/png"
+  }
+  ],
+  "start_url": "/",
+  "background_color": "#f8f9fa",
+  "theme_color": "#f8f9fa",
+  "display": "standalone"
+}

@@ -34,11 +34,11 @@ cs480App.controller('HomeCtrl',
          .then(function successCallback(response){
            console.log("Device token is in DB.");
          }, function errorCallback(response){
-           console.log("Error in Pushing Device Token");
+           alert("Error in Pushing Device Token");
          });
        })
        .catch(function(err) {
-         console.log("Push notifications permission denied");
+         console.log("Push notifications permission denied", err);
        });
      }
 
@@ -53,7 +53,7 @@ cs480App.controller('HomeCtrl',
    .then(function successCallback(response) {
      $scope.user_id = response.data;
    }, function errorCallback(response){
-     console.log("Error in getting current user id");
+     alert('Error in getting current User ID');
    });
 
    $scope.changeSettings = function(){
@@ -63,7 +63,7 @@ cs480App.controller('HomeCtrl',
            console.log("Changed User Settings in DB.");
            $scope.settingModal.close();
        }, function errorCallback(response){
-           console.log("Error in Changing User Settings");
+           alert("Error in Changing User Settings");
        });
    };
 
@@ -74,7 +74,7 @@ cs480App.controller('HomeCtrl',
            $scope.emailStatus = response.data.settings.notificationTypes.email;
            $scope.pushStatus = response.data.settings.notificationTypes.pushNotification;
          }, function errorCallback(response){
-            console.log("Error in getting Settings");
+            alert("Error in getting Settings");
          });
    };
 
@@ -83,7 +83,7 @@ cs480App.controller('HomeCtrl',
         .then(function successCallback(response){
           console.log("Successfully cleared device tokens for user");
         }, function errorCallback(response){
-           console.log("Error in clearing device tokens");
+           alert("Error in clearing device tokens");
         });
   };
    // initialize website to show ttr as first active tab
