@@ -71,7 +71,12 @@ router.delete('/clearDeviceTokens/:userId', function(req,res,next){
   });
 });
 
-router.post('/login',
+function usernameToLowerCase(req, res, next){
+  req.body.username = req.body.username.toLowerCase();
+  next();
+}
+
+router.post('/login', usernameToLowerCase,
 passport.authenticate('local', {failureRedirect: '/users/login', badRequestMessage : 'Invalid username or password.', failureFlash: true}),
 function(req, res) {
   req.flash('message', 'You are now logged in');
@@ -107,8 +112,8 @@ passport.use(new LocalStrategy(function(username, password, done){
 
 router.post('/register', function(req, res, next) {
   var name = req.body.name;
-  var email = req.body.email;
-  var username = req.body.username;
+  var email = req.body.email.toLowerCase();
+  var username = req.body.username.toLowerCase();
   var phoneNumber = req.body.phoneNumber;
   var password = req.body.password;
   var password2 = req.body.password2;
