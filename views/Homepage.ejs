@@ -177,8 +177,8 @@
         <h6>Notification Types</h6>
         <form name="editTTR" style="text-align:center">
           <div>
-            <label for="txtMsg">Text Message</label>
-            <input type="checkbox" id="txtMsg" ng-model="textStatus" ng-init='textStatus=$parent.textStatus' ng-value='$parent.textStatus'>
+            <label for="txtMsg" class="text-muted">Text Message</label>
+            <input type="checkbox" id="txtMsg" disabled="disabled" ng-model="textStatus" ng-init='textStatus=$parent.textStatus' ng-value='$parent.textStatus'>
           </div>
           <div>
             <label for="email">Email</label>
@@ -190,6 +190,7 @@
             <br>
             <a id="clearDeviceTokens" class="text-warning" ng-click="$parent.clearDeviceTokens();$parent.settingModal.close()">Clear Push Notification Devices</a>
           </div>
+          <span id="settingsContact">Contact <a href="mailto:abeyepremian@gmail.com">abeyepremian@gmail.com</a> to enable text message notifications.</span>
         </form>
       </div>
       <div class="modal-footer">
