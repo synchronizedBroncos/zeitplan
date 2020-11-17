@@ -20,7 +20,6 @@ const staticAssets = [
   './javascripts/services/restService.js',
   './resources/cropped_logo_192x192.png',
   './resources/cropped_logo.png',
-  './resources/logo.png',
   './resources/logo2.png',
   './stylesheets/bootstrap.css',
   './stylesheets/clockstyle.css',
