@@ -3,9 +3,6 @@
 /**
 * Module dependencies.
 */
-
-// TODO: make https when we get cert renewed
-
 var app = require('../app');
 var debug = require('debug')('zeitplan:server');
 // var https = require('https');

@@ -1,7 +1,6 @@
 const cacheName = 'zeitplan';
 
 const staticAssets = [
-  './about.html',
   './favicon.ico',
   './firebase-messaging-sw.js',
   './logs.html',
