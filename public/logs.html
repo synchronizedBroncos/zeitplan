@@ -13,13 +13,14 @@
 
 <ul id="log_cards" class="mt-3">
 	<hr class="log-separator">
+	<p class="text-dark" ng-if="logs && !logs.length">Give Result to your Schedule items to see Logs</p>
 	<div class="container content-area sample-show-hide" ng-repeat="log in logs | orderBy: '-' | filter:myFilter">
 		<div class="row">
 			<div class="col-sm-6">
 				<h5>Description: {{log.description}}</h5>
 				<small>Completed: {{log.completed ? "True" : "False"}} </small>
 				<br>
-				<small>Reason: {{log.reason}}</small>
+				<small>Reason: {{log.reason ? log.reason : "N/A"}}</small>
 			</div>
 			<div class="col-sm-4">
 				<small>Start Date: {{log.startDate | date:'MM-dd-yyyy'}}</small>
@@ -29,7 +30,7 @@
 				<small>End Time: {{log.endDate | date:'hh:mm a'}}</small>
 			</div>
 			<div class="col-sm-2">
-				<button type="button" class="btn btn-warning remove-log-btn"><i class="fa fa-trash" aria-hidden="true"></i></button>
+				<button type="button" class="btn btn-warning remove-log-btn" ng-click='deleteLog(log._id)'><i class="fa fa-trash" aria-hidden="true"></i></button>
 			</div>
 		</div>
 		<hr class="log-separator">

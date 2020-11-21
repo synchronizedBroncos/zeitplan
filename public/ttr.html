@@ -13,6 +13,11 @@
           <th style="width:30%" scope = "col">Due</th>
         </tr>
       </thead>
+        <tr class="bg-light" ng-if="ttrs && !ttrs.length">
+          <td></td>
+          <td>Press Add above to add TTRs</td>
+          <td></td>
+        </tr>
         <tr ng-repeat="ttr in ttrs | orderBy: 'dueDate'">
           <td><input type="checkbox" ng-model="checkStatus" ng-init='checkStatus=false' value="ttrCheck" ng-click="selectedTTR(ttr._id, checkStatus)"></td>
           <td ng-click="editModal.open(ttr)">{{ ttr.description }}</td>
@@ -79,8 +84,8 @@
             <input type="text" class="form-control" id="scheduleDescription" ng-model="description" ng-value="model.data.description">
             <label for="scheduleStartDate">Start Date</label>
             <input type="date" class="form-control" id="scheduleStartDate" ng-model="date">
-            <label for="scheduleStartDate">Start Time</label>
-            <input type="time" class="form-control" id="scheduleEndDate" ng-model="startDate">
+            <label for="scheduleStartTime">Start Time</label>
+            <input type="time" class="form-control" id="scheduleStartTime" ng-model="startDate">
             <label for="scheduleEndDate">End Time</label>
             <input type="time" class="form-control" id="scheduleEndDate" ng-model="endDate">
             <label for="scheduleNotification">Notify Me</label>

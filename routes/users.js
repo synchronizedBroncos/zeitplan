@@ -52,7 +52,31 @@ router.post('/addDeviceToken/:userId', function(req,res,next){
   });
 });
 
-router.post('/login',
+router.delete('/clearDeviceTokens/:userId', function(req,res,next){
+  User.clearDeviceTokensByUserId(req.params.userId, function(err,deviceTokens){
+    if(err){
+      console.error(err);
+      throw err;
+    }
+    else{
+      User.setPushNotificationsOffByUserId(req.params.userId, function(err, settings) {
+        if(err) {
+          console.log(err);
+          throw err;
+        } else {
+          res.json(deviceTokens);
+        }
+      });
+    }
+  });
+});
+
+function usernameToLowerCase(req, res, next){
+  req.body.username = req.body.username.toLowerCase();
+  next();
+}
+
+router.post('/login', usernameToLowerCase,
 passport.authenticate('local', {failureRedirect: '/users/login', badRequestMessage : 'Invalid username or password.', failureFlash: true}),
 function(req, res) {
   req.flash('message', 'You are now logged in');
@@ -88,8 +112,8 @@ passport.use(new LocalStrategy(function(username, password, done){
 
 router.post('/register', function(req, res, next) {
   var name = req.body.name;
-  var email = req.body.email;
-  var username = req.body.username;
+  var email = req.body.email.toLowerCase();
+  var username = req.body.username.toLowerCase();
   var phoneNumber = req.body.phoneNumber;
   var password = req.body.password;
   var password2 = req.body.password2;
@@ -113,40 +137,53 @@ router.post('/register', function(req, res, next) {
       errors: errors
     });
   } else {
-    console.log('No errors');
-    var newUser = new User({
-      name: name,
-      email: email,
-      phoneNumber: phoneNumber,
-      username: username,
-      password: password,
-      deviceTokens: [],
-      settings: {
-        notificationTypes: {
-          textMessage: false,
-          email: false,
-          pushNotification: false
-        }
+    User.userExists(username, email, phoneNumber, function(err, isUserFound){
+      if(err) throw err;
+
+      if (isUserFound) {
+        console.log('User info already exists');
+        res.render('register', {
+          title: 'Register',
+          expressFlash: 'Username, Email, or Phone Number already exists',
+          errors: ['Username, Email, or Phone Number already exists']
+        });
+      } else {
+        console.log('No errors');
+        var newUser = new User({
+          name: name,
+          email: email,
+          phoneNumber: phoneNumber,
+          username: username,
+          password: password,
+          deviceTokens: [],
+          settings: {
+            notificationTypes: {
+              textMessage: false,
+              email: false,
+              pushNotification: false
+            }
+          }
+        });
+        User.createUser(newUser, function(err, user){
+          if(err) throw err;
+          console.log(user);
+          var newItem = new Item({
+            user: user.id,
+            username: user.username,
+            ttr: [],
+            schedule: [],
+            logs: []
+          });
+          Item.createItem(newItem, function(err, item){
+            if(err) throw err;
+            console.log(item);
+          });
+        });
+        req.flash('message', 'You are now registered and can login');
+        res.location('/users/login');
+        res.redirect('/users/login');
       }
     });
-    User.createUser(newUser, function(err, user){
-      if(err) throw err;
-      console.log(user);
-      var newItem = new Item({
-        user: user.id,
-        username: user.username,
-        ttr: [],
-        schedule: [],
-        logs: []
-      });
-      Item.createItem(newItem, function(err, item){
-        if(err) throw err;
-        console.log(item);
-      });
-    });
-    req.flash('message', 'You are now registered and can login');
-    res.location('/users/login');
-    res.redirect('/users/login');
   }
 });
 

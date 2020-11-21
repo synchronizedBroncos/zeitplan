@@ -60,6 +60,10 @@ module.exports.addDeviceTokenByUserId = function(userId, deviceToken, callback){
   User.findOneAndUpdate({ _id: userId }, { $push: {deviceTokens: deviceToken} }, {new: true}, callback).select('deviceTokens');
 }
 
+module.exports.clearDeviceTokensByUserId = function(userId, callback){
+  User.findOneAndUpdate({ _id: userId }, { $pull: {deviceTokens: { $type : "string" } } }, {new: true}, callback).select('deviceTokens');
+}
+
 module.exports.getSettingsByUserId = function(userId, callback){
   var query = {_id: userId};
   User.findOne(query, callback).select('settings');
@@ -68,6 +72,30 @@ module.exports.getSettingsByUserId = function(userId, callback){
 module.exports.editSettingsByUserId = function(user_id, data, callback){
   User.findOneAndUpdate({_id:user_id},{$set: {'settings.notificationTypes.textMessage': data.textMessage,
    'settings.notificationTypes.email': data.email, 'settings.notificationTypes.pushNotification' : data.pushNotification}}, callback).select('settings');
+}
+
+module.exports.setPushNotificationsOffByUserId = function(user_id, callback) {
+  User.findOneAndUpdate({_id:user_id},{$set: {'settings.notificationTypes.pushNotification' : false}}, callback).select('settings');
+}
+
+module.exports.userExists = function(username, email, phoneNumber, callback) {
+  let isUserFound = false;
+  User.count({username: username}, function (err, count){ 
+    if(count>0){
+      isUserFound = true;
+    }
+    User.count({email: email}, function (err, count){ 
+      if(count>0){
+        isUserFound = true;
+      }
+      User.count({phoneNumber: phoneNumber}, function (err, count){ 
+        if(count>0){
+          isUserFound = true;
+        }
+        callback(null, isUserFound);
+      }); 
+    }); 
+  });
 }
 
 module.exports.comparePassword = function(candidatePassword, hash, callback){

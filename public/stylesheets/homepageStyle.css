@@ -64,6 +64,16 @@ a:focus {
     margin: 40px 0;
 }
 
+#clearDeviceTokens {
+    font-size: 12px;
+    cursor: pointer;
+}
+
+#settingsContact {
+    font-size: 12px;
+    color: #6c757d;
+}
+
 /* ---------------------------------------------------
     SIDEBAR STYLE
 ----------------------------------------------------- */

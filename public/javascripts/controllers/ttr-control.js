@@ -43,7 +43,7 @@ cs480App.controller('TTRCntrl',
             $scope.ttrs = response.data.ttr;
             $scope.selectTTR.length = 0;
         }, function errorCallback(response){
-           console.log("Error in getting TTR");
+           alert("Error in getting TTR");
         });
   };
 
@@ -56,7 +56,7 @@ cs480App.controller('TTRCntrl',
             $scope.getTTR();
             $scope.editModal.close();
         }, function errorCallback(response){
-            console.log("Error in updating TTR");
+            alert("Error in updating TTR");
         });
   };
 
@@ -80,7 +80,7 @@ cs480App.controller('TTRCntrl',
             console.log("Added TTR to Schedule.");
             $scope.editModal.close();
         }, function errorCallback(response){
-            $log.log("Error add TTR to Schedule.");
+            alert("Error when trying to add TTR to Schedule.");
         });
     }
   };
@@ -94,7 +94,7 @@ cs480App.controller('TTRCntrl',
             $scope.getTTR();
             $('#ttrAddModal').modal('hide');
         }, function errorCallback(response){
-            console.log("Error in adding TTR");
+            alert("Error in adding TTR");
         });
   };
 
@@ -106,7 +106,7 @@ cs480App.controller('TTRCntrl',
           $scope.getTTR();
           $scope.editModal.close();
       }, function errorCallback(response){
-          $log.log("Error removing TTR from DB.");
+          alert("Error in removing TTR");
       });
   };
 }]);
